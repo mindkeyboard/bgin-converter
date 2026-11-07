@@ -9,6 +9,8 @@
 [Полное руководство](https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.5.0/)
 · [English](README.md)
 
+[Инструкция установки на GitHub](https://github.com/mindkeyboard/bgin-converter/blob/v0.5.0/README.ru.md)
+
 ## Выбор пакета
 
 | Среда | Суффикс файла |

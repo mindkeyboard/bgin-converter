@@ -9,6 +9,8 @@ Creator: **mindkeyboard**. Distributed under the included terms of use.
 [Full guide](https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.5.0/)
 · [Русский](README.ru.md)
 
+[Installation instructions on GitHub](https://github.com/mindkeyboard/bgin-converter/blob/v0.5.0/README.md)
+
 ## Choose the package
 
 | Environment | File suffix |
