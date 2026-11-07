@@ -1,0 +1,221 @@
+{
+  "name": "bgin-editor",
+  "displayName": "Binary GIN Editor",
+  "description": "Binary GIN hierarchy, JSON editing and preview with external resources.",
+  "version": "0.5.0",
+  "publisher": "a8devtools",
+  "license": "SEE LICENSE IN LICENSE",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "main": "./out/extension.js",
+  "extensionKind": ["workspace"],
+  "activationEvents": [
+    "onCustomEditor:bgin.editor",
+    "onStartupFinished"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "The local BGIN worker reads explicitly configured project resources."
+    },
+    "virtualWorkspaces": false
+  },
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "bgin.editor",
+        "displayName": "Binary GIN",
+        "selector": [
+          {
+            "filenamePattern": "*.bgin"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
+    "commands": [
+      {
+        "command": "bgin.newFile",
+        "title": "BGIN: New File"
+      },
+      {
+        "command": "bgin.refreshPreview",
+        "title": "BGIN: Refresh Preview"
+      },
+      {
+        "command": "bgin.togglePreview",
+        "title": "BGIN: Toggle Preview"
+      },
+      {
+        "command": "bgin.expandPreview",
+        "title": "BGIN: Expand Preview"
+      },
+      {
+        "command": "bgin.resources",
+        "title": "BGIN: Resources"
+      },
+      {
+        "command": "bgin.enableExplorerNewFile",
+        "title": "BGIN: Enable Windows Explorer New File"
+      },
+      {
+        "command": "bgin.disableExplorerNewFile",
+        "title": "BGIN: Disable Windows Explorer New File"
+      }
+    ],
+    "configuration": {
+      "title": "Binary GIN",
+      "properties": {
+        "bgin.resourceBindings": {
+          "type": "object",
+          "default": {},
+          "additionalProperties": {
+            "type": "string"
+          },
+          "scope": "resource",
+          "description": "Reference namespace to external BGIN file. Relative paths use the workspace folder.",
+          "deprecationMessage": "Choose bgin.resourceFolders.bginRoot instead. Existing aliases are read only until a BGIN folder is selected."
+        },
+        "bgin.assetRoot": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Extracted resource root containing textures_android and texter_fonts."
+        },
+        "bgin.preview": {
+          "type": "object",
+          "default": {},
+          "scope": "resource",
+          "description": "Initial preview options. Local editor changes are stored separately."
+        },
+        "bgin.language": {
+          "type": "string",
+          "enum": [
+            "en",
+            "ru"
+          ],
+          "enumDescriptions": [
+            "English",
+            "Русский"
+          ],
+          "default": "en",
+          "scope": "resource",
+          "description": "Editor interface language. English is the default; choose ru for Russian."
+        },
+        "bgin.textureRoot": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Optional external textures folder. Overrides the resource root for texture lookup."
+        },
+        "bgin.fontRoot": {
+          "type": "string",
+          "default": "",
+          "scope": "resource",
+          "description": "Optional external fonts folder. Overrides the resource root for font lookup."
+        },
+        "bgin.resourceFolders": {
+          "type": "object",
+          "default": {},
+          "scope": "resource",
+          "additionalProperties": false,
+          "properties": {
+            "assetRoot": {
+              "type": "string",
+              "default": ""
+            },
+            "bginRoot": {
+              "type": "string",
+              "default": ""
+            },
+            "textureRoot": {
+              "type": "string",
+              "default": ""
+            },
+            "fontRoot": {
+              "type": "string",
+              "default": ""
+            }
+          },
+          "description": "External resource folders. BGIN files use their internal namespaces and are loaded only when referenced. Relative paths use the workspace folder."
+        },
+        "bgin.acceptedTermsVersion": {
+          "type": "string",
+          "default": "",
+          "scope": "application",
+          "description": "Terms version explicitly accepted on first opening a BGIN file. Empty shows the terms again."
+        },
+        "bgin.windowsExplorerNewFile": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "Add Binary GIN to Windows Explorer > New for the current Windows user. Creates an empty draft; no administrator rights required. Disable before uninstalling to remove the menu entry."
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "bgin",
+          "title": "Binary GIN",
+          "icon": "media/bgin.svg"
+        }
+      ]
+    },
+    "views": {
+      "bgin": [
+        {
+          "id": "bgin.converter",
+          "name": "Converter",
+          "type": "webview",
+          "icon": "media/bgin.svg"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "bgin.enableExplorerNewFile",
+          "when": "isWindows && !remoteName"
+        },
+        {
+          "command": "bgin.disableExplorerNewFile",
+          "when": "isWindows && !remoteName"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node build.mjs",
+    "vscode:prepublish": "npm run build",
+    "check": "tsc --noEmit",
+    "test": "node test/run.cjs",
+    "test:ui": "node test/ui.cjs",
+    "package": "node build.mjs --package"
+  },
+  "dependencies": {
+    "@codemirror/commands": "^6.8.1",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/language": "^6.11.0",
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.38.1",
+    "jsonc-parser": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "1.105.0",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.6.2",
+    "esbuild": "^0.25.0",
+    "playwright": "^1.64.1",
+    "prettier": "^3.9.10",
+    "typescript": "^5.9.0"
+  },
+  "homepage": "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.5.0/",
+  "icon": "media/icon.jpg"
+}

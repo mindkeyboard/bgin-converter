@@ -1,0 +1,21 @@
+{
+  "name": "example",
+  "screens": [
+    {
+      "type": "StackContainer",
+      "name": "screen",
+      "properties": {
+        "Size": [320, 240]
+      },
+      "children": [
+        {
+          "type": "Label",
+          "name": "caption",
+          "properties": {
+            "TestString": "Привет!"
+          }
+        }
+      ]
+    }
+  ]
+}

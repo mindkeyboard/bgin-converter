@@ -1,0 +1,1704 @@
+{
+"AspectRatioContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"ItemAspectRatio": {
+"en": "Ratio of the derived box side to the base side. BGIN parameter `ItemAspectRatio`.",
+"ru": "Отношение вычисляемой стороны прямоугольника к основной. Параметр BGIN `ItemAspectRatio`."
+},
+"ItemAspectRatioMode": {
+"en": "Which side of the box is derived through ItemAspectRatio. BGIN parameter `ItemAspectRatioMode`.",
+"ru": "Какая сторона прямоугольника вычисляется через ItemAspectRatio. Параметр BGIN `ItemAspectRatioMode`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Button": {
+"Alignment": {
+"en": "Where the text sits in the label area while it fits. BGIN parameter `Alignment`.",
+"ru": "Где стоит текст в области надписи, пока он помещается. Параметр BGIN `Alignment`."
+},
+"Background": {
+"en": "Sprite under the text covering the whole label rectangle, margins included. BGIN parameter `Background`.",
+"ru": "Спрайт под текстом на весь прямоугольник надписи, включая поля. Параметр BGIN `Background`."
+},
+"ButtonEventPolicy": {
+"en": "When a press starts and is cancelled. BGIN parameter `ButtonEventPolicy`.",
+"ru": "Когда начинается и отменяется нажатие. Параметр BGIN `ButtonEventPolicy`."
+},
+"DisabledBackground": {
+"en": "Button background when it is disabled. BGIN parameter `DisabledBackground` — a sprite path.",
+"ru": "Фон кнопки когда она выключена. Параметр BGIN `DisabledBackground` — путь к спрайту."
+},
+"DisabledTextStyle": {
+"en": "Button text style when it is disabled. BGIN parameter `DisabledTextStyle` — a style name.",
+"ru": "Стиль текста кнопки когда она выключена. Параметр BGIN `DisabledTextStyle` — имя стиля."
+},
+"DisabledToggledBackground": {
+"en": "Button background when disabled in the selected state. BGIN parameter `DisabledToggledBackground` — a sprite path.",
+"ru": "Фон кнопки выключенной в выбранном состоянии. Параметр BGIN `DisabledToggledBackground` — путь к спрайту."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"HeightFactor": {
+"en": "Line height with VerticalTextPolicy = HeightFactor: a percentage of the full screen height, minus the top and bottom margins. Independent of the parent. BGIN parameter `HeightFactor`.",
+"ru": "Высота строки при VerticalTextPolicy = HeightFactor: процент высоты всего экрана, из которого затем вычитаются верхнее и нижнее поле. От родителя не зависит. Параметр BGIN `HeightFactor`."
+},
+"InvertAlignmentRTL": {
+"en": "Whether to mirror alignment (left ↔ right) when the game shows a right-to-left language. BGIN parameter `InvertAlignmentRTL`.",
+"ru": "Зеркалить ли выравнивание (лево ↔ право), когда игра показывает язык с письмом справа налево. Параметр BGIN `InvertAlignmentRTL`."
+},
+"MarginFactors": {
+"en": "Text insets from the label edges as shares of its size: top and bottom from the height, left and right from the width. BGIN parameter `MarginFactors`.",
+"ru": "Отступы текста от краёв надписи как доли её размера: верхнее и нижнее — от высоты, левое и правое — от ширины. Параметр BGIN `MarginFactors`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"PressedBackground": {
+"en": "Button background while a finger holds it. BGIN parameter `PressedBackground` — a sprite path.",
+"ru": "Фон кнопки пока палец удерживает её. Параметр BGIN `PressedBackground` — путь к спрайту."
+},
+"PressedTextStyle": {
+"en": "Button text style while held by a finger; also applies to a selected button. BGIN parameter `PressedTextStyle` — a style name.",
+"ru": "Стиль текста кнопки пока палец удерживает её; действует и у выбранной кнопки. Параметр BGIN `PressedTextStyle` — имя стиля."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"ScrollDelay": {
+"en": "How long a long line stays still before each scroll pass. BGIN parameter `ScrollDelay`.",
+"ru": "Сколько длинная строка стоит на месте перед каждым проходом прокрутки. Параметр BGIN `ScrollDelay`."
+},
+"ScrollSpeed": {
+"en": "Speed of a long line: pass duration = overflow length / speed. Motion eases in and out. BGIN parameter `ScrollSpeed`.",
+"ru": "Скорость движения длинной строки: длительность прохода = длина переполнения / скорость. Движение плавно разгоняется и тормозит. Параметр BGIN `ScrollSpeed`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"TestString": {
+"en": "The label's source string and how it is interpreted: literal text or a localization key. From BGIN the text comes as the `TestString` parameter in localization mode.",
+"ru": "Исходная строка надписи и способ её трактовки: буквальный текст или ключ локализации. Из BGIN текст приходит параметром `TestString` в режиме локализации."
+},
+"TextPolicy": {
+"en": "What to do with a line wider than the label area and how much width to ask layout for. BGIN parameter `TextPolicy`.",
+"ru": "Что делать со строкой шире области надписи и сколько ширины требовать у раскладки. Параметр BGIN `TextPolicy`."
+},
+"TextStyle": {
+"en": "Font, height range, colours and effects of the label. In BGIN the `TextStyle` parameter is a style name from resources; without it the shared interface style is used.",
+"ru": "Шрифт, диапазон высоты, цвета и эффекты надписи. В BGIN параметр `TextStyle` — имя стиля из ресурсов; без него используется общий стиль интерфейса."
+},
+"Toggleable": {
+"en": "Makes the button a toggle: every activation flips the selected state. BGIN parameter `Toggleable`.",
+"ru": "Делает кнопку переключателем: каждое срабатывание меняет выбранное состояние на противоположное. Параметр BGIN `Toggleable`."
+},
+"ToggledBackground": {
+"en": "Button background in the selected state. BGIN parameter `ToggledBackground` — a sprite path.",
+"ru": "Фон кнопки в выбранном состоянии. Параметр BGIN `ToggledBackground` — путь к спрайту."
+},
+"ToggledPressedBackground": {
+"en": "Button background when selected and held by a finger. BGIN parameter `ToggledPressedBackground` — a sprite path.",
+"ru": "Фон кнопки выбранной и удерживаемой пальцем. Параметр BGIN `ToggledPressedBackground` — путь к спрайту."
+},
+"ToggledTextStyle": {
+"en": "Button text style in the selected state when not pressed. BGIN parameter `ToggledTextStyle` — a style name.",
+"ru": "Стиль текста кнопки в выбранном состоянии без нажатия. Параметр BGIN `ToggledTextStyle` — имя стиля."
+},
+"TouchAreaGrowFactors": {
+"en": "How much larger than its picture the area catching a finger is. Applies only to button sides shorter than 10 mm and never makes the area larger than 10 mm. BGIN parameter `TouchAreaGrowFactors`.",
+"ru": "Насколько зона, в которой кнопка ловит палец, больше её картинки. Действует только для сторон кнопки меньше 10 мм и не делает зону больше 10 мм. Параметр BGIN `TouchAreaGrowFactors`."
+},
+"VerticalTextPolicy": {
+"en": "How the font height is chosen. BGIN parameter `VerticalTextPolicy`. The result is always clamped by the style's FontHeight range.",
+"ru": "Как выбирается высота шрифта. Параметр BGIN `VerticalTextPolicy`. Результат всегда ограничивается диапазоном FontHeight стиля."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"CircularProgress": {
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FillBackground": {
+"en": "Picture over the whole element, of which only the sector from the top to the current angle is visible. BGIN parameter `FillBackground` — a sprite path.",
+"ru": "Картинка на весь элемент, из которой видна только часть-сектор от верхней точки до текущего угла. Параметр BGIN `FillBackground` — путь к спрайту."
+},
+"KnobBackground": {
+"en": "Pointer picture from the centre to the edge, rotated to the current angle. BGIN parameter `KnobBackground` — a sprite path.",
+"ru": "Картинка стрелки от центра к краю, повёрнутая на текущий угол. Параметр BGIN `KnobBackground` — путь к спрайту."
+},
+"KnobFactor": {
+"en": "Pointer width as a share of the radius; pointer length is always the radius. BGIN parameter `KnobFactor` in percent.",
+"ru": "Ширина стрелки как доля радиуса; длина стрелки всегда равна радиусу. Параметр BGIN `KnobFactor` в процентах."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"NormalBackground": {
+"en": "Picture under the whole dial. BGIN parameter `NormalBackground` — a sprite path.",
+"ru": "Картинка под всем регулятором. Параметр BGIN `NormalBackground` — путь к спрайту."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"CircularSlider": {
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FillBackground": {
+"en": "Picture over the whole element, of which only the sector from the top to the current angle is visible. BGIN parameter `FillBackground` — a sprite path.",
+"ru": "Картинка на весь элемент, из которой видна только часть-сектор от верхней точки до текущего угла. Параметр BGIN `FillBackground` — путь к спрайту."
+},
+"KnobBackground": {
+"en": "Pointer picture from the centre to the edge, rotated to the current angle. BGIN parameter `KnobBackground` — a sprite path.",
+"ru": "Картинка стрелки от центра к краю, повёрнутая на текущий угол. Параметр BGIN `KnobBackground` — путь к спрайту."
+},
+"KnobFactor": {
+"en": "Pointer width as a share of the radius; pointer length is always the radius. BGIN parameter `KnobFactor` in percent.",
+"ru": "Ширина стрелки как доля радиуса; длина стрелки всегда равна радиусу. Параметр BGIN `KnobFactor` в процентах."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"NormalBackground": {
+"en": "Picture under the whole dial. BGIN parameter `NormalBackground` — a sprite path.",
+"ru": "Картинка под всем регулятором. Параметр BGIN `NormalBackground` — путь к спрайту."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"CompoundButton": {
+"ButtonEventPolicy": {
+"en": "When a press starts and is cancelled — as for ButtonWidget: normal or `Autopress`. BGIN parameter `ButtonEventPolicy`.",
+"ru": "Когда начинается и отменяется нажатие — как у ButtonWidget: обычное или `Autopress`. Параметр BGIN `ButtonEventPolicy`."
+},
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Toggleable": {
+"en": "Makes the button a toggle: every activation flips selection. BGIN parameter `Toggleable`.",
+"ru": "Делает кнопку переключателем: каждое срабатывание меняет выбранность. Параметр BGIN `Toggleable`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"CoverFlowContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"ColumnCount": {
+"en": "Size of one card: width = inner carousel width / ColumnCount, height = width × ItemHeightAspectRatio. BGIN parameters `ColumnCount` and `ItemHeightAspectRatio`.",
+"ru": "Размер одной карточки: ширина = внутренняя ширина карусели / ColumnCount, высота = ширина × ItemHeightAspectRatio. Параметры BGIN `ColumnCount` и `ItemHeightAspectRatio`."
+},
+"Direction": {
+"en": "Axis of the strip and turning. BGIN parameter `Direction`: `Horizontal` — horizontal, any other name — vertical.",
+"ru": "Ось ленты и листания. Параметр BGIN `Direction`: `Horizontal` — по горизонтали, любое другое имя — по вертикали."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"ItemHeightAspectRatio": {
+"en": "Size of one card: width = inner carousel width / ColumnCount, height = width × ItemHeightAspectRatio. BGIN parameters `ColumnCount` and `ItemHeightAspectRatio`.",
+"ru": "Размер одной карточки: ширина = внутренняя ширина карусели / ColumnCount, высота = ширина × ItemHeightAspectRatio. Параметры BGIN `ColumnCount` и `ItemHeightAspectRatio`."
+},
+"ItemMainScale": {
+"en": "How much larger the centre card is: its size is multiplied by 1 + ItemMainScale, and for neighbours the enlargement fades to zero over one card width. BGIN parameter `ItemMainScale`.",
+"ru": "Насколько карточка в центре крупнее обычной: её размер умножается на 1 + ItemMainScale, а у соседей увеличение плавно спадает до нуля на расстоянии одной ширины карточки. Параметр BGIN `ItemMainScale`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"SpacingFactor": {
+"en": "Distance between neighbouring cards as a share of the carousel size along its axis. BGIN parameter `SpacingFactor`.",
+"ru": "Расстояние между соседними карточками как доля размера карусели вдоль оси. Параметр BGIN `SpacingFactor`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"FixedSizeContainer": {
+"AspectRatio": {
+"en": "Multiplier for the unfixed side: with a fixed height, width = height × AspectRatio; with a fixed width, height = width × AspectRatio. BGIN parameter `AspectRatio`.",
+"ru": "Множитель для незафиксированной стороны: при фиксированной высоте ширина = высота × AspectRatio, при фиксированной ширине высота = ширина × AspectRatio. Параметр BGIN `AspectRatio`."
+},
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableAspectRatio": {
+"en": "Compute the unfixed side from the fixed one through AspectRatio so the area keeps its shape. BGIN parameter `EnableAspectRatio`.",
+"ru": "Вычислять незафиксированную сторону из зафиксированной через AspectRatio, чтобы область сохраняла форму. Параметр BGIN `EnableAspectRatio`."
+},
+"EnableFixedHeight": {
+"en": "Turns on fixing the height: it becomes a percentage of screen height (from FixedHeightFactor) instead of the space the parent gave. BGIN parameter `EnableFixedHeight`.",
+"ru": "Включает фиксацию высоты: она становится процентом высоты экрана (из FixedHeightFactor), а не местом, которое дал родитель. Параметр BGIN `EnableFixedHeight`."
+},
+"EnableFixedWidth": {
+"en": "Turns on fixing the width: it becomes a percentage of screen width (from FixedWidthFactor) instead of the space the parent gave. BGIN parameter `EnableFixedWidth`.",
+"ru": "Включает фиксацию ширины: она становится процентом ширины экрана (из FixedWidthFactor), а не местом, которое дал родитель. Параметр BGIN `EnableFixedWidth`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FixedHeightFactor": {
+"en": "What percentage of screen height the children area takes when fixing is on. BGIN parameter `FixedHeightFactor`.",
+"ru": "Какой процент высоты экрана занимает область детей при включённой фиксации. Параметр BGIN `FixedHeightFactor`."
+},
+"FixedWidthFactor": {
+"en": "What percentage of screen width the children area takes when fixing is on. BGIN parameter `FixedWidthFactor`.",
+"ru": "Какой процент ширины экрана занимает область детей при включённой фиксации. Параметр BGIN `FixedWidthFactor`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"GridContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"ColumnCount": {
+"en": "The order in which children take cells and how many fit in one line. `Direction` = `Horizontal`: left to right, a new row after `ColumnCount` children. Any other value: top to bottom, a new column after `ColumnCount` children. BGIN parameters `Direction` and `ColumnCount`.",
+"ru": "В каком порядке дети занимают ячейки и сколько их в одном ряду. `Direction` = `Horizontal`: слева направо, перенос на новую строку после `ColumnCount` детей. Любое другое значение: сверху вниз, новый столбец после `ColumnCount` детей. Параметры BGIN `Direction` и `ColumnCount`."
+},
+"Direction": {
+"en": "The order in which children take cells and how many fit in one line. `Direction` = `Horizontal`: left to right, a new row after `ColumnCount` children. Any other value: top to bottom, a new column after `ColumnCount` children. BGIN parameters `Direction` and `ColumnCount`.",
+"ru": "В каком порядке дети занимают ячейки и сколько их в одном ряду. `Direction` = `Horizontal`: слева направо, перенос на новую строку после `ColumnCount` детей. Любое другое значение: сверху вниз, новый столбец после `ColumnCount` детей. Параметры BGIN `Direction` и `ColumnCount`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"ItemAspectRatio": {
+"en": "Which cell side stretches to the container and which is derived through the ratio. BGIN parameters `ItemAspectRatioMode` and `ItemAspectRatio`.",
+"ru": "Какая сторона ячейки растягивается до размера контейнера, а какая вычисляется через коэффициент. Параметры BGIN `ItemAspectRatioMode` и `ItemAspectRatio`."
+},
+"ItemAspectRatioMode": {
+"en": "Which cell side stretches to the container and which is derived through the ratio. BGIN parameters `ItemAspectRatioMode` and `ItemAspectRatio`.",
+"ru": "Какая сторона ячейки растягивается до размера контейнера, а какая вычисляется через коэффициент. Параметры BGIN `ItemAspectRatioMode` и `ItemAspectRatio`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"SpacingPolicy": {
+"en": "Unit of Spacing between cells; the spacing is the same horizontally and vertically. BGIN parameter `SpacingPolicy`.",
+"ru": "В чём измеряется Spacing между ячейками; интервал одинаков по горизонтали и вертикали. Параметр BGIN `SpacingPolicy`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"HorizontalContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EmptySpaceFillPolicy": {
+"en": "How the row divides its length among children: stretch them by StretchFactor weights, or keep each at its minimum and shift the group. BGIN parameter `EmptySpaceFillPolicy`.",
+"ru": "Как ряд делит свою длину между детьми: растягивает их по весам StretchFactor или оставляет каждому его минимум и сдвигает группу. Параметр BGIN `EmptySpaceFillPolicy`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"SpacingPolicy": {
+"en": "Unit of Spacing between row neighbours. BGIN parameter `SpacingPolicy`.",
+"ru": "В чём измеряется Spacing между соседями ряда. Параметр BGIN `SpacingPolicy`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"HorizontalSpring": {
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"MaxSize": {
+"en": "One number per parameter. For `HorizontalSpring`: `MinSize` — minimum height, `MaxSize` — maximum width. For `VerticalSpring`: `MinSize` — minimum width, `MaxSize` — maximum height.",
+"ru": "Одно число на параметр. У `HorizontalSpring`: `MinSize` — минимальная высота, `MaxSize` — максимальная ширина. У `VerticalSpring`: `MinSize` — минимальная ширина, `MaxSize` — максимальная высота."
+},
+"MinSize": {
+"en": "One number per parameter. For `HorizontalSpring`: `MinSize` — minimum height, `MaxSize` — maximum width. For `VerticalSpring`: `MinSize` — minimum width, `MaxSize` — maximum height.",
+"ru": "Одно число на параметр. У `HorizontalSpring`: `MinSize` — минимальная высота, `MaxSize` — максимальная ширина. У `VerticalSpring`: `MinSize` — минимальная ширина, `MaxSize` — максимальная высота."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Label": {
+"Alignment": {
+"en": "Where the text sits in the label area while it fits. BGIN parameter `Alignment`.",
+"ru": "Где стоит текст в области надписи, пока он помещается. Параметр BGIN `Alignment`."
+},
+"Background": {
+"en": "Sprite under the text covering the whole label rectangle, margins included. BGIN parameter `Background`.",
+"ru": "Спрайт под текстом на весь прямоугольник надписи, включая поля. Параметр BGIN `Background`."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"HeightFactor": {
+"en": "Line height with VerticalTextPolicy = HeightFactor: a percentage of the full screen height, minus the top and bottom margins. Independent of the parent. BGIN parameter `HeightFactor`.",
+"ru": "Высота строки при VerticalTextPolicy = HeightFactor: процент высоты всего экрана, из которого затем вычитаются верхнее и нижнее поле. От родителя не зависит. Параметр BGIN `HeightFactor`."
+},
+"InvertAlignmentRTL": {
+"en": "Whether to mirror alignment (left ↔ right) when the game shows a right-to-left language. BGIN parameter `InvertAlignmentRTL`.",
+"ru": "Зеркалить ли выравнивание (лево ↔ право), когда игра показывает язык с письмом справа налево. Параметр BGIN `InvertAlignmentRTL`."
+},
+"MarginFactors": {
+"en": "Text insets from the label edges as shares of its size: top and bottom from the height, left and right from the width. BGIN parameter `MarginFactors`.",
+"ru": "Отступы текста от краёв надписи как доли её размера: верхнее и нижнее — от высоты, левое и правое — от ширины. Параметр BGIN `MarginFactors`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"ScrollDelay": {
+"en": "How long a long line stays still before each scroll pass. BGIN parameter `ScrollDelay`.",
+"ru": "Сколько длинная строка стоит на месте перед каждым проходом прокрутки. Параметр BGIN `ScrollDelay`."
+},
+"ScrollSpeed": {
+"en": "Speed of a long line: pass duration = overflow length / speed. Motion eases in and out. BGIN parameter `ScrollSpeed`.",
+"ru": "Скорость движения длинной строки: длительность прохода = длина переполнения / скорость. Движение плавно разгоняется и тормозит. Параметр BGIN `ScrollSpeed`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"TestString": {
+"en": "The label's source string and how it is interpreted: literal text or a localization key. From BGIN the text comes as the `TestString` parameter in localization mode.",
+"ru": "Исходная строка надписи и способ её трактовки: буквальный текст или ключ локализации. Из BGIN текст приходит параметром `TestString` в режиме локализации."
+},
+"TextPolicy": {
+"en": "What to do with a line wider than the label area and how much width to ask layout for. BGIN parameter `TextPolicy`.",
+"ru": "Что делать со строкой шире области надписи и сколько ширины требовать у раскладки. Параметр BGIN `TextPolicy`."
+},
+"TextStyle": {
+"en": "Font, height range, colours and effects of the label. In BGIN the `TextStyle` parameter is a style name from resources; without it the shared interface style is used.",
+"ru": "Шрифт, диапазон высоты, цвета и эффекты надписи. В BGIN параметр `TextStyle` — имя стиля из ресурсов; без него используется общий стиль интерфейса."
+},
+"VerticalTextPolicy": {
+"en": "How the font height is chosen. BGIN parameter `VerticalTextPolicy`. The result is always clamped by the style's FontHeight range.",
+"ru": "Как выбирается высота шрифта. Параметр BGIN `VerticalTextPolicy`. Результат всегда ограничивается диапазоном FontHeight стиля."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"MarginContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"MarginFactors": {
+"en": "Margins around children as shares of the container's own size: left and right from the width, top and bottom from the height. BGIN parameter `MarginFactors`.",
+"ru": "Поля вокруг детей как доли собственного размера контейнера: левое и правое — от ширины, верхнее и нижнее — от высоты. Параметр BGIN `MarginFactors`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Module": {
+"HStretch": {
+"en": "How the stretchable part is filled horizontally (`HStretch`) and vertically (`VStretch`): `Tile` — repeat as tiles, any other value — stretch.",
+"ru": "Как заполняется растягиваемая часть по горизонтали (`HStretch`) и вертикали (`VStretch`): `Tile` — повтор плиткой, любое другое значение — растяжение."
+},
+"NinePatchDef": {
+"en": "`NinePatchMode`: `Classic` — nine parts with fixed corners, `FixedHorizontalAspectRatio` — side parts keeping proportions, otherwise — plain stretch. Edges: `NinePatchDef` (left, right, top, bottom) or `NinePatchDefFH` (left, right).",
+"ru": "`NinePatchMode`: `Classic` — девять частей с неизменными углами, `FixedHorizontalAspectRatio` — боковые части с сохранением пропорций, иначе — простое растяжение. Края: `NinePatchDef` (лево, право, верх, низ) или `NinePatchDefFH` (лево, право)."
+},
+"NinePatchDefFH": {
+"en": "`NinePatchMode`: `Classic` — nine parts with fixed corners, `FixedHorizontalAspectRatio` — side parts keeping proportions, otherwise — plain stretch. Edges: `NinePatchDef` (left, right, top, bottom) or `NinePatchDefFH` (left, right).",
+"ru": "`NinePatchMode`: `Classic` — девять частей с неизменными углами, `FixedHorizontalAspectRatio` — боковые части с сохранением пропорций, иначе — простое растяжение. Края: `NinePatchDef` (лево, право, верх, низ) или `NinePatchDefFH` (лево, право)."
+},
+"NinePatchMode": {
+"en": "`NinePatchMode`: `Classic` — nine parts with fixed corners, `FixedHorizontalAspectRatio` — side parts keeping proportions, otherwise — plain stretch. Edges: `NinePatchDef` (left, right, top, bottom) or `NinePatchDefFH` (left, right).",
+"ru": "`NinePatchMode`: `Classic` — девять частей с неизменными углами, `FixedHorizontalAspectRatio` — боковые части с сохранением пропорций, иначе — простое растяжение. Края: `NinePatchDef` (лево, право, верх, низ) или `NinePatchDefFH` (лево, право)."
+},
+"Source": {
+"en": "The image all resource modules are cut from. In BGIN the `Source` parameter is a texture file path.",
+"ru": "Изображение, из которого вырезаются все модули ресурса. В BGIN параметр `Source` — путь к файлу текстуры."
+},
+"VStretch": {
+"en": "How the stretchable part is filled horizontally (`HStretch`) and vertically (`VStretch`): `Tile` — repeat as tiles, any other value — stretch.",
+"ru": "Как заполняется растягиваемая часть по горизонтали (`HStretch`) и вертикали (`VStretch`): `Tile` — повтор плиткой, любое другое значение — растяжение."
+}
+},
+"Movie": {
+"Alignment": {
+"en": "Picture position along the derived axis. BGIN parameter `Alignment`: `Center` — centred, `TopOrLeft` — to the top with Fit or left edge with Fill, `BottomOrRight` — to the bottom or right edge.",
+"ru": "Положение картинки по вычисляемой оси. Параметр BGIN `Alignment`: `Center` — по центру, `TopOrLeft` — к верху при Fit или к левому краю при Fill, `BottomOrRight` — к низу или правому краю."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Fitting": {
+"en": "Which side of the element is kept when proportions are on. BGIN parameter `Fitting`: `Fit` — width (height derived), `Fill` — height (width derived, excess clipped).",
+"ru": "Какая сторона элемента сохраняется при включённых пропорциях. Параметр BGIN `Fitting`: `Fit` — ширина (высота вычисляется), `Fill` — высота (ширина вычисляется, лишнее обрезается)."
+},
+"KeepAspectRatio": {
+"en": "On — the picture is fitted by the Fitting rule keeping proportions; off — it is stretched over the whole element. BGIN parameter `KeepAspectRatio`: above 0.5 enables it.",
+"ru": "Включено — картинка вписывается по правилу Fitting с сохранением пропорций; выключено — растягивается на весь элемент. Параметр BGIN `KeepAspectRatio`: больше 0.5 включает."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"Movie": {
+"en": "The picture or animation the element shows. BGIN parameter `Movie` — a reference to a resource sprite or animation.",
+"ru": "Картинка или анимация, которую показывает элемент. Параметр BGIN `Movie` — ссылка на спрайт или анимацию ресурса."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"MovieModule": {
+"Source": {
+"en": "The image all resource modules are cut from. In BGIN the `Source` parameter is a texture file path.",
+"ru": "Изображение, из которого вырезаются все модули ресурса. В BGIN параметр `Source` — путь к файлу текстуры."
+}
+},
+"MultiProgress": {
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FillBackground0": {
+"en": "Fill pictures. In BGIN `FillBackground0`, `FillBackground1`, `FillBackground2` are sprite paths. Each is stretched from the left edge to a share of the length by its value; each next one is drawn over the previous.",
+"ru": "Картинки заполнений. В BGIN `FillBackground0`, `FillBackground1`, `FillBackground2` — пути к спрайтам. Каждая растягивается от левого края на долю длины по своему значению; следующая рисуется поверх предыдущей."
+},
+"FillBackground1": {
+"en": "Fill pictures. In BGIN `FillBackground0`, `FillBackground1`, `FillBackground2` are sprite paths. Each is stretched from the left edge to a share of the length by its value; each next one is drawn over the previous.",
+"ru": "Картинки заполнений. В BGIN `FillBackground0`, `FillBackground1`, `FillBackground2` — пути к спрайтам. Каждая растягивается от левого края на долю длины по своему значению; следующая рисуется поверх предыдущей."
+},
+"FillBackground2": {
+"en": "Fill pictures. In BGIN `FillBackground0`, `FillBackground1`, `FillBackground2` are sprite paths. Each is stretched from the left edge to a share of the length by its value; each next one is drawn over the previous.",
+"ru": "Картинки заполнений. В BGIN `FillBackground0`, `FillBackground1`, `FillBackground2` — пути к спрайтам. Каждая растягивается от левого края на долю длины по своему значению; следующая рисуется поверх предыдущей."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"NormalBackground": {
+"en": "Picture under the fills over the whole element. BGIN parameter `NormalBackground` — a sprite path.",
+"ru": "Картинка под заполнениями на весь элемент. Параметр BGIN `NormalBackground` — путь к спрайту."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"PageContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"Direction": {
+"en": "Axis along which pages are placed and turned. BGIN parameter `Direction`.",
+"ru": "Ось, вдоль которой стоят и листаются страницы. Параметр BGIN `Direction`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Progress": {
+"Direction": {
+"en": "Knob movement axis. BGIN parameter `Direction`: `Horizontal` — horizontal, any other value — vertical.",
+"ru": "Ось движения бегунка. Параметр BGIN `Direction`: `Horizontal` — горизонтально, любое другое значение — вертикально."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FillBackground": {
+"en": "Picture of the covered part: from the bar start to the knob. BGIN parameter `FillBackground` — a sprite path.",
+"ru": "Картинка пройденной части: от начала полосы до бегунка. Параметр BGIN `FillBackground` — путь к спрайту."
+},
+"KnobAspectRatio": {
+"en": "Knob length along the bar as a share of the cross size: for a horizontal slider, knob width to bar height. BGIN parameter `KnobAspectRatio`.",
+"ru": "Длина бегунка вдоль полосы как доля поперечного размера: у горизонтального — ширина бегунка к высоте полосы. Параметр BGIN `KnobAspectRatio`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"NormalBackground": {
+"en": "Bar picture in the normal state, stretched over the whole slider. BGIN parameter `NormalBackground` — a sprite path.",
+"ru": "Картинка полосы в обычном состоянии, растягивается на весь регулятор. Параметр BGIN `NormalBackground` — путь к спрайту."
+},
+"NormalKnob": {
+"en": "Knob picture; always drawn. BGIN parameter `NormalKnob` — a sprite path.",
+"ru": "Картинка бегунка; рисуется всегда. Параметр BGIN `NormalKnob` — путь к спрайту."
+},
+"PressedBackground": {
+"en": "Bar picture while the slider is pressed or focused. BGIN parameter `PressedBackground` — a sprite path.",
+"ru": "Картинка полосы, пока регулятор нажат или в фокусе. Параметр BGIN `PressedBackground` — путь к спрайту."
+},
+"PressedKnob": {
+"en": "Picture drawn over the normal knob while the slider is pressed or focused. BGIN parameter `PressedKnob` — a sprite path.",
+"ru": "Картинка, которая рисуется поверх обычного бегунка, пока регулятор нажат или в фокусе. Параметр BGIN `PressedKnob` — путь к спрайту."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"ScrollContainer": {
+"BarBackground": {
+"en": "Sprite of the bar track: stretched over the full window length along its edge. BGIN parameter `BarBackground`.",
+"ru": "Спрайт дорожки полосы: растягивается на всю длину окна вдоль его края. Параметр BGIN `BarBackground`."
+},
+"BarKnob": {
+"en": "Knob sprite: its length is the visible share of the strip, its position the scroll fraction. BGIN parameter `BarKnob`.",
+"ru": "Спрайт бегунка: его длина — доля видимой части ленты, положение — доля прокрутки. Параметр BGIN `BarKnob`."
+},
+"BarSize": {
+"en": "Thickness of the scroll bar across the strip. BGIN parameter `BarSize`; BarSizePolicy sets its units.",
+"ru": "Толщина полосы прокрутки поперёк ленты. Параметр BGIN `BarSize`; единицы задаёт BarSizePolicy."
+},
+"BarSizePolicy": {
+"en": "Unit of BarSize. BGIN parameter `BarSizePolicy` with the same names as SpacingPolicy.",
+"ru": "В чём измеряется BarSize. Параметр BGIN `BarSizePolicy` с теми же именами, что у SpacingPolicy."
+},
+"BarVisibility": {
+"en": "When the scroll bar is visible. BGIN parameter `BarVisibility`. The bar is drawn only if the strip is longer than the window.",
+"ru": "Когда видна полоса прокрутки. Параметр BGIN `BarVisibility`. Полоса рисуется только если лента длиннее окна."
+},
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"Direction": {
+"en": "Axis of the strip and of scrolling. BGIN parameter `Direction`.",
+"ru": "Ось ленты и прокрутки. Параметр BGIN `Direction`."
+},
+"EmptySpaceFillPolicy": {
+"en": "How children share the window length while the strip is shorter than the window: the same rule as in a [row](?view=class&name=gin::HVContainer#tab=properties&record=reference%3Ae8b89a3d5a9441b2bc8484cc7b4db730%3A1391%3A%5B%5D). When the strip is longer, children get their minimums. BGIN parameter `EmptySpaceFillPolicy`.",
+"ru": "Как дети делят длину окна, пока лента короче окна: то же правило, что у [ряда](?view=class&name=gin::HVContainer#tab=properties&record=reference%3Ae8b89a3d5a9441b2bc8484cc7b4db730%3A1391%3A%5B%5D). Когда лента длиннее окна, дети получают свои минимумы. Параметр BGIN `EmptySpaceFillPolicy`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"SnapAtChildren": {
+"en": "The BGIN parameter `SnapAtChildren` is read by the loader but **has no effect**: its setter is empty, and scrolling never snaps to children.",
+"ru": "Параметр BGIN `SnapAtChildren` читается загрузчиком, но **не действует**: операция его установки пустая, и прокрутка никогда не прилипает к детям."
+},
+"SnapAtEdges": {
+"en": "The BGIN parameter `SnapAtEdges` is read by the loader but **has no effect**: its setter is empty. The strip always stops hard at the edges, with no overscroll and no soft return.",
+"ru": "Параметр BGIN `SnapAtEdges` читается загрузчиком, но **не действует**: операция его установки пустая. Лента всегда жёстко упирается в края, без выхода за них и мягкого возврата."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"SpacingPolicy": {
+"en": "Units of Spacing between strip children, as in a [row](?view=class&name=gin::HVContainer#tab=properties&record=reference%3A58665bffa7cd49ceadf5c77be897b417%3A1391%3A%5B%5D): `Mm`, `Factor`, `ScreenWidthFactor`, `ScreenHeightFactor`. BGIN parameter `SpacingPolicy`.",
+"ru": "Единицы Spacing между детьми ленты — как у [ряда](?view=class&name=gin::HVContainer#tab=properties&record=reference%3A58665bffa7cd49ceadf5c77be897b417%3A1391%3A%5B%5D): `Mm`, `Factor`, `ScreenWidthFactor`, `ScreenHeightFactor`. Параметр BGIN `SpacingPolicy`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Slider": {
+"Direction": {
+"en": "Knob movement axis. BGIN parameter `Direction`: `Horizontal` — horizontal, any other value — vertical.",
+"ru": "Ось движения бегунка. Параметр BGIN `Direction`: `Horizontal` — горизонтально, любое другое значение — вертикально."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FillBackground": {
+"en": "Picture of the covered part: from the bar start to the knob. BGIN parameter `FillBackground` — a sprite path.",
+"ru": "Картинка пройденной части: от начала полосы до бегунка. Параметр BGIN `FillBackground` — путь к спрайту."
+},
+"KnobAspectRatio": {
+"en": "Knob length along the bar as a share of the cross size: for a horizontal slider, knob width to bar height. BGIN parameter `KnobAspectRatio`.",
+"ru": "Длина бегунка вдоль полосы как доля поперечного размера: у горизонтального — ширина бегунка к высоте полосы. Параметр BGIN `KnobAspectRatio`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"NormalBackground": {
+"en": "Bar picture in the normal state, stretched over the whole slider. BGIN parameter `NormalBackground` — a sprite path.",
+"ru": "Картинка полосы в обычном состоянии, растягивается на весь регулятор. Параметр BGIN `NormalBackground` — путь к спрайту."
+},
+"NormalKnob": {
+"en": "Knob picture; always drawn. BGIN parameter `NormalKnob` — a sprite path.",
+"ru": "Картинка бегунка; рисуется всегда. Параметр BGIN `NormalKnob` — путь к спрайту."
+},
+"PressedBackground": {
+"en": "Bar picture while the slider is pressed or focused. BGIN parameter `PressedBackground` — a sprite path.",
+"ru": "Картинка полосы, пока регулятор нажат или в фокусе. Параметр BGIN `PressedBackground` — путь к спрайту."
+},
+"PressedKnob": {
+"en": "Picture drawn over the normal knob while the slider is pressed or focused. BGIN parameter `PressedKnob` — a sprite path.",
+"ru": "Картинка, которая рисуется поверх обычного бегунка, пока регулятор нажат или в фокусе. Параметр BGIN `PressedKnob` — путь к спрайту."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Sprite": {
+"Source": {
+"en": "The image all resource modules are cut from. In BGIN the `Source` parameter is a texture file path.",
+"ru": "Изображение, из которого вырезаются все модули ресурса. В BGIN параметр `Source` — путь к файлу текстуры."
+}
+},
+"SpriteMovie": {
+"Source": {
+"en": "The image all resource modules are cut from. In BGIN the `Source` parameter is a texture file path.",
+"ru": "Изображение, из которого вырезаются все модули ресурса. В BGIN параметр `Source` — путь к файлу текстуры."
+}
+},
+"StackContainer": {
+"Background": {
+"en": "Sprite stretched over the whole container rectangle and drawn below the children. BGIN parameter `Background` — a sprite path.",
+"ru": "Спрайт, растянутый на весь прямоугольник контейнера и нарисованный под детьми. Параметр BGIN `Background` — путь к спрайту."
+},
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"Switch": {
+"Direction": {
+"en": "Knob movement axis. BGIN parameter `Direction`: `Horizontal` — horizontal, any other value — vertical.",
+"ru": "Ось движения бегунка. Параметр BGIN `Direction`: `Horizontal` — горизонтально, любое другое значение — вертикально."
+},
+"DisabledMargin": {
+"en": "\"On\" text left of the knob and \"off\" text right of it, each with its own style and margin from the knob. In BGIN: `EnabledTextStyle`, `DisabledTextStyle` — style names; `EnabledMargin`, `DisabledMargin` — margins. Only code sets the strings.",
+"ru": "Текст «включено» слева от бегунка и «выключено» справа, каждый со своим стилем и отступом от бегунка. В BGIN: `EnabledTextStyle`, `DisabledTextStyle` — имена стилей; `EnabledMargin`, `DisabledMargin` — отступы. Строки задаёт только код."
+},
+"DisabledTextStyle": {
+"en": "\"On\" text left of the knob and \"off\" text right of it, each with its own style and margin from the knob. In BGIN: `EnabledTextStyle`, `DisabledTextStyle` — style names; `EnabledMargin`, `DisabledMargin` — margins. Only code sets the strings.",
+"ru": "Текст «включено» слева от бегунка и «выключено» справа, каждый со своим стилем и отступом от бегунка. В BGIN: `EnabledTextStyle`, `DisabledTextStyle` — имена стилей; `EnabledMargin`, `DisabledMargin` — отступы. Строки задаёт только код."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"EnabledMargin": {
+"en": "\"On\" text left of the knob and \"off\" text right of it, each with its own style and margin from the knob. In BGIN: `EnabledTextStyle`, `DisabledTextStyle` — style names; `EnabledMargin`, `DisabledMargin` — margins. Only code sets the strings.",
+"ru": "Текст «включено» слева от бегунка и «выключено» справа, каждый со своим стилем и отступом от бегунка. В BGIN: `EnabledTextStyle`, `DisabledTextStyle` — имена стилей; `EnabledMargin`, `DisabledMargin` — отступы. Строки задаёт только код."
+},
+"EnabledTextStyle": {
+"en": "\"On\" text left of the knob and \"off\" text right of it, each with its own style and margin from the knob. In BGIN: `EnabledTextStyle`, `DisabledTextStyle` — style names; `EnabledMargin`, `DisabledMargin` — margins. Only code sets the strings.",
+"ru": "Текст «включено» слева от бегунка и «выключено» справа, каждый со своим стилем и отступом от бегунка. В BGIN: `EnabledTextStyle`, `DisabledTextStyle` — имена стилей; `EnabledMargin`, `DisabledMargin` — отступы. Строки задаёт только код."
+},
+"FillBackground": {
+"en": "Picture of the covered part: from the bar start to the knob. BGIN parameter `FillBackground` — a sprite path.",
+"ru": "Картинка пройденной части: от начала полосы до бегунка. Параметр BGIN `FillBackground` — путь к спрайту."
+},
+"KnobAspectRatio": {
+"en": "Knob length along the bar as a share of the cross size: for a horizontal slider, knob width to bar height. BGIN parameter `KnobAspectRatio`.",
+"ru": "Длина бегунка вдоль полосы как доля поперечного размера: у горизонтального — ширина бегунка к высоте полосы. Параметр BGIN `KnobAspectRatio`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"NormalBackground": {
+"en": "Bar picture in the normal state, stretched over the whole slider. BGIN parameter `NormalBackground` — a sprite path.",
+"ru": "Картинка полосы в обычном состоянии, растягивается на весь регулятор. Параметр BGIN `NormalBackground` — путь к спрайту."
+},
+"NormalKnob": {
+"en": "Knob picture; always drawn. BGIN parameter `NormalKnob` — a sprite path.",
+"ru": "Картинка бегунка; рисуется всегда. Параметр BGIN `NormalKnob` — путь к спрайту."
+},
+"PressedBackground": {
+"en": "Bar picture while the slider is pressed or focused. BGIN parameter `PressedBackground` — a sprite path.",
+"ru": "Картинка полосы, пока регулятор нажат или в фокусе. Параметр BGIN `PressedBackground` — путь к спрайту."
+},
+"PressedKnob": {
+"en": "Picture drawn over the normal knob while the slider is pressed or focused. BGIN parameter `PressedKnob` — a sprite path.",
+"ru": "Картинка, которая рисуется поверх обычного бегунка, пока регулятор нажат или в фокусе. Параметр BGIN `PressedKnob` — путь к спрайту."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"TextArea": {
+"Alignment": {
+"en": "Position of the block of lines in the area. BGIN parameter `Alignment` with the same names as for a label.",
+"ru": "Положение блока строк в области. Параметр BGIN `Alignment` с теми же именами, что у надписи."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"FontHeightFactor": {
+"en": "Line height as a percentage of the full screen height, regardless of the parent size; then clamped by the style's FontHeight range. BGIN parameter `FontHeightFactor`.",
+"ru": "Высота строки как процент высоты всего экрана, независимо от размера родителя; затем ограничивается диапазоном FontHeight стиля. Параметр BGIN `FontHeightFactor`."
+},
+"InvertAlignmentRTL": {
+"en": "Whether to mirror alignment for right-to-left languages. BGIN parameter `InvertAlignmentRTL`.",
+"ru": "Зеркалить ли выравнивание для языков с письмом справа налево. Параметр BGIN `InvertAlignmentRTL`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"TestString": {
+"en": "The area's source text and how it is interpreted. From BGIN it comes as the `TestString` parameter, a `$KEY` localization key; screen code may also set literal text.",
+"ru": "Исходный текст области и способ его трактовки. Из BGIN приходит параметром `TestString` как ключ локализации `$КЛЮЧ`; код экрана может задать и буквальный текст."
+},
+"TextStyle": {
+"en": "Font, colours, effects and letter height range. In BGIN the `TextStyle` parameter is a style name from resources.",
+"ru": "Шрифт, цвета, эффекты и диапазон высоты букв. В BGIN параметр `TextStyle` — имя стиля из ресурсов."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"TextStyle": {
+"ColorMode": {
+"en": "Solid text or a transition from PrimaryColor to SecondaryColor. BGIN parameter `ColorMode`.",
+"ru": "Одноцветный текст или переход от PrimaryColor к SecondaryColor. Параметр BGIN `ColorMode`."
+},
+"FontHeight": {
+"en": "Lower and upper bound of letter height. The element picks the height by its own rules and the style clamps it to this range. BGIN parameter `FontHeight` — a pair [minimum, maximum].",
+"ru": "Нижняя и верхняя граница высоты букв. Элемент выбирает высоту по своим правилам, а стиль приводит её в этот диапазон. Параметр BGIN `FontHeight` — пара чисел [минимум, максимум]."
+},
+"FontName": {
+"en": "Font file for the text unless the current language has its own. BGIN parameter `FontName`.",
+"ru": "Файл шрифта для текста, если для текущего языка не задан свой. Параметр BGIN `FontName`."
+},
+"FontNameAR": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameID": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameJA": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameKO": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameRU": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameTH": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameTR": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameZH": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontNameZH_HANT": {
+"en": "A separate font for Japanese, Korean, Chinese, traditional Chinese, Russian, Turkish, Arabic, Thai and Indonesian. BGIN parameters `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`.",
+"ru": "Свой шрифт для японского, корейского, китайского, традиционного китайского, русского, турецкого, арабского, тайского и индонезийского. Параметры BGIN `FontNameJA`, `FontNameKO`, `FontNameZH`, `FontNameZH_HANT`, `FontNameRU`, `FontNameTR`, `FontNameAR`, `FontNameTH`, `FontNameID`."
+},
+"FontScalingAR": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingID": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingJA": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingKO": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingRU": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingTH": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingTR": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingZH": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"FontScalingZH_HANT": {
+"en": "Text height multiplier used with a language-specific font. BGIN parameters `FontScalingJA`, `FontScalingKO` and so on for the same languages.",
+"ru": "Множитель высоты текста, когда используется шрифт отдельного языка. Параметры BGIN `FontScalingJA`, `FontScalingKO` и так далее для тех же языков."
+},
+"OutlineColor": {
+"en": "Colour of the effect around the letters. BGIN parameters `ShadowColor` and `OutlineColor` write the same value, but each works only with its own Style.",
+"ru": "Цвет эффекта вокруг букв. Параметры BGIN `ShadowColor` и `OutlineColor` пишут одно и то же значение, но каждый действует только при своём Style."
+},
+"OutlineThickness": {
+"en": "Shadow offset or outline width. BGIN parameters `ShadowThickness` and `OutlineThickness`; each works only with its own Style.",
+"ru": "Сдвиг тени или ширина обводки. Параметры BGIN `ShadowThickness` и `OutlineThickness`; каждый действует только при своём Style."
+},
+"PrimaryColor": {
+"en": "Main letter colour and the second gradient colour. BGIN parameters `PrimaryColor` and `SecondaryColor`.",
+"ru": "Основной цвет букв и второй цвет градиента. Параметры BGIN `PrimaryColor` и `SecondaryColor`."
+},
+"SecondaryColor": {
+"en": "Main letter colour and the second gradient colour. BGIN parameters `PrimaryColor` and `SecondaryColor`.",
+"ru": "Основной цвет букв и второй цвет градиента. Параметры BGIN `PrimaryColor` и `SecondaryColor`."
+},
+"ShadowColor": {
+"en": "Colour of the effect around the letters. BGIN parameters `ShadowColor` and `OutlineColor` write the same value, but each works only with its own Style.",
+"ru": "Цвет эффекта вокруг букв. Параметры BGIN `ShadowColor` и `OutlineColor` пишут одно и то же значение, но каждый действует только при своём Style."
+},
+"ShadowThickness": {
+"en": "Shadow offset or outline width. BGIN parameters `ShadowThickness` and `OutlineThickness`; each works only with its own Style.",
+"ru": "Сдвиг тени или ширина обводки. Параметры BGIN `ShadowThickness` и `OutlineThickness`; каждый действует только при своём Style."
+},
+"Style": {
+"en": "Plain text, text with a shadow or with an outline. BGIN parameter `Style`.",
+"ru": "Обычный текст, текст с тенью или с обводкой. Параметр BGIN `Style`."
+}
+},
+"ThreeCellButton": {
+"Alignment": {
+"en": "Where the text sits in the label area while it fits. BGIN parameter `Alignment`.",
+"ru": "Где стоит текст в области надписи, пока он помещается. Параметр BGIN `Alignment`."
+},
+"Background": {
+"en": "Sprite under the text covering the whole label rectangle, margins included. BGIN parameter `Background`.",
+"ru": "Спрайт под текстом на весь прямоугольник надписи, включая поля. Параметр BGIN `Background`."
+},
+"ButtonEventPolicy": {
+"en": "When a press starts and is cancelled. BGIN parameter `ButtonEventPolicy`.",
+"ru": "Когда начинается и отменяется нажатие. Параметр BGIN `ButtonEventPolicy`."
+},
+"DisabledBackground": {
+"en": "Button background when it is disabled. BGIN parameter `DisabledBackground` — a sprite path.",
+"ru": "Фон кнопки когда она выключена. Параметр BGIN `DisabledBackground` — путь к спрайту."
+},
+"DisabledLeftBackground": {
+"en": "End picture for a disabled button. BGIN parameter `DisabledLeftBackground` — a sprite path.",
+"ru": "Картинка края у выключенной кнопки. Параметр BGIN `DisabledLeftBackground` — путь к спрайту."
+},
+"DisabledRightBackground": {
+"en": "End picture for a disabled button. BGIN parameter `DisabledRightBackground` — a sprite path.",
+"ru": "Картинка края у выключенной кнопки. Параметр BGIN `DisabledRightBackground` — путь к спрайту."
+},
+"DisabledTextStyle": {
+"en": "Button text style when it is disabled. BGIN parameter `DisabledTextStyle` — a style name.",
+"ru": "Стиль текста кнопки когда она выключена. Параметр BGIN `DisabledTextStyle` — имя стиля."
+},
+"DisabledToggledBackground": {
+"en": "Button background when disabled in the selected state. BGIN parameter `DisabledToggledBackground` — a sprite path.",
+"ru": "Фон кнопки выключенной в выбранном состоянии. Параметр BGIN `DisabledToggledBackground` — путь к спрайту."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"HeightFactor": {
+"en": "Line height with VerticalTextPolicy = HeightFactor: a percentage of the full screen height, minus the top and bottom margins. Independent of the parent. BGIN parameter `HeightFactor`.",
+"ru": "Высота строки при VerticalTextPolicy = HeightFactor: процент высоты всего экрана, из которого затем вычитаются верхнее и нижнее поле. От родителя не зависит. Параметр BGIN `HeightFactor`."
+},
+"InvertAlignmentRTL": {
+"en": "Whether to mirror alignment (left ↔ right) when the game shows a right-to-left language. BGIN parameter `InvertAlignmentRTL`.",
+"ru": "Зеркалить ли выравнивание (лево ↔ право), когда игра показывает язык с письмом справа налево. Параметр BGIN `InvertAlignmentRTL`."
+},
+"LeftAspectRatio": {
+"en": "Left end width as a share of the button height. BGIN parameter `LeftAspectRatio`.",
+"ru": "Ширина левого края как доля высоты кнопки. Параметр BGIN `LeftAspectRatio`."
+},
+"LeftBackground": {
+"en": "End picture in the normal state. BGIN parameter `LeftBackground` — a sprite path.",
+"ru": "Картинка края в обычном состоянии. Параметр BGIN `LeftBackground` — путь к спрайту."
+},
+"LeftOverlap": {
+"en": "Whether to draw the left end beyond the button border. Off — the end is inside and narrows the middle; on — the end is outside and the middle spans the full width. BGIN parameter `LeftOverlap`.",
+"ru": "Рисовать ли левый край за границей кнопки. Выключено — край внутри и сужает середину; включено — край снаружи, середина во всю ширину. Параметр BGIN `LeftOverlap`."
+},
+"MarginFactors": {
+"en": "Text insets from the label edges as shares of its size: top and bottom from the height, left and right from the width. BGIN parameter `MarginFactors`.",
+"ru": "Отступы текста от краёв надписи как доли её размера: верхнее и нижнее — от высоты, левое и правое — от ширины. Параметр BGIN `MarginFactors`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"PressedBackground": {
+"en": "Button background while a finger holds it. BGIN parameter `PressedBackground` — a sprite path.",
+"ru": "Фон кнопки пока палец удерживает её. Параметр BGIN `PressedBackground` — путь к спрайту."
+},
+"PressedLeftBackground": {
+"en": "End picture while the button is pressed. BGIN parameter `PressedLeftBackground` — a sprite path.",
+"ru": "Картинка края пока кнопка нажата. Параметр BGIN `PressedLeftBackground` — путь к спрайту."
+},
+"PressedRightBackground": {
+"en": "End picture while the button is pressed. BGIN parameter `PressedRightBackground` — a sprite path.",
+"ru": "Картинка края пока кнопка нажата. Параметр BGIN `PressedRightBackground` — путь к спрайту."
+},
+"PressedTextStyle": {
+"en": "Button text style while held by a finger; also applies to a selected button. BGIN parameter `PressedTextStyle` — a style name.",
+"ru": "Стиль текста кнопки пока палец удерживает её; действует и у выбранной кнопки. Параметр BGIN `PressedTextStyle` — имя стиля."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"RightAspectRatio": {
+"en": "Right end width as a share of the button height. BGIN parameter `RightAspectRatio`.",
+"ru": "Ширина правого края как доля высоты кнопки. Параметр BGIN `RightAspectRatio`."
+},
+"RightBackground": {
+"en": "End picture in the normal state. BGIN parameter `RightBackground` — a sprite path.",
+"ru": "Картинка края в обычном состоянии. Параметр BGIN `RightBackground` — путь к спрайту."
+},
+"RightOverlap": {
+"en": "Whether to draw the right end beyond the button border. Off — the end is inside and narrows the middle; on — the end is outside and the middle spans the full width. BGIN parameter `RightOverlap`.",
+"ru": "Рисовать ли правый край за границей кнопки. Выключено — край внутри и сужает середину; включено — край снаружи, середина во всю ширину. Параметр BGIN `RightOverlap`."
+},
+"ScrollDelay": {
+"en": "How long a long line stays still before each scroll pass. BGIN parameter `ScrollDelay`.",
+"ru": "Сколько длинная строка стоит на месте перед каждым проходом прокрутки. Параметр BGIN `ScrollDelay`."
+},
+"ScrollSpeed": {
+"en": "Speed of a long line: pass duration = overflow length / speed. Motion eases in and out. BGIN parameter `ScrollSpeed`.",
+"ru": "Скорость движения длинной строки: длительность прохода = длина переполнения / скорость. Движение плавно разгоняется и тормозит. Параметр BGIN `ScrollSpeed`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"TestString": {
+"en": "The label's source string and how it is interpreted: literal text or a localization key. From BGIN the text comes as the `TestString` parameter in localization mode.",
+"ru": "Исходная строка надписи и способ её трактовки: буквальный текст или ключ локализации. Из BGIN текст приходит параметром `TestString` в режиме локализации."
+},
+"TextPolicy": {
+"en": "What to do with a line wider than the label area and how much width to ask layout for. BGIN parameter `TextPolicy`.",
+"ru": "Что делать со строкой шире области надписи и сколько ширины требовать у раскладки. Параметр BGIN `TextPolicy`."
+},
+"TextStyle": {
+"en": "Font, height range, colours and effects of the label. In BGIN the `TextStyle` parameter is a style name from resources; without it the shared interface style is used.",
+"ru": "Шрифт, диапазон высоты, цвета и эффекты надписи. В BGIN параметр `TextStyle` — имя стиля из ресурсов; без него используется общий стиль интерфейса."
+},
+"Toggleable": {
+"en": "Makes the button a toggle: every activation flips the selected state. BGIN parameter `Toggleable`.",
+"ru": "Делает кнопку переключателем: каждое срабатывание меняет выбранное состояние на противоположное. Параметр BGIN `Toggleable`."
+},
+"ToggledBackground": {
+"en": "Button background in the selected state. BGIN parameter `ToggledBackground` — a sprite path.",
+"ru": "Фон кнопки в выбранном состоянии. Параметр BGIN `ToggledBackground` — путь к спрайту."
+},
+"ToggledLeftBackground": {
+"en": "End picture for a selected button. BGIN parameter `ToggledLeftBackground` — a sprite path.",
+"ru": "Картинка края у выбранной кнопки. Параметр BGIN `ToggledLeftBackground` — путь к спрайту."
+},
+"ToggledPressedBackground": {
+"en": "Button background when selected and held by a finger. BGIN parameter `ToggledPressedBackground` — a sprite path.",
+"ru": "Фон кнопки выбранной и удерживаемой пальцем. Параметр BGIN `ToggledPressedBackground` — путь к спрайту."
+},
+"ToggledRightBackground": {
+"en": "End picture for a selected button. BGIN parameter `ToggledRightBackground` — a sprite path.",
+"ru": "Картинка края у выбранной кнопки. Параметр BGIN `ToggledRightBackground` — путь к спрайту."
+},
+"ToggledTextStyle": {
+"en": "Button text style in the selected state when not pressed. BGIN parameter `ToggledTextStyle` — a style name.",
+"ru": "Стиль текста кнопки в выбранном состоянии без нажатия. Параметр BGIN `ToggledTextStyle` — имя стиля."
+},
+"TouchAreaGrowFactors": {
+"en": "How much larger than its picture the area catching a finger is. Applies only to button sides shorter than 10 mm and never makes the area larger than 10 mm. BGIN parameter `TouchAreaGrowFactors`.",
+"ru": "Насколько зона, в которой кнопка ловит палец, больше её картинки. Действует только для сторон кнопки меньше 10 мм и не делает зону больше 10 мм. Параметр BGIN `TouchAreaGrowFactors`."
+},
+"VerticalTextPolicy": {
+"en": "How the font height is chosen. BGIN parameter `VerticalTextPolicy`. The result is always clamped by the style's FontHeight range.",
+"ru": "Как выбирается высота шрифта. Параметр BGIN `VerticalTextPolicy`. Результат всегда ограничивается диапазоном FontHeight стиля."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"ThreeCellContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"LeftAspectRatio": {
+"en": "Width of the left cell (first child) as a share of the inner container height: width = height × ratio. BGIN parameter `LeftAspectRatio`.",
+"ru": "Ширина левой ячейки (первый ребёнок) как доля внутренней высоты контейнера: ширина = высота × коэффициент. Параметр BGIN `LeftAspectRatio`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"RightAspectRatio": {
+"en": "Width of the right cell (third child) as a share of the inner container height: width = height × ratio. BGIN parameter `RightAspectRatio`.",
+"ru": "Ширина правой ячейки (третий ребёнок) как доля внутренней высоты контейнера: ширина = высота × коэффициент. Параметр BGIN `RightAspectRatio`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"TransformContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"VerticalContainer": {
+"ClipChildrenEvents": {
+"en": "Do not pass children touches that land outside the container rectangle. When disabled, a child sticking out stays touchable outside too. BGIN parameter `ClipChildrenEvents`.",
+"ru": "Не передавать детям касания, которые пришлись вне прямоугольника контейнера. Если выключить, ребёнок, вылезший за край, остаётся нажимаемым и снаружи. Параметр BGIN `ClipChildrenEvents`."
+},
+"ClipRender": {
+"en": "Draw children only inside the container rectangle. Without clipping, a child that sticks out is drawn in full. BGIN parameter `ClipRender`.",
+"ru": "Рисовать детей только внутри прямоугольника контейнера. Без обрезки ребёнок, выходящий за край, рисуется целиком. Параметр BGIN `ClipRender`."
+},
+"EmptySpaceFillPolicy": {
+"en": "How the row divides its length among children: stretch them by StretchFactor weights, or keep each at its minimum and shift the group. BGIN parameter `EmptySpaceFillPolicy`.",
+"ru": "Как ряд делит свою длину между детьми: растягивает их по весам StretchFactor или оставляет каждому его минимум и сдвигает группу. Параметр BGIN `EmptySpaceFillPolicy`."
+},
+"EnableRightToLeftLayout": {
+"en": "Allows the container to mirror the horizontal order of its children when the game enables right-to-left writing (for example Arabic). BGIN parameter `EnableRightToLeftLayout` on horizontal rows and scroll areas.",
+"ru": "Разрешает контейнеру зеркалить горизонтальный порядок детей, когда в игре включён режим письма справа налево (например, арабский язык). Параметр BGIN `EnableRightToLeftLayout` у горизонтального ряда и прокрутки."
+},
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"Margins": {
+"en": "Insets from the container edges to the area the children receive. They are added to the content requirement and subtracted from the assigned size. BGIN parameter `Margins`.",
+"ru": "Отступы от краёв контейнера до области, которую получают дети. Прибавляются к потребности содержимого и вычитаются из выделенного размера. Параметр BGIN `Margins`."
+},
+"MaxSize": {
+"en": "Upper size limit: a container never stretches the element beyond it, even if its weight entitles it to more. The extra space goes to siblings. BGIN parameter `MaxSize`.",
+"ru": "Верхняя граница размера: больше неё контейнер элемент не растянет, даже если по весу ему положено больше. Лишнее место достаётся соседям. Параметр BGIN `MaxSize`."
+},
+"MinSize": {
+"en": "Manually set lower size limit. The effective minimum is the larger of `MinSize` and [what the content needs](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); a container never shrinks the element below it. BGIN parameter `MinSize`.",
+"ru": "Нижняя граница размера, заданная вручную. Действующий минимум элемента — большее из `MinSize` и [потребности содержимого](?view=class&name=gin::Widget#tab=properties&record=reference%3Ae9e117e7eb344093a0ab686eb5626b1a%3A1437%3A%5B%5D); меньше него контейнер элемент не сожмёт. Параметр BGIN `MinSize`."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"Spacing": {
+"en": "Distance between neighbouring children; placed only between them, not at the edges. BGIN parameter `Spacing`.",
+"ru": "Расстояние между соседними детьми; ставится только между ними, не по краям. Параметр BGIN `Spacing`."
+},
+"SpacingPolicy": {
+"en": "Unit of Spacing between row neighbours. BGIN parameter `SpacingPolicy`.",
+"ru": "В чём измеряется Spacing между соседями ряда. Параметр BGIN `SpacingPolicy`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+},
+"VerticalSpring": {
+"Enabled": {
+"en": "Whether the element can receive touches. A parent passes a touch to a child only if the child is both enabled and visible; a disabled container blocks touches for its whole subtree. BGIN parameter `Enabled`.",
+"ru": "Может ли элемент получать касания. Родитель передаёт касание ребёнку, только если тот одновременно разрешён и видим; выключенный контейнер закрывает касания всему своему поддереву. Параметр BGIN `Enabled`."
+},
+"MaxSize": {
+"en": "One number per parameter. For `HorizontalSpring`: `MinSize` — minimum height, `MaxSize` — maximum width. For `VerticalSpring`: `MinSize` — minimum width, `MaxSize` — maximum height.",
+"ru": "Одно число на параметр. У `HorizontalSpring`: `MinSize` — минимальная высота, `MaxSize` — максимальная ширина. У `VerticalSpring`: `MinSize` — минимальная ширина, `MaxSize` — максимальная высота."
+},
+"MinSize": {
+"en": "One number per parameter. For `HorizontalSpring`: `MinSize` — minimum height, `MaxSize` — maximum width. For `VerticalSpring`: `MinSize` — minimum width, `MaxSize` — maximum height.",
+"ru": "Одно число на параметр. У `HorizontalSpring`: `MinSize` — минимальная высота, `MaxSize` — максимальная ширина. У `VerticalSpring`: `MinSize` — минимальная ширина, `MaxSize` — максимальная высота."
+},
+"RenderLayer": {
+"en": "Drawing order among children of the same parent: siblings are drawn in ascending layer order, so a higher layer ends up on top. BGIN parameter `RenderLayer`.",
+"ru": "Порядок рисования среди соседей одного родителя: соседи рисуются по возрастанию слоя, поэтому больший слой оказывается поверх. Параметр BGIN `RenderLayer`."
+},
+"StretchFactor": {
+"en": "Share of free space the element receives in a horizontal or vertical row that uses the fill policy. It is a weight, not a percentage: the element gets its weight divided by the sum of its siblings' weights. The minimum and MaxSize take priority: if the share is below the minimum the element gets the minimum, if it is above MaxSize it gets the maximum, and the difference is divided again among the others by the same weights. BGIN parameter `StretchFactor`.",
+"ru": "Доля свободного места, которую элемент получает в горизонтальном или вертикальном ряду с политикой заполнения. Это вес, а не процент: элементу достаётся его вес, делённый на сумму весов соседей. Минимум и MaxSize имеют приоритет: если доля меньше минимума, элемент получает минимум, если больше MaxSize — максимум, а разница заново делится между остальными по тем же весам. Параметр BGIN `StretchFactor`."
+},
+"Visible": {
+"en": "Whether the element is shown. A hidden element and all its children are not drawn and receive no touches, yet it keeps its place in the parent's layout. BGIN parameter `Visible`.",
+"ru": "Показывается ли элемент. Скрытый элемент не рисуется и не получает касаний вместе со всеми детьми, но продолжает занимать своё место в раскладке родителя. Параметр BGIN `Visible`."
+}
+}
+}

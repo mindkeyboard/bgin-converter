@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Editable Binary GIN",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["screens"],
+  "properties": {
+    "name": {"type": "string", "minLength": 1, "pattern": "\\S"},
+    "dialect": {"enum": ["ui", "templates", "sprites"]},
+    "format": {"enum": ["hashed", "legacy"]},
+    "screens": {"type": "array", "minItems": 0, "maxItems": 65535, "items": {"$ref": "#/$defs/node"}}
+  },
+  "allOf": [
+    {"if": {"properties": {"screens": {"minItems": 1}}}, "then": {"required": ["name"]}},
+    {"if": {"required": ["name"]}, "then": {"properties": {"screens": {"minItems": 1}}}, "else": {"properties": {"dialect": {"const": "ui"}}, "not": {"required": ["format"]}}}
+  ],
+  "$defs": {
+    "vector": {"type": "array", "maxItems": 255, "items": {"type": "number"}},
+    "enum": {
+      "type": "object", "additionalProperties": false, "required": ["enum"],
+      "properties": {"enum": {"type": "string"}, "value": {"type": "integer"}, "text": {"type": "string"}}
+    },
+    "value": {
+      "oneOf": [
+        {"type": ["null", "number", "string"]},
+        {"type": "array", "items": {"type": ["number", "string"]}},
+        {"$ref": "#/$defs/enum"},
+        {
+          "type": "object", "minProperties": 1, "maxProperties": 1, "additionalProperties": false,
+          "properties": {
+            "number": {"oneOf": [{"type": "number"}, {"$ref": "#/$defs/vector"}]},
+            "vector": {"$ref": "#/$defs/vector"},
+            "vectors": {"type": "array", "items": {"$ref": "#/$defs/vector"}},
+            "enums": {"type": "array", "items": {"$ref": "#/$defs/enum"}},
+            "empty": {"type": "integer", "minimum": 0, "maximum": 65535},
+            "string": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]},
+            "path": {"oneOf": [{"type": "string"}, {"type": "array", "items": {"type": "string"}}]}
+          }
+        }
+      ]
+    },
+    "properties": {
+      "oneOf": [
+        {"type": "object", "additionalProperties": {"$ref": "#/$defs/value"}},
+        {"type": "array", "items": {"type": "object", "minProperties": 1, "maxProperties": 1, "additionalProperties": {"$ref": "#/$defs/value"}}}
+      ]
+    },
+    "node": {
+      "type": "object", "additionalProperties": false, "required": ["type", "name"],
+      "properties": {
+        "type": {"type": "string"}, "name": {"type": "string"},
+        "transform": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "number"}},
+        "properties": {"$ref": "#/$defs/properties"},
+        "children": {"type": "array", "maxItems": 65535, "items": {"$ref": "#/$defs/node"}},
+        "tracks": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+        "keyframes": {"type": "array", "items": {"$ref": "#/$defs/frame"}},
+        "settings": {"type": "array", "minItems": 4, "maxItems": 4, "items": {"type": "integer", "minimum": 0}},
+        "marker": {"type": "integer", "minimum": 0, "maximum": 255}
+      }
+    },
+    "channel": {
+      "type": "object", "additionalProperties": false, "required": ["value"],
+      "properties": {
+        "value": {"oneOf": [{"type": "number"}, {"$ref": "#/$defs/vector"}]},
+        "interpolation": {"type": "integer", "minimum": 0, "maximum": 255}
+      }
+    },
+    "frame": {
+      "type": "object", "additionalProperties": false, "required": ["frame"],
+      "properties": {
+        "frame": {"type": "integer", "minimum": 0, "maximum": 4294967294},
+        "position": {"$ref": "#/$defs/channel"}, "rotation": {"$ref": "#/$defs/channel"}, "scale": {"$ref": "#/$defs/channel"},
+        "strings": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "string"}},
+        "colors": {"$ref": "#/$defs/properties"},
+        "event": {
+          "type": "object", "additionalProperties": false, "required": ["name", "arguments"],
+          "properties": {"name": {"type": "string"}, "arguments": {"type": "array", "minItems": 3, "maxItems": 3, "items": {"type": "integer", "minimum": 0}}}
+        }
+      }
+    }
+  }
+}

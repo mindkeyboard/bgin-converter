@@ -1,0 +1,13 @@
+.git/
+build/
+dist/
+examples/
+development/
+graphify-out/
+__pycache__/
+.venv/
+vscode/node_modules/
+vscode/out/
+vscode/python/
+vscode/backend/
+vscode/media/app.js

@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+build/
+dist/
+graphify-out/
+vscode/node_modules/
+vscode/out/
+vscode/media/app.js
+vscode/media/app.js.map
+vscode/python/
+vscode/backend/
+vscode/.vscode-test/
+*.vsix
+
+.ruff_cache/

@@ -1,0 +1,42 @@
+Copyright (c) 2026 A8DevTools contributors
+Creator: mindkeyboard
+
+# Terms of use
+
+2026-10-22 · mindkeyboard
+
+Before Octane Loader is released, Binary GIN Editor may be used to replace BGIN files in the cache of any Gameloft game.
+
+Until OctaneLoader beta is released, use in large-scale modifications with modified classes is prohibited.
+
+After these releases, use in any project is permitted provided that its README credits the creator as mindkeyboard.
+
+The creator, mindkeyboard, is not responsible for misuse, harmful or unlawful uses, data loss, or consequences of changes made with this tool. Users are responsible for their actions and for respecting applicable laws and third-party rights.
+
+The editor is provided as is, without a guarantee of compatibility with every game. Keep backups of files before replacing them.
+
+On first opening a BGIN file, the dialog presents expandable terms. Only I agree to the terms saves acceptance in user settings.json. Closing does not accept; editing remains unavailable. Reopen the terms in Editor settings.
+
+After the first close or acceptance, the Octane Telegram channel opens once. Reopening the terms, another file or VS Code does not repeat the visit. Opening the channel does not subscribe you or replace accepting the terms.
+
+---
+
+# Условия использования
+
+2026-10-22 · mindkeyboard
+
+До выхода Octane Loader редактор Binary GIN Editor можно использовать для замены файлов BGIN в кеше любых игр Gameloft.
+
+До выхода OctaneLoader beta запрещается использовать редактор в масштабных модификациях с изменёнными классами.
+
+После этих выпусков разрешено использование в любых проектах с обязательным указанием автора mindkeyboard в README.
+
+Автор mindkeyboard не несёт ответственности за ненадлежащее, вредоносное или противоправное использование, потерю данных и последствия изменений, сделанных этим инструментом. Пользователь отвечает за свои действия, соблюдение применимого законодательства и прав третьих лиц.
+
+Редактор предоставляется как есть, без гарантии совместимости с каждой игрой. Перед заменой файлов сохраняйте резервные копии.
+
+При первом открытии BGIN окно показывает сворачиваемый текст условий. Только кнопка «Я согласен с условиями» записывает согласие в пользовательский settings.json. Закрытие окна не означает согласия: файл не становится доступен для редактирования. Условия можно повторно открыть в настройках редактора.
+
+После первого закрытия этого окна или принятия условий однократно открывается Telegram-канал Octane. Повторное открытие условий, другого файла или окна VS Code не запускает переход снова. Переход не подписывает на канал и не заменяет принятие условий.
+
+Third-party components retain their respective licenses. See THIRD_PARTY_NOTICES.txt.

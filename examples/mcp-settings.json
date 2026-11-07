@@ -1,0 +1,16 @@
+{
+  "preview": {
+    "width": 1280,
+    "height": 720,
+    "pixelsPerMm": 3.78,
+    "bounds": false,
+    "selectionOnly": true
+  },
+  "resources": {
+    "assetRoot": "",
+    "bginRoot": "",
+    "textureRoot": "",
+    "fontRoot": ""
+  },
+  "browserChannel": ""
+}

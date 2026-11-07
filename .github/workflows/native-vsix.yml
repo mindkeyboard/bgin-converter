@@ -1,0 +1,77 @@
+name: Native VSIX packages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { target: win32-x64, runner: windows-2025, arch: x64 }
+          - { target: win32-arm64, runner: windows-11-arm, arch: arm64 }
+          - { target: darwin-x64, runner: macos-15-intel, arch: x64 }
+          - { target: darwin-arm64, runner: macos-15, arch: arm64 }
+          - { target: linux-x64, runner: ubuntu-24.04, platform: linux/amd64, image: 'node:22-bookworm-slim' }
+          - { target: linux-arm64, runner: ubuntu-24.04-arm, platform: linux/arm64, image: 'node:22-bookworm-slim' }
+          - { target: linux-armhf, runner: ubuntu-24.04, platform: linux/arm/v7, image: 'node:22-bookworm-slim' }
+          - { target: alpine-x64, runner: ubuntu-24.04, platform: linux/amd64, image: 'node:22-alpine3.23' }
+          - { target: alpine-arm64, runner: ubuntu-24.04-arm, platform: linux/arm64, image: 'node:22-alpine3.23' }
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        if: ${{ !matrix.platform }}
+        with:
+          python-version: '3.13'
+          architecture: ${{ matrix.arch }}
+      - uses: actions/setup-node@v4
+        if: ${{ !matrix.platform }}
+        with:
+          node-version: '22'
+          architecture: ${{ matrix.arch }}
+      - name: Build and test Windows or macOS package
+        if: ${{ !matrix.platform }}
+        shell: bash
+        run: |
+          python tools/build_nuitka.py --target '${{ matrix.target }}' --timeout 2400
+          (cd vscode && npm ci && npm run check && npm run package)
+          python tools/smoke_vsix.py dist/*-${{ matrix.target }}.vsix
+          python tools/prepare_release.py --target '${{ matrix.target }}'
+      - uses: docker/setup-qemu-action@v3
+        if: matrix.target == 'linux-armhf'
+        with:
+          platforms: arm
+      - name: Build and test Linux package
+        if: matrix.platform
+        run: |
+          docker build --platform '${{ matrix.platform }}' --build-arg NODE_IMAGE='${{ matrix.image }}' -t bgin-native - < tools/linux-build.Dockerfile
+          docker run --rm --platform '${{ matrix.platform }}' \
+            -v "$PWD:/workspace/bgin-converter" \
+            bgin-native sh -ec '
+              python3 tools/build_nuitka.py --target ${{ matrix.target }} --timeout 4200
+              (cd vscode && npm ci && npm run check && npm run package)
+              python3 tools/smoke_vsix.py dist/*-${{ matrix.target }}.vsix
+              python3 tools/prepare_release.py --target ${{ matrix.target }}
+            '
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: bgin-editor-${{ matrix.target }}
+          path: |
+            dist/*-${{ matrix.target }}.vsix
+            dist/*-${{ matrix.target }}.zip
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: bgin-build-log-${{ matrix.target }}
+          path: build/nuitka/compilation.log

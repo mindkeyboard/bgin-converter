@@ -1,0 +1,14 @@
+node_modules/**
+python/**
+src/**
+test/**
+.vscode-test/**
+out/*.map
+tsconfig.json
+build.mjs
+package-lock.json
+**/__pycache__/**
+**/*.pyc
+**/*.bgin
+**/*.vsix
+.ruff_cache/**
