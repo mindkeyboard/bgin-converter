@@ -54,7 +54,7 @@ jobs:
         if: matrix.platform
         run: |
           docker build --platform '${{ matrix.platform }}' --build-arg NODE_IMAGE='${{ matrix.image }}' -t bgin-native - < tools/linux-build.Dockerfile
-          docker run --rm --platform '${{ matrix.platform }}' \
+          docker run --rm --user "$(id -u):$(id -g)" --env HOME=/tmp --platform '${{ matrix.platform }}' \
             -v "$PWD:/workspace/bgin-converter" \
             bgin-native sh -ec '
               python3 tools/build_nuitka.py --target ${{ matrix.target }} --timeout 4200
