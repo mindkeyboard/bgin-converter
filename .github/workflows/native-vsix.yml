@@ -11,6 +11,7 @@ on:
           - standard
           - armv7-only
           - all
+          - win32-arm64
 
 permissions:
   contents: read
@@ -33,7 +34,9 @@ jobs:
           from pathlib import Path
           targets = json.loads(Path('.github/native-targets.json').read_text())
           selection = os.environ['PLATFORMS'] or 'standard'
-          if selection != 'all':
+          if selection == 'win32-arm64':
+              targets = [item for item in targets if item['target'] == selection]
+          elif selection != 'all':
               targets = [item for item in targets if (item['target'] == 'linux-armhf') == (selection == 'armv7-only')]
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               output.write('matrix=' + json.dumps(targets, separators=(',', ':')) + '\n')
@@ -61,6 +64,16 @@ jobs:
         with:
           node-version: '22'
           architecture: ${{ matrix.arch }}
+      - name: Prepare OpenSSL for Windows ARM64
+        if: matrix.target == 'win32-arm64'
+        shell: pwsh
+        run: |
+          $dependencyRoot = $env:VCPKG_INSTALLATION_ROOT
+          if (-not $dependencyRoot) { $dependencyRoot = 'C:\vcpkg' }
+          & "$dependencyRoot/vcpkg.exe" install openssl:arm64-windows-static-md
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+          "OPENSSL_DIR=$dependencyRoot/installed/arm64-windows-static-md" >> $env:GITHUB_ENV
+          'OPENSSL_STATIC=1' >> $env:GITHUB_ENV
       - name: Build and test Windows or macOS package
         if: ${{ !matrix.platform }}
         shell: bash
