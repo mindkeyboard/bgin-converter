@@ -2,28 +2,51 @@ name: Native VSIX packages
 
 on:
   workflow_dispatch:
+    inputs:
+      platforms:
+        description: 'Platforms to build (ARMv7 uses slow QEMU emulation)'
+        type: choice
+        default: standard
+        options:
+          - standard
+          - armv7-only
+          - all
 
 permissions:
   contents: read
 
 jobs:
+  targets:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.select.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: select
+        env:
+          PLATFORMS: ${{ inputs.platforms }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          targets = json.loads(Path('.github/native-targets.json').read_text())
+          selection = os.environ['PLATFORMS'] or 'standard'
+          if selection != 'all':
+              targets = [item for item in targets if (item['target'] == 'linux-armhf') == (selection == 'armv7-only')]
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('matrix=' + json.dumps(targets, separators=(',', ':')) + '\n')
+          PY
   package:
+    needs: targets
     name: ${{ matrix.target }}
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 90
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - { target: win32-x64, runner: windows-2025, arch: x64 }
-          - { target: win32-arm64, runner: windows-11-arm, arch: arm64 }
-          - { target: darwin-x64, runner: macos-15-intel, arch: x64 }
-          - { target: darwin-arm64, runner: macos-15, arch: arm64 }
-          - { target: linux-x64, runner: ubuntu-24.04, platform: linux/amd64, image: 'node:22-bookworm-slim' }
-          - { target: linux-arm64, runner: ubuntu-24.04-arm, platform: linux/arm64, image: 'node:22-bookworm-slim' }
-          - { target: linux-armhf, runner: ubuntu-24.04, platform: linux/arm/v7, image: 'node:22-bookworm-slim' }
-          - { target: alpine-x64, runner: ubuntu-24.04, platform: linux/amd64, image: 'node:22-alpine3.23' }
-          - { target: alpine-arm64, runner: ubuntu-24.04-arm, platform: linux/arm64, image: 'node:22-alpine3.23' }
+        include: ${{ fromJSON(needs.targets.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
         with:

@@ -1,0 +1,52 @@
+[
+  {
+    "target": "win32-x64",
+    "runner": "windows-2025",
+    "arch": "x64"
+  },
+  {
+    "target": "win32-arm64",
+    "runner": "windows-11-arm",
+    "arch": "arm64"
+  },
+  {
+    "target": "darwin-x64",
+    "runner": "macos-15-intel",
+    "arch": "x64"
+  },
+  {
+    "target": "darwin-arm64",
+    "runner": "macos-15",
+    "arch": "arm64"
+  },
+  {
+    "target": "linux-x64",
+    "runner": "ubuntu-24.04",
+    "platform": "linux/amd64",
+    "image": "node:22-bookworm-slim"
+  },
+  {
+    "target": "linux-arm64",
+    "runner": "ubuntu-24.04-arm",
+    "platform": "linux/arm64",
+    "image": "node:22-bookworm-slim"
+  },
+  {
+    "target": "linux-armhf",
+    "runner": "ubuntu-24.04",
+    "platform": "linux/arm/v7",
+    "image": "node:22-bookworm-slim"
+  },
+  {
+    "target": "alpine-x64",
+    "runner": "ubuntu-24.04",
+    "platform": "linux/amd64",
+    "image": "node:22-alpine3.23"
+  },
+  {
+    "target": "alpine-arm64",
+    "runner": "ubuntu-24.04-arm",
+    "platform": "linux/arm64",
+    "image": "node:22-alpine3.23"
+  }
+]
