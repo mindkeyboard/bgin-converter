@@ -1,7 +1,7 @@
-# Binary GIN Editor 0.6.2
+# Binary GIN Editor 0.6.3
 
-Practical guide for the 0.6.2 sources. Extension 0.6.2 uses worker version 0.6.0.
-[User guide](https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.2/).
+Practical guide for the 0.6.3 sources. Extension 0.6.3 uses worker version 0.6.3 with bundled MCP.
+[User guide](https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/).
 
 Opening detects the document's wire mode. Saving preserves it. New documents
 offer ~0.0.2, ~1.6.0, ~3.7.0 and ~5.8.0. Use the sidebar's BGIN → BGIN converter
@@ -33,11 +33,10 @@ operation, pause a client's edits or disconnect it. Applied changes use normal
 VS Code undo. Client previews appear in a gallery and are marked stale after
 the document or resources change.
 
-The stdio MCP adapter needs a separate Python environment installed from this
-checkout with `python -m pip install -e ".[mcp]"`. Legacy Zstd v0.6 needs a
-source-built `zstd` with `ZSTD_LEGACY=1`; generic wheels omit that decoder.
-The VSIX worker builder handles this automatically. Normal editor use does not
-require system Python.
+The stdio MCP adapter, dependencies and legacy Zstd support are bundled in
+the VSIX. No Python, pip or source checkout is required. **Copy MCP configuration**
+copies ready `command` and `args` settings. Rendering requires Chrome or Edge
+installed where the adapter runs; the driver is bundled.
 
 Use **Copy client command**, and set a distinct `--client-name` for each client.
 The discovery file identifies one VS Code window and contains a local access
@@ -59,12 +58,12 @@ slider hides painted objects in reverse paint order; it does not infer engine
 state or logical layer semantics. Reset view restores the composition.
 Inspection covers the whole current screen despite tree selection, uses cached
 paint and never edits the document or triggers a render. Changed documents and
-resources require another explicit refresh. The native codec remains 0.6.0.
+resources require another explicit refresh. The native worker now also includes MCP.
 
 The screen-name button opens a searchable dialog with All and By prefix views.
 Prefixes are derived from names using separators and CamelCase. Select a result
 and Open, or double-click. Large result lists are virtualized.
 
-Extension 0.6.2 shows each screen's object count, including the root and all
+Extension 0.6.3 shows each screen's object count, including the root and all
 nested children and tracks. External definitions and animation frames are not
 counted as additional stored objects.

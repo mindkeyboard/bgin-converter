@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "octane-bgin-json"
-version = "0.6.0"
+version = "0.6.3"
 description = "Editable two-way Binary GIN and JSON converter"
 requires-python = ">=3.10"
 dependencies = []

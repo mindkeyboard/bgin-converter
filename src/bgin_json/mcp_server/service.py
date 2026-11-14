@@ -368,6 +368,8 @@ class Service:
         }
 
     def core(self):
+        if "__compiled__" in globals() and not self.core_path:
+            return importlib.import_module("bgin_core")
         # The workspace transaction codec is the independent authority for writes.
         # A standalone install supplies its tools directory via --core-path.
         candidates = (

@@ -76,15 +76,21 @@ async def render_sheets(service, requests, tile_width, tile_height):
         )
     images, rows = [], []
     async with async_playwright() as runtime:
-        try:
-            browser = await runtime.chromium.launch(
-                channel=settings["browserChannel"] or None
-            )
-        except Exception as error:
+        browser = None
+        channels = [settings["browserChannel"]] if settings["browserChannel"] else [None, "chrome", "msedge"]
+        failure = None
+        for channel in channels:
+            try:
+                browser = await runtime.chromium.launch(channel=channel)
+                break
+            except Exception as error:
+                failure = error
+        if browser is None:
             raise ValueError(
-                "Browser unavailable. Run python -m playwright install chromium, or set browserChannel to msedge/chrome for an installed browser. "
-                + str(error)
-            ) from error
+                "MCP preview requires Chrome or Microsoft Edge installed on the machine running the adapter. "
+                "Select chrome/msedge in browserChannel, or install a supported browser. Reading and editing do not require a browser. "
+                + str(failure)
+            ) from failure
         try:
             page = await browser.new_page(device_scale_factor=1)
             await page.route("**/*", lambda route: route.abort())

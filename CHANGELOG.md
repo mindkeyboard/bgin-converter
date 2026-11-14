@@ -1,5 +1,11 @@
 # Changes
 
+## 0.6.3 — 2026-11-14
+
+- Bundle the stdio MCP adapter, its dependencies and browser driver in the native worker. Copy a ready command or MCP JSON from the sidebar; Python and pip setup are unnecessary.
+- Check the packaged MCP handshake, editing skill, read/edit and independent export without Python on PATH.
+- Use installed Chrome or Edge for MCP previews when no managed Chromium is available.
+
 ## 0.6.2 — 2026-11-14
 
 - Show each screen's object count in both screen-picker views, including the root

@@ -18,8 +18,8 @@ exports.run = async () => {
     editorGuideUrl,
   } = await extension.activate();
   assert.deepEqual(await backend.call("ping"), { ready: true });
-  assert.equal(editorGuideUrl("ru"), "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.2/");
-  assert.equal(editorGuideUrl("en"), "https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.2/");
+  assert.equal(editorGuideUrl("ru"), "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/");
+  assert.equal(editorGuideUrl("en"), "https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/");
   assert.match(documentationUrl("en", "gin::LabelWidget"), /\/en\/reference\/\?view=class&name=gin::LabelWidget$/);
   assert.match(documentationUrl("ru", "https://wrong.invalid"), /name=gin$/);
   const onboardingState = new Map();
@@ -94,6 +94,17 @@ exports.run = async () => {
   let converterReceive;
   const converterView = { webview: { options: {}, html: "", onDidReceiveMessage: receive => { converterReceive = receive; return { dispose() {} }; } }, onDidDispose: () => ({ dispose() {} }) };
   converter.resolveWebviewView(converterView);
+  const previousClipboard = await vscode.env.clipboard.readText();
+  await converterReceive({ type: "copyClientConfig" });
+  const mcpConfig = JSON.parse(await vscode.env.clipboard.readText()).mcpServers.bgin;
+  assert.equal(mcpConfig.command, path.join(extension.extensionPath, "backend", process.platform === "win32" ? "bgin_backend.exe" : "bgin_backend"));
+  assert.deepEqual(mcpConfig.args.slice(0, 4), ["--mcp", "--mode", "connected", "--editor-bridge"]);
+  assert.equal(mcpConfig.args[4], bridge.state().discoveryFile);
+  await converterReceive({ type: "copyClientCommand" });
+  const nativeCommand = await vscode.env.clipboard.readText();
+  assert(nativeCommand.includes("bgin_backend") && nativeCommand.includes("--mcp"));
+  assert(!nativeCommand.includes("bgin-mcp"), "Published connection commands must not depend on a Python entry point");
+  await vscode.env.clipboard.writeText(previousClipboard);
   await converterReceive({ type: "direction", to: "bgin" });
   await vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "converter.html"), Buffer.from(converterView.webview.html));
   await vscode.commands.executeCommand("vscode.openWith", uri, "bgin.editor");

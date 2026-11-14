@@ -11,6 +11,7 @@ from xml.etree import ElementTree
 from zipfile import ZipFile
 
 from build_nuitka import native_target, verify_executable
+from smoke_mcp import smoke_mcp
 
 
 def main(package):
@@ -54,6 +55,7 @@ def main(package):
         if not ping["ready"] or not catalog["defaults"] or encoded["data"] != original or not preview["svg"].startswith("<svg"):
             raise ValueError("Worker failed readiness, catalog, byte-exact round trip or preview")
         print(f"{target}: packaged worker passed without Python on PATH")
+        smoke_mcp(executable, fixture, temporary, env)
 
 
 if __name__ == "__main__":

@@ -4,6 +4,12 @@
   Reuse completed results; do not restart agents for routine follow-up checks.
   Incident 2026-11-14: excessive delegation exhausted the user's usage budget.
 
+- A released MCP connection command must launch the packaged executable, without
+  requiring Python, pip or a source checkout. Test a real stdio MCP handshake,
+  a live VS Code edit and render from that executable with Python removed from
+  PATH. Component tests alone do not prove this installation path works.
+  Incident 2026-11-14: MCP was advertised alongside VSIX but required source setup.
+
 - The four user-facing modes are approximately 0.0.2, 1.6.0, 3.7.0 and 5.8.0.
   Detect the wire profile when opening, preserve it when saving, and require an
   explicit target for cross-profile conversion. Keep portable JSON self-contained.

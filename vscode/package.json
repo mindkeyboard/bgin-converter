@@ -2,7 +2,7 @@
   "name": "bgin-editor",
   "displayName": "Binary GIN Editor",
   "description": "Binary GIN hierarchy, JSON editing and preview with external resources.",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "publisher": "a8devtools",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
@@ -222,6 +222,6 @@
     "prettier": "^3.9.10",
     "typescript": "^5.9.0"
   },
-  "homepage": "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.2/",
+  "homepage": "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/",
   "icon": "media/icon.jpg"
 }

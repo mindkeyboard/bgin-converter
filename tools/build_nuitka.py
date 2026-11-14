@@ -9,6 +9,7 @@ import struct
 import subprocess
 import sys
 import sysconfig
+import zipfile
 from pathlib import Path
 from urllib.request import urlopen
 
@@ -83,10 +84,11 @@ def finish_distribution(binary, target, venv):
         version = platform.python_version()
         with urlopen(f"https://raw.githubusercontent.com/python/cpython/v{version}/LICENSE", timeout=30) as license_file:
             (licenses / "Python.txt").write_bytes(license_file.read())
-    for package in ("pillow", "texture2ddecoder", "lz4", "zstd"):
-        for license_file in venv.glob(f"**/{package}-*.dist-info/**/LICENSE*"):
-            if license_file.is_file():
-                shutil.copyfile(license_file, licenses / f"{package}-{license_file.name}.txt")
+    for metadata in venv.glob("**/*.dist-info"):
+        for license_file in metadata.rglob("*"):
+            if license_file.is_file() and license_file.name.upper().startswith(("LICENSE", "COPYING", "NOTICE")):
+                relative = license_file.relative_to(metadata).as_posix().replace("/", "-")
+                shutil.copyfile(license_file, licenses / f"{metadata.name}-{relative}.txt")
     shutil.copyfile(Path(__file__).resolve().parents[1] / "vendor/licenses/Zstandard.txt", licenses / "Zstandard.txt")
     (binary.parent / "target.json").write_text(json.dumps({"target": target}) + "\n", encoding="utf-8")
 
@@ -110,7 +112,9 @@ def main():
     python = venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     if not python.is_file():
         subprocess.run([sys.executable, "-m", "venv", str(venv)], check=True)
-    dependencies = ["Nuitka==" + args.nuitka_version, "Pillow==13.0.0", "texture2ddecoder==1.0.6", "lz4==4.4.5"]
+    dependencies = ["Nuitka==" + args.nuitka_version, "Pillow==13.0.0", "texture2ddecoder==1.0.6", "lz4==4.4.5", "mcp==1.30.0"]
+    native_node = target.startswith("alpine-") or target == "linux-armhf"
+    dependencies += ["pyee>=13,<15", "greenlet>=3.1.1,<4"] if native_node else ["playwright==1.64.1"]
     if target.startswith("alpine-"):
         # Nuitka rejects the patchelf 0.18.0 shipped with Alpine 3.23.
         dependencies.append("patchelf==0.17.2.4")
@@ -118,6 +122,29 @@ def main():
         [str(python), "-m", "pip", "install", *dependencies],
         check=True,
     )
+    if native_node:
+        # Playwright's Python API is portable; its published Node driver is not
+        # available for musl/ARMv7. Use the matching Node from the build image.
+        wheels = output / "playwright-wheel"
+        wheels.mkdir(exist_ok=True)
+        subprocess.run([str(python), "-m", "pip", "download", "--no-deps", "--only-binary=:all:",
+                        "--platform", "manylinux1_x86_64", "--platform", "manylinux_2_17_x86_64",
+                        "--dest", str(wheels), "playwright==1.64.1"], check=True)
+        site = Path(subprocess.check_output([str(python), "-c", "import sysconfig; print(sysconfig.get_path('purelib'))"], text=True).strip())
+        wheel = next(wheels.glob("playwright-1.64.1-*.whl"))
+        with zipfile.ZipFile(wheel) as archive:
+            for member in archive.infolist():
+                name = member.filename
+                if (name.startswith(("playwright/", "playwright-1.64.1.dist-info/"))
+                        and ".." not in Path(name).parts):
+                    archive.extract(member, site)
+        node = shutil.which("node")
+        if not node:
+            raise SystemExit("The target build image must provide a native Node.js executable")
+        shutil.copy2(node, site / "playwright" / "driver" / "node")
+        node_version = subprocess.check_output([node, "--version"], text=True).strip()
+        with urlopen(f"https://raw.githubusercontent.com/nodejs/node/{node_version}/LICENSE", timeout=30) as license_file:
+            (site / "playwright" / "driver" / "LICENSE").write_bytes(license_file.read())
     # The published zstd wheels omit the v0.6 decoder used by game resources.
     # Compile its source distribution with legacy support on every target.
     legacy_env = dict(os.environ, ZSTD_LEGACY="1")
@@ -131,7 +158,10 @@ def main():
     )
     # Keep the entry outside the package so Python relative imports retain their identity.
     entry = output / "bgin_backend.py"
-    entry.write_text("from bgin_json.rpc import main\n\nmain()\n", encoding="utf-8")
+    entry.write_text("from bgin_json.native import main\n\nmain()\n", encoding="utf-8")
+    driver = Path(subprocess.check_output(
+        [str(python), "-c", "from pathlib import Path; import playwright; print(Path(playwright.__file__).parent / 'driver')"], text=True
+    ).strip())
     env = dict(
         os.environ,
         PATH=str(python.parent) + os.pathsep + os.environ["PATH"],
@@ -148,6 +178,7 @@ def main():
         "--assume-yes-for-downloads",
         "--include-module=bgin_core",
         "--include-package-data=bgin_json:parameter_help.json",
+        "--include-package-data=bgin_json.mcp_server",
         "--include-module=PIL.Image",
         "--include-module=PIL.ImageFont",
         "--include-module=texture2ddecoder",
@@ -206,6 +237,10 @@ def main():
         / "bgin_backend.dist"
         / ("bgin_backend.exe" if os.name == "nt" else "bgin_backend")
     )
+    # Playwright's driver includes a native Node executable, not only data files.
+    # Preserve the complete upstream driver and its notices after compilation.
+    destination_driver = binary.parent / "playwright" / "driver"
+    shutil.copytree(driver, destination_driver, dirs_exist_ok=True)
     finish_distribution(binary, target, venv)
     print(str(binary), flush=True)
 

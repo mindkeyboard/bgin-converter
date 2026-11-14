@@ -31,6 +31,7 @@ const ru: Record<string, string> = {
   "Connected": "Подключён", "Disconnected": "Отключён", "Target BGIN format": "Целевой формат BGIN",
   "running": "выполняется", "completed": "завершено", "failed": "ошибка", "cancelled": "отменено", "Recent actions": "Последние действия",
   "Copy client command": "Копировать команду клиента",
+  "Copy MCP configuration": "Копировать настройки MCP",
   "Keep source format": "Сохранить формат исходника",
   "The selected mode changes BGIN encoding. Texture compression is checked separately; textures are not converted.": "Выбранный режим меняет запись BGIN. Сжатие текстур проверяется отдельно; текстуры не преобразуются.",
 };
@@ -86,8 +87,19 @@ export class ConverterView implements vscode.WebviewViewProvider {
   }
   private async receive(message: { type: string; to?: string; format?: string; sessionId?: string; operationId?: string; documentId?: string }) {
     if (message.type === "copyConnection" && this.bridgeState) { await vscode.env.clipboard.writeText(this.bridgeState.discoveryFile); return; }
+    if (message.type === "copyClientConfig" && this.bridgeState) {
+      const command = path.join(this.context.extensionPath, "backend", process.platform === "win32" ? "bgin_backend.exe" : "bgin_backend");
+      const args = ["--mcp", "--mode", "connected", "--editor-bridge", this.bridgeState.discoveryFile, "--client-name", "My assistant"];
+      await vscode.env.clipboard.writeText(JSON.stringify({ mcpServers: { bgin: { command, args } } }, null, 2));
+      return;
+    }
     if (message.type === "copyClientCommand" && this.bridgeState) {
-      await vscode.env.clipboard.writeText(`bgin-mcp --mode connected --editor-bridge ${JSON.stringify(this.bridgeState.discoveryFile)} --client-name "My assistant"`);
+      const executable = path.join(this.context.extensionPath, "backend", process.platform === "win32" ? "bgin_backend.exe" : "bgin_backend");
+      const args = ["--mcp", "--mode", "connected", "--editor-bridge", this.bridgeState.discoveryFile, "--client-name", "My assistant"];
+      const command = process.platform === "win32"
+        ? "& " + [executable, ...args].map(value => "'" + value.replace(/'/g, "''") + "'").join(" ")
+        : [executable, ...args].map(value => "'" + value.replace(/'/g, "'\\''") + "'").join(" ");
+      await vscode.env.clipboard.writeText(command);
       return;
     }
     if (message.type === "mcpOpen" && message.documentId) { await this.openDocument?.(message.documentId); return; }
@@ -195,6 +207,6 @@ ${this.to !== "json" ? `<label for="format">${t("Target BGIN format")}</label><s
   private connections() {
     const t = (text: string) => escape(this.t(text));
     const state = this.bridgeState;
-    return `<section><h2>${t("MCP connections")}</h2><p style="overflow-wrap:anywhere">${state?.running ? escape(state.endpoint) : t("Local bridge is starting…")}</p>${state?.running ? `<button class="secondary" data-action="copyConnection">${t("Copy connection path")}</button><button class="secondary" data-action="copyClientCommand">${t("Copy client command")}</button><p style="overflow-wrap:anywhere"><small>${escape(state.discoveryFile)}</small></p>` : ""}${state?.sessions.length ? state.sessions.map(session => `<article style="border-top:1px solid var(--vscode-panel-border);margin-top:12px;padding-top:8px;overflow-wrap:anywhere"><strong>${escape(session.name)}</strong><p>${t(session.connected ? session.paused ? "Paused" : "Connected" : "Disconnected")}${session.operation ? ` · ${escape(session.operation.name)} · ${t(session.operation.status)}` : ""}</p>${session.operation?.documentId ? `<button class="secondary" data-action="mcpOpen" data-document="${escape(session.operation.documentId)}">${t("Open document")}</button>` : ""}${session.connected ? `<button class="secondary" data-action="${session.paused ? "mcpResume" : "mcpPause"}" data-session="${escape(session.id)}">${t(session.paused ? "Resume edits" : "Pause edits")}</button>${session.operation?.status === "running" ? `<button class="secondary" data-action="mcpStop" data-session="${escape(session.id)}" data-operation="${escape(session.operation.id)}">${t("Stop operation")}</button>` : ""}<button class="secondary" data-action="mcpDisconnect" data-session="${escape(session.id)}">${t("Disconnect")}</button>` : ""}</article>`).join("") : `<p>${t("No clients connected")}</p>`}${this.activity.length ? `<details><summary>${t("Recent actions")}</summary>${this.activity.map(item => `<p style="overflow-wrap:anywhere"><small>${escape(item.text)}</small></p>`).join("")}</details>` : ""}</section>`;
+    return `<section><h2>${t("MCP connections")}</h2><p style="overflow-wrap:anywhere">${state?.running ? escape(state.endpoint) : t("Local bridge is starting…")}</p>${state?.running ? `<button class="secondary" data-action="copyConnection">${t("Copy connection path")}</button><button class="secondary" data-action="copyClientCommand">${t("Copy client command")}</button><button class="secondary" data-action="copyClientConfig">${t("Copy MCP configuration")}</button><p style="overflow-wrap:anywhere"><small>${escape(state.discoveryFile)}</small></p>` : ""}${state?.sessions.length ? state.sessions.map(session => `<article style="border-top:1px solid var(--vscode-panel-border);margin-top:12px;padding-top:8px;overflow-wrap:anywhere"><strong>${escape(session.name)}</strong><p>${t(session.connected ? session.paused ? "Paused" : "Connected" : "Disconnected")}${session.operation ? ` · ${escape(session.operation.name)} · ${t(session.operation.status)}` : ""}</p>${session.operation?.documentId ? `<button class="secondary" data-action="mcpOpen" data-document="${escape(session.operation.documentId)}">${t("Open document")}</button>` : ""}${session.connected ? `<button class="secondary" data-action="${session.paused ? "mcpResume" : "mcpPause"}" data-session="${escape(session.id)}">${t(session.paused ? "Resume edits" : "Pause edits")}</button>${session.operation?.status === "running" ? `<button class="secondary" data-action="mcpStop" data-session="${escape(session.id)}" data-operation="${escape(session.operation.id)}">${t("Stop operation")}</button>` : ""}<button class="secondary" data-action="mcpDisconnect" data-session="${escape(session.id)}">${t("Disconnect")}</button>` : ""}</article>`).join("") : `<p>${t("No clients connected")}</p>`}${this.activity.length ? `<details><summary>${t("Recent actions")}</summary>${this.activity.map(item => `<p style="overflow-wrap:anywhere"><small>${escape(item.text)}</small></p>`).join("")}</details>` : ""}</section>`;
   }
 }

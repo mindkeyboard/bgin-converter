@@ -5,4 +5,4 @@ from .writer import encode, convert_document
 from .export import convert_file, dumps, load_json
 
 __all__ = ["BginError", "Limits", "parse", "load", "encode", "dumps", "load_json", "convert_file", "convert_document"]
-__version__ = "0.6.0"
+__version__ = "0.6.3"

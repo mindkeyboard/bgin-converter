@@ -774,7 +774,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
 }
 
 export function editorGuideUrl(language: string) {
-  return `https://octane-loader.utmsoft.ru/${language === "ru" ? "ru" : "en"}/guide/octane-devtools/bgin-editor/v0.6.2/`;
+  return `https://octane-loader.utmsoft.ru/${language === "ru" ? "ru" : "en"}/guide/octane-devtools/bgin-editor/v0.6.3/`;
 }
 
 /** Reference page of one engine class, or of the gin namespace without one. */
