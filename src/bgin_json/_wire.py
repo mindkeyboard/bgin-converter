@@ -8,6 +8,7 @@ import struct
 from typing import Any
 
 from .names import PROPERTY_NAMES, TYPE_NAMES
+from .profiles import normalize_format
 
 MAGIC = 0x000C1AAA
 MOVIE = 0x6E739C13
@@ -108,11 +109,14 @@ class _Reader:
 
 
 class _Parser:
-    def __init__(self, data: bytes, dialect: str, preserve_unknown: bool, limits: Limits):
+    def __init__(self, data: bytes, dialect: str, preserve_unknown: bool, limits: Limits,
+                 profile: str = "a8-1.6.0"):
         self.data, self.dialect = data, dialect
         self.preserve_unknown, self.limits = preserve_unknown, limits
         self.nodes = self.values = 0
-        self.legacy = data[4:14] == LEGACY_MARKER
+        self.profile = profile
+        self.legacy = profile == "a8-0.0.2"
+        self.modern = profile == "a8-5.8.0"
         self.diagnostics: list[dict[str, Any]] = []
 
     def budget(self, count: int, reader: _Reader) -> None:
@@ -131,7 +135,30 @@ class _Parser:
         start = r.pos
         literal_name = r.text() if self.legacy else None
         name_hash = _name_hash(literal_name) if self.legacy else r.u32()
-        kind, count = (r.u32() if self.legacy else r.u16()), r.u16()
+        kind = r.u32() if self.legacy else r.u16()
+        count = r.u8() if self.modern else r.u16()
+        values = self.values_for_kind(r, kind, count, start)
+        variants = []
+        if self.modern:
+            variant_count = r.u8()
+            self.budget(variant_count, r)
+            for _ in range(variant_count):
+                key, cardinality = r.u32(), r.u8()
+                variants.append(dict(hash=_hex(key), count=cardinality,
+                                     values=self.values_for_kind(r, kind, cardinality, start)))
+        encodings = {0: "empty", 2: "f64", 4: "enum", 8: "path",
+                     0x80: "f32_vector", 0x400: "string"}
+        result = dict(hash=_hex(name_hash), name=PROPERTY_NAMES.get(name_hash),
+                      kind=f"0x{kind:04X}", encoding=encodings[kind], count=count,
+                      values=values, span=_span(start, r.pos), raw_hex=self.data[start:r.pos].hex())
+        if self.modern:
+            result["variants"] = variants
+        if self.legacy:
+            result["literal_name"] = literal_name
+        r.path = old_path
+        return result
+
+    def values_for_kind(self, r, kind, count, start):
         self.budget(count, r)
         values: list[Any] = []
         encodings = {0: "empty", 2: "f64", 4: "enum", 8: "path",
@@ -155,13 +182,7 @@ class _Parser:
                 self.budget(components, r)
                 value = [r.number("f") for _ in range(components)]
             values.append(value)
-        result = dict(hash=_hex(name_hash), name=PROPERTY_NAMES.get(name_hash),
-                      kind=f"0x{kind:04X}", encoding=encodings[kind], count=count,
-                      values=values, span=_span(start, r.pos), raw_hex=self.data[start:r.pos].hex())
-        if self.legacy:
-            result["literal_name"] = literal_name
-        r.path = old_path
-        return result
+        return values
 
     def node(self, parent: _Reader, path: str, depth: int) -> dict[str, Any]:
         if depth > self.limits.max_depth:
@@ -187,7 +208,7 @@ class _Parser:
             if self.dialect == "sprites" and type_hash == MOVIE:
                 node["sprite_movie"] = self.movie(r, path + "/sprite_movie", depth)
             else:
-                node["metadata_hex"] = r.raw(20).hex()
+                node["metadata_hex"] = "" if self.modern else r.raw(20).hex()
                 node["properties"] = self.properties(r, path + "/properties")
                 count = r.u16()
                 r.require(count * 8)
@@ -255,7 +276,18 @@ class _Parser:
         if flags & 8:
             frame["event"] = dict(name=r.text(), value_a=r.u32(), value_b=r.u32(), flags=r.u8())
         if flags & 0x20:
-            frame["color_properties"] = self.properties(r, path + "/color_properties")
+            if self.modern:
+                count = r.u16()
+                self.budget(count, r)
+                channels = []
+                for _ in range(count):
+                    key, interpolation, components = r.u32(), r.u8(), r.u8()
+                    self.budget(components, r)
+                    channels.append(dict(hash=_hex(key), interpolation=interpolation,
+                                         values=[r.number("f") for _ in range(components)]))
+                frame["color_channels"] = channels
+            else:
+                frame["color_properties"] = self.properties(r, path + "/color_properties")
         frame.update(span=_span(start, r.pos), raw_hex=self.data[start:r.pos].hex())
         return frame
 
@@ -283,17 +315,28 @@ class _Parser:
                 screens.append(dict(name_hash=_hex(_name_hash(root["name"])), offset=offset, root=root))
             if r.pos != r.end:
                 r.fail("Unconsumed legacy document bytes", "trailing_bytes")
-            return dict(format="legacy", dialect=self.dialect, header=dict(name=name),
+            return dict(format="legacy", profile=self.profile, dialect=self.dialect, header=dict(name=name),
                         complete=not self.diagnostics, diagnostics=self.diagnostics, screens=screens)
         file_hash, name = r.u32(), r.text()
         automatic = self.dialect == "auto"
         if automatic:
             self.dialect = {"sprites": "sprites", "widgets": "templates"}.get(name.lower(), "ui")
+        extended = self.profile in ("a8-3.7.0", "a8-5.8.0")
+        block_size = r.u32() if extended else None
         count = r.u16()
-        if not count:
+        if not count and not extended:
             r.fail("Empty screen directory is not supported", "invalid_directory")
         r.require(count * 8 + 2)
         entries = [(r.u32(), r.u32()) for _ in range(count)]
+        if extended:
+            second = r.u16()
+            if block_size != 4 + 8 * (count + second):
+                r.fail("Extended directory size does not match its two tables", "invalid_directory")
+            if second:
+                r.fail("The second directory table uses unsupported records; saving would lose data",
+                       "unsupported_records")
+            if not count:
+                r.fail("Empty screen directory is not supported", "invalid_directory")
         repeated = r.u16()
         if repeated != count:
             r.fail(f"Directory counts differ: {count} and {repeated}", "invalid_directory", r.pos - 2)
@@ -317,7 +360,7 @@ class _Parser:
             if root_reader.pos != end:
                 root_reader.fail("Root does not fill its directory range", "invalid_directory")
             screens.append(dict(name_hash=_hex(name_hash), offset=offset, root=root))
-        return dict(format="octane.bgin-json", version=1, dialect=self.dialect,
+        return dict(format="octane.bgin-json", profile=self.profile, version=1, dialect=self.dialect,
                     header=dict(magic=_hex(magic), file_hash=_hex(file_hash), name=name,
                                 screen_count=count, directory_count=repeated,
                                 directory_extra_hex=extra.hex(), span=_span(0, first)),
@@ -325,7 +368,7 @@ class _Parser:
 
 
 def parse(data: bytes, *, dialect: str = "auto", preserve_unknown: bool = False,
-          limits: Limits | None = None) -> dict[str, Any]:
+          limits: Limits | None = None, format: str = "auto") -> dict[str, Any]:
     """Parse bytes into the versioned JSON model. Strict parsing is the default."""
     if not isinstance(data, bytes):
         raise TypeError("data must be bytes")
@@ -334,13 +377,53 @@ def parse(data: bytes, *, dialect: str = "auto", preserve_unknown: bool = False,
     limits = limits or Limits()
     if len(data) > limits.max_bytes:
         raise BginError("File size budget exceeded", 0, "/", "limit_exceeded")
-    return _Parser(data, dialect, preserve_unknown, limits).document()
+    if format != "auto":
+        return _Parser(data, dialect, preserve_unknown, limits, normalize_format(format)).document()
+    if data[4:14] == LEGACY_MARKER:
+        return _Parser(data, dialect, preserve_unknown, limits, "a8-0.0.2").document()
+    # Header validation narrows candidates before any record is interpreted. The
+    # two later profiles share a header, so whole-record validation distinguishes them.
+    profiles = ("a8-1.6.0",)
+    if len(data) >= 14:
+        namespace_end = 10 + struct.unpack_from("<H", data, 8)[0]
+        if namespace_end + 6 <= len(data):
+            block_size, count = struct.unpack_from("<IH", data, namespace_end)
+            second_count_offset = namespace_end + 6 + count * 8
+            if (block_size >= 4 and block_size <= len(data) - namespace_end - 4
+                    and (block_size - 4) % 8 == 0 and second_count_offset + 2 <= len(data)):
+                second_count = struct.unpack_from("<H", data, second_count_offset)[0]
+                if block_size == 4 + 8 * (count + second_count):
+                    profiles = ("a8-3.7.0", "a8-5.8.0")
+    candidates = []
+    for profile in profiles:
+        try:
+            result = _Parser(data, dialect, False, limits, profile).document()
+            candidates.append(result)
+        except BginError as error:
+            candidates.append(error)
+    successes = [item for item in candidates if isinstance(item, dict)]
+    if len(successes) == 1:
+        return successes[0]
+    if len(successes) > 1:
+        raise BginError("Ambiguous BGIN format; choose an explicit profile", 0, "/format", "ambiguous_format")
+    errors = [item for item in candidates if isinstance(item, BginError)]
+    if preserve_unknown:
+        preserved = []
+        for profile in profiles:
+            try:
+                preserved.append(_Parser(data, dialect, True, limits, profile).document())
+            except BginError:
+                pass
+        if len(preserved) == 1:
+            return preserved[0]
+    unsupported = next((e for e in errors if e.code == "unsupported_records"), None)
+    raise unsupported or max(errors, key=lambda e: e.offset)
 
 
 def load(path: str | Path, *, dialect: str = "auto", preserve_unknown: bool = False,
-         limits: Limits | None = None) -> dict[str, Any]:
+         limits: Limits | None = None, format: str = "auto") -> dict[str, Any]:
     """Read at most max_bytes + 1 bytes, including when the file grows during reading."""
     limits = limits or Limits()
     with Path(path).open("rb") as stream:
         data = stream.read(limits.max_bytes + 1)
-    return parse(data, dialect=dialect, preserve_unknown=preserve_unknown, limits=limits)
+    return parse(data, dialect=dialect, preserve_unknown=preserve_unknown, limits=limits, format=format)

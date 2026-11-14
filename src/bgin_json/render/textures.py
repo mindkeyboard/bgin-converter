@@ -4,6 +4,108 @@ import struct
 from io import BytesIO
 from pathlib import Path
 
+from ..resource_formats import ASTC_BLOCKS, pvr_layout
+
+
+def _zstd06_frame_size(frame, expected):
+    """Bound one legacy v0.6 frame before calling the native decoder.
+
+    The frame/content and block-header layout follows zstd's zstd_v06.c.
+    A known content size and a single complete frame keep the Python wrapper's
+    allocation bounded; unknown-size or concatenated frames are not accepted.
+    """
+    if len(frame) < 6 or frame[:4] != b"\x26\xb5\x2f\xfd":
+        raise ValueError("Unsupported Zstd frame generation")
+    descriptor = frame[4]
+    size_bytes = (0, 1, 2, 8)[descriptor >> 6]
+    if descriptor & 0x20 or not size_bytes or len(frame) < 5 + size_bytes:
+        raise ValueError("Invalid or unbounded Zstd v0.6 content size")
+    declared = int.from_bytes(frame[5:5 + size_bytes], "little") + (256 if size_bytes == 2 else 0)
+    if declared != expected:
+        raise ValueError("Zstd frame output size disagrees with PVR mip")
+    position = 5 + size_bytes
+    while True:
+        if position + 3 > len(frame):
+            raise ValueError("Truncated Zstd v0.6 block header")
+        first, second, third = frame[position:position + 3]
+        position += 3
+        kind = first >> 6
+        size = third + (second << 8) + ((first & 7) << 16)
+        if kind == 3:
+            if position != len(frame):
+                raise ValueError("Unexpected or concatenated Zstd frame data")
+            return
+        position += 1 if kind == 2 else size
+        if position > len(frame):
+            raise ValueError("Truncated Zstd v0.6 block")
+
+
+def _modern_zstd_frame_size(frame, expected):
+    """Validate a bounded standard frame, including checksum and exact end."""
+    if len(frame) < 6 or frame[:4] != b"\x28\xb5\x2f\xfd":
+        raise ValueError("Unsupported Zstd frame generation")
+    descriptor = frame[4]
+    if descriptor & 0x18:
+        raise ValueError("Unsupported Zstd frame descriptor")
+    single = bool(descriptor & 0x20)
+    size_flag = descriptor >> 6
+    size_bytes = (1 if single else 0) if size_flag == 0 else (2, 4, 8)[size_flag - 1]
+    position = 5 + (0 if single else 1) + (0, 1, 2, 4)[descriptor & 3]
+    if not size_bytes or position + size_bytes > len(frame):
+        raise ValueError("Invalid or unbounded Zstd content size")
+    declared = int.from_bytes(frame[position:position + size_bytes], "little") + (256 if size_flag == 1 else 0)
+    if declared != expected:
+        raise ValueError("Zstd frame output size disagrees with PVR mip")
+    position += size_bytes
+    while True:
+        if position + 3 > len(frame):
+            raise ValueError("Truncated Zstd block header")
+        header = int.from_bytes(frame[position:position + 3], "little")
+        position += 3
+        kind, size = (header >> 1) & 3, header >> 3
+        if kind == 3 or size > 128 * 1024:
+            raise ValueError("Invalid Zstd block header")
+        position += 1 if kind == 1 else size
+        if position > len(frame):
+            raise ValueError("Truncated Zstd block")
+        if header & 1:
+            position += 4 if descriptor & 4 else 0
+            if position != len(frame):
+                raise ValueError("Unexpected or concatenated Zstd frame data")
+            return
+
+
+def _pvr_payload(info):
+    payload = info["payload"]
+    if info["compression"] == "none":
+        return payload
+    result = []
+    for offset, packed, expected in info["entries"]:
+        frame = payload[offset:offset + packed]
+        try:
+            if info["compression"] == "jlz4":
+                from lz4.block import decompress
+
+                decoded = decompress(frame, uncompressed_size=expected)
+            else:
+                legacy = frame[:4] == b"\x26\xb5\x2f\xfd"
+                (_zstd06_frame_size if legacy else _modern_zstd_frame_size)(frame, expected)
+                import zstd
+
+                if legacy and not zstd.ZSTD_legacy_support():
+                    raise ValueError("Zstd v0.6 support is missing; install zstd from source with ZSTD_LEGACY=1 or use the bundled backend")
+                decoded = zstd.decompress(frame)
+        except ImportError as error:
+            raise ValueError("Compressed texture preview requires the lz4 and legacy-enabled zstd render dependencies") from error
+        except Exception as error:
+            if isinstance(error, ValueError):
+                raise
+            raise ValueError(f"Invalid {info['compression']} PVR mip: {error}") from error
+        if len(decoded) != expected:
+            raise ValueError("Decompressed PVR mip has an unexpected size")
+        result.append(decoded)
+    return b"".join(result)
+
 
 def _dimensions(w, h):
     if not 0 < w <= 16384 or not 0 < h <= 16384 or w * h > 32_000_000:
@@ -55,7 +157,10 @@ def _kty_blocks(payload, w, h):
 def _compressed_size(kind, two_bit, w, h):
     if kind == "pvrtc":
         return max(16, w) * max(8, h) // 4 if two_bit else max(8, w) * max(8, h) // 2
-    return ((w + 3) // 4) * ((h + 3) // 4) * 8
+    if kind == "astc":
+        bw, bh = two_bit
+        return ((w + bw - 1) // bw) * ((h + bh - 1) // bh) * 16
+    return ((w + 3) // 4) * ((h + 3) // 4) * (16 if kind in ("etc2a8", "bc3") else 8)
 
 
 def decode(raw):
@@ -67,21 +172,23 @@ def decode(raw):
     if raw[:4] == b"PVR\x03":
         if len(raw) < 52:
             raise ValueError("Truncated PVR header")
-        _, _, fmt, _, _, h, w, depth, surfaces, faces, mips, metadata = (
-            struct.unpack_from("<IIQ9I", raw)
-        )
-        if depth not in (0, 1) or surfaces != 1 or faces != 1:
-            raise ValueError("Only 2D single-surface PVR is supported")
-        if 52 + metadata > len(raw):
-            raise ValueError("Truncated PVR metadata")
-        payload = raw[52 + metadata :]
+        info = pvr_layout(raw)
+        fmt, w, h = info["pixel_format"], info["width"], info["height"]
+        payload = _pvr_payload(info)
         compressed = {
             0: ("pvrtc", True),
             1: ("pvrtc", True),
             2: ("pvrtc", False),
             3: ("pvrtc", False),
             6: ("etc1", False),
+            7: ("bc1", False),
+            11: ("bc3", False),
+            22: ("etc2", False),
+            23: ("etc2a8", False),
+            24: ("etc2a1", False),
         }.get(fmt)
+        if 27 <= fmt < 27 + len(ASTC_BLOCKS):
+            compressed = ("astc", ASTC_BLOCKS[fmt - 27])
         if compressed is None:
             channels = (
                 (fmt & 0xFFFFFFFF)
@@ -191,19 +298,19 @@ def decode(raw):
         raise ValueError("Truncated compressed texture")
     if kind == "pvrtc":
         pixels = texture2ddecoder.decode_pvrtc(payload[:expected], w, h, two_bit)
+    elif kind == "astc":
+        pixels = texture2ddecoder.decode_astc(payload[:expected], w, h, *two_bit)
     else:
-        decoder = (
-            texture2ddecoder.decode_etc2
-            if kind == "etc2"
-            else texture2ddecoder.decode_etc1
-        )
+        decoder = getattr(texture2ddecoder, "decode_" + kind)
         pixels = decoder(payload[:expected], w, h)
+    if len(pixels) != w * h * 4:
+        raise ValueError("Texture decoder returned an unexpected pixel count")
     return Image.frombytes("RGBA", (w, h), pixels, "raw", "BGRA")
 
 
-def read(path: Path, alpha=True):
+def read(path: Path, alpha=True, *, mask_path=None):
     image = decode(path.read_bytes())
-    alpha_path = path.with_suffix(path.suffix + "__alpha")
+    alpha_path = mask_path if mask_path is not None else path.with_suffix(path.suffix + "__alpha")
     if alpha and alpha_path.is_file():
         mask = decode(alpha_path.read_bytes())
         if mask.size != image.size:

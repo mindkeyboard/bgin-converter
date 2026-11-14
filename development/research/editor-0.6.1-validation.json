@@ -1,0 +1,80 @@
+{
+  "version": "0.6.1",
+  "date": "2026-11-14",
+  "vsix": {
+    "path": "dist/bgin-editor-0.6.1-win32-x64.vsix",
+    "sha256": "e9889a31dbe0cf2093b4457cce2c16aa90be526354cce231128e97ba830b05f2",
+    "bytes": 17795412
+  },
+  "worker_unchanged_from_0_6_0": true,
+  "worker_sha256": "e7ee544cfcd62a5272c9043fa345ffba4684388168dbc1363be606cb2a39552c",
+  "sources": {
+    "vscode/src/webview.ts": "40b1e9fbc283049fb2c01a906c3334a1ce227c6a84ae401c96bd1fe85ecd9249",
+    "vscode/src/previewInspection.ts": "b5723c8d4e6048940aa75aee4fcc1df6424efead96fb1862539180f671155b05",
+    "vscode/src/screenPicker.ts": "1e6c696f1a4652f7f1b88047b38a87a18b4cfffd4703ed797cd71cd89289e344",
+    "vscode/src/translations.ts": "575e1abd835a8debb406987d01f21b7f2ccbcc2bc666bb0ccaa0380e919bf831",
+    "vscode/media/styles.css": "112e3af87a6728e069aeb80ec901f399925fb6d2d5e631b990b2d90b93bfa619",
+    "vscode/test/ui.cjs": "151a49a1c2c0145c93830a33b79408a44ff0d77b852bbfe1cf7382ae667cd101"
+  },
+  "checks": {
+    "typecheck": true,
+    "real_extension_host": true,
+    "native_worker_browser_ui": true,
+    "inspection_visual_review": true,
+    "no_automatic_renders": true,
+    "screen_picker_prefix_search": true,
+    "document_update_closes_stale_picker": true,
+    "packaged_files_match_tested_files": true,
+    "packaged_worker_without_python": true
+  },
+  "logs": {
+    "extension-host-inspection.log": "73c70a4db4d51925453ec486d6e605cf6c652546b69a36951cc5c34c494178c7",
+    "ui-inspection-artifact.log": "c296b606a1cf54f36af11a2951c72e7c5586bfa339105d3d15c0e6f108e5bab7",
+    "package-inspection.log": "61796c09c12e13fe85be6c41cf2c2f26d03881c49ade73a20b7423d230252687",
+    "graph-inspection.log": "ff1dce88463ed647ae081c65b4ce9c479986e3303abac664c6150c461f7f03c9"
+  },
+  "resource_sets": [
+    {
+      "version": "0.0.2",
+      "gui": 9,
+      "textures_android": 57,
+      "texter_fonts": 7,
+      "MiB": 82.7,
+      "missing": [],
+      "hashes_verified": true
+    },
+    {
+      "version": "1.6.0",
+      "gui": 54,
+      "textures_android": 197,
+      "texter_fonts": 10,
+      "MiB": 226.1,
+      "missing": [
+        "prokits_02.tga"
+      ],
+      "hashes_verified": true
+    },
+    {
+      "version": "3.7.0",
+      "gui": 74,
+      "textures_android": 456,
+      "texter_fonts": 10,
+      "MiB": 517.1,
+      "missing": [
+        "ui_mclaren_controller_tutorial.tga"
+      ],
+      "hashes_verified": true,
+      "texture_crcs_verified_against_source": true,
+      "gui_and_font_hashes_verified_against_device": true
+    },
+    {
+      "version": "5.8.0",
+      "gui": 96,
+      "textures_android": 587,
+      "texter_fonts": 10,
+      "MiB": 450.4,
+      "missing": [],
+      "hashes_verified": true
+    }
+  ]
+}

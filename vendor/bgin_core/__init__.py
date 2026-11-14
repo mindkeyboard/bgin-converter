@@ -19,6 +19,8 @@ from .model import (
     SpriteKeyframe,
     SpriteMoviePayload,
     SpriteMovieTrack,
+    PropertyVariant,
+    SpriteColorChannel,
 )
 
 __all__ = [
@@ -38,6 +40,8 @@ __all__ = [
     "SpriteKeyframe",
     "SpriteMoviePayload",
     "SpriteMovieTrack",
+    "PropertyVariant",
+    "SpriteColorChannel",
     "TYPE_HASH",
 
     "clone_document",

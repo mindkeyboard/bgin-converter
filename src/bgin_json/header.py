@@ -27,3 +27,9 @@ def read_namespace(stream):
     if not name or any(c.isspace() or c in "/\\" or ord(c) < 32 for c in name):
         raise ValueError("Invalid BGIN namespace")
     return name
+
+
+def read_format(data):
+    """Identify a profile using complete structural validation, not magic alone."""
+    from ._wire import parse
+    return parse(data)["profile"]

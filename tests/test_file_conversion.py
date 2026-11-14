@@ -15,7 +15,7 @@ class FileConversionTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         self.server = Server()
-        self.doc = {"name": "example", "screens": [{"type": "StackContainer", "name": "main"}]}
+        self.doc = {"name": "example", "format": "a8-1.6.0", "screens": [{"type": "StackContainer", "name": "main"}]}
         self.source = self.root / "source.bgin"
         self.source.write_bytes(encode(self.doc))
 
@@ -89,6 +89,41 @@ class FileConversionTests(unittest.TestCase):
         encoded = self.call(text, target, "bgin")
         self.assertTrue(encoded["warnings"])
         self.assertEqual(target.read_bytes(), b"")
+
+    def test_explicit_cross_profile_binary_conversion(self):
+        from bgin_json import parse
+        for target in ("a8-0.0.2", "a8-1.6.0", "a8-3.7.0", "a8-5.8.0"):
+            with self.subTest(target=target):
+                binary = self.root / (target + ".bgin")
+                result = self.call(self.source, binary, "bgin", target_format=target)
+                doc = parse(binary.read_bytes())
+                self.assertEqual(doc["format"], target)
+                self.assertEqual(doc["screens"][0]["name"], "main")
+                self.assertEqual(result["format"], "bgin")
+
+    def test_binary_conversion_requires_target_and_preserves_destination(self):
+        binary = self.root / "existing.bgin"
+        binary.write_bytes(b"previous")
+        with self.assertRaisesRegex(ValueError, "explicit target"):
+            self.call(self.source, binary, "bgin", overwrite=True)
+        self.assertEqual(binary.read_bytes(), b"previous")
+        self.assertFalse(list(self.root.glob("*.bak")))
+
+    def test_lossy_profile_conversion_refuses_before_publication(self):
+        from bgin_json import encode
+        doc = {"name": "newer", "format": "a8-5.8.0", "screens": [{
+            "type": "HorizontalSpring", "name": "main", "properties": {
+                "StretchFactor": {"value": 1, "variants": [{"key": "#CF1A96C9", "value": 3}]}
+            }
+        }]}
+        source = self.root / "newer.bgin"
+        source.write_bytes(encode(doc))
+        destination = self.root / "older.bgin"
+        destination.write_bytes(b"keep")
+        with self.assertRaises(ValueError):
+            self.call(source, destination, "bgin", target_format="a8-1.6.0", overwrite=True)
+        self.assertEqual(destination.read_bytes(), b"keep")
+        self.assertFalse(list(self.root.glob("*.bak")))
 
     def test_public_codec_empty_draft_without_name(self):
         from bgin_json import parse

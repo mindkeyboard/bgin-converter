@@ -34,7 +34,7 @@ class LegacyTests(unittest.TestCase):
     def test_hand_built_fixture_and_unknown_names_are_preserved(self):
         raw = fixture()
         doc = parse(raw)
-        self.assertEqual(doc["format"], "legacy")
+        self.assertEqual(doc["format"], "a8-0.0.2")
         self.assertEqual(doc["screens"][0]["type"], "OldCustomContainer")
         self.assertIsInstance(doc["screens"][0]["properties"], list)
         self.assertEqual(doc["screens"][0]["properties"][1]["LegacyMode"], {"enum": "AnOldChoice", "value": -7})
@@ -44,7 +44,7 @@ class LegacyTests(unittest.TestCase):
     def test_transaction_edits_and_undo_keep_the_variant(self):
         core = independent_core()
         session = core.BginSession(fixture())
-        self.assertEqual(session.document.wire_format, "legacy")
+        self.assertEqual(session.document.wire_format, "a8-0.0.2")
         session.rename_node(core.BginAddress(0), "renamed")
         self.assertEqual(parse(session.data)["screens"][0]["name"], "renamed")
         self.assertTrue(session.undo())
@@ -121,6 +121,6 @@ class LegacyCorpusTests(unittest.TestCase):
                 edited = copy.deepcopy(doc)
                 edited["screens"][0]["name"] += "_edited"
                 compiled = verified_binary(edited)
-                self.assertEqual(parse(compiled)["format"], "legacy")
+                self.assertEqual(parse(compiled)["format"], "a8-0.0.2")
                 self.assertEqual(parse(compiled)["screens"][0]["name"], edited["screens"][0]["name"])
                 self.assertEqual(path.read_bytes(), original)

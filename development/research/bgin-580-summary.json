@@ -1,0 +1,510 @@
+{
+  "source": "GloftA8HM580/base.apk/assets/releaseminigame",
+  "source_scope": "13 BGIN мини-игры из установленного APK, не полный GUI основной игры",
+  "production_changed": false,
+  "coverage": {
+    "input_files": 13,
+    "fully_decoded_files": 10,
+    "force_roundtrip_exact_files": 10,
+    "independent_core_decoder_compared_files": 10,
+    "unparsed_second_table_records": 74,
+    "mixed_files": [
+      "download_minigame.bgin",
+      "end_race_screens.bgin"
+    ],
+    "second_table_only_files": [
+      "sequences.bgin"
+    ]
+  },
+  "wire_changes": [
+    "header: u32 directory_size, two [u16 count, (u32 name_hash,u32 offset)*count] tables, u16 total roots",
+    "generic node: removed 20-byte metadata; name followed directly by property_count",
+    "property: hash u32, kind u16, count u8, values, variant_count u8; each variant key_hash u32,count u8,values with inherited kind",
+    "sprite Movie keyframe flag0x20: u16 channel_count; each hash u32, interpolation u8, component_count u8, f32[]; old property encoding no longer applies"
+  ],
+  "decoded_stats": {
+    "nodes": 29231,
+    "properties": 317108,
+    "frames": 1849,
+    "types": {
+      "0x8706BEAF": 6287,
+      "0x6E739C13": 4910,
+      "0xDE8925BA": 2132,
+      "0xB8F333D9": 2889,
+      "0xB490D6D6": 1903,
+      "0x64BAC2F5": 2162,
+      "0x2829EE60": 65,
+      "0x34EA05F7": 1625,
+      "0xB76EA225": 9,
+      "0x915854F8": 213,
+      "0x02737331": 1111,
+      "0x7D332216": 250,
+      "0xC6D609D8": 42,
+      "0x57CCBBC1": 345,
+      "0xFE3354C4": 118,
+      "0xE7D7F713": 1,
+      "0x4A745A36": 16,
+      "0x33EF85C7": 8,
+      "0xCE026A8F": 2,
+      "0x47B597C6": 27,
+      "0x3FD29A03": 320,
+      "0x730FD607": 1,
+      "0xAD1E6B8E": 1,
+      "0xB737FB69": 47,
+      "0x7417B190": 4,
+      "0x1B16669A": 7,
+      "0xD5B3083A": 20,
+      "0x3BA2E9E2": 27,
+      "0x93EF34CD": 908,
+      "0xBE17FA7A": 1436,
+      "0xEB9A8C92": 2345
+    },
+    "kinds": {
+      "0x00000002": 159915,
+      "0x00000080": 65119,
+      "0x00000004": 69263,
+      "0x00000008": 20446,
+      "0x00000400": 2365
+    },
+    "variants_per_property": {
+      "0": 316896,
+      "1": 212
+    },
+    "variant_keys": {
+      "0xCF1A96C9": 195,
+      "0x441CB3AD": 17
+    },
+    "unknown_type_hashes": {
+      "0x730FD607": 1,
+      "0xAD1E6B8E": 1,
+      "0x7417B190": 4,
+      "0x1B16669A": 7
+    },
+    "unknown_property_hashes": {
+      "0x770E34FE": 22759,
+      "0x01A9B305": 10421,
+      "0x8F1E663F": 3474,
+      "0x2F63F37C": 1625,
+      "0xC75DD87F": 1111,
+      "0x9E61A2DC": 1111,
+      "0x26936E0F": 250,
+      "0x8DCE7469": 42,
+      "0xFA0C0DCF": 42,
+      "0xAAC04948": 42,
+      "0x8C5676C1": 345,
+      "0xCD624281": 345,
+      "0xDC5F9341": 345,
+      "0x95954A96": 345,
+      "0x18AF0F6B": 345,
+      "0x6B4993B7": 2,
+      "0xFE337A82": 1,
+      "0x1DEA4399": 4,
+      "0x3048C1EB": 7,
+      "0xEE17FF22": 7,
+      "0x1A8132D8": 7,
+      "0x4271CB1A": 7,
+      "0x490CC48A": 7,
+      "0xE4701D33": 7,
+      "0xA0D1CDBA": 7,
+      "0x5711478B": 20,
+      "0x1B8038F4": 20,
+      "0x04FA7DAD": 20,
+      "0xC419C355": 20,
+      "0xB4A006C2": 2345,
+      "0xF9E153A2": 2345
+    },
+    "color_channel_hashes": {
+      "0xB4A006C2": 1642,
+      "0xF9E153A2": 1642
+    }
+  },
+  "unknown_type_examples": {
+    "0x730FD607": [
+      {
+        "file": "ingame_menu.bgin",
+        "name": "hint_layer_container",
+        "span": {
+          "offset": 575189,
+          "length": 547
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0x6B4993B7"
+        ]
+      }
+    ],
+    "0xAD1E6B8E": [
+      {
+        "file": "ingame_menu.bgin",
+        "name": "hint_container",
+        "span": {
+          "offset": 575414,
+          "length": 322
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0xFE337A82",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0x7C507826",
+          "0x5F1631E7",
+          "0x7766BD8A",
+          "0xB6490172",
+          "0x94DE0460",
+          "0x2D6C132B",
+          "0x6B4993B7"
+        ]
+      }
+    ],
+    "0x7417B190": [
+      {
+        "file": "ingame_menu.bgin",
+        "name": "progress_bar",
+        "span": {
+          "offset": 1534275,
+          "length": 263
+        },
+        "property_hashes": [
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x5E69021F",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1DEA4399",
+          "0x0C1A2475",
+          "0x7B42B702",
+          "0x62DF9900",
+          "0x28DF8FA9",
+          "0x4FFE73DC",
+          "0x1185171F",
+          "0xC1EA89C1"
+        ]
+      },
+      {
+        "file": "ingame_menu.bgin",
+        "name": "progress_bar",
+        "span": {
+          "offset": 1536901,
+          "length": 263
+        },
+        "property_hashes": [
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x5E69021F",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1DEA4399",
+          "0x0C1A2475",
+          "0x7B42B702",
+          "0x62DF9900",
+          "0x28DF8FA9",
+          "0x4FFE73DC",
+          "0x1185171F",
+          "0xC1EA89C1"
+        ]
+      },
+      {
+        "file": "ingame_menu.bgin",
+        "name": "progress_bar",
+        "span": {
+          "offset": 1539524,
+          "length": 263
+        },
+        "property_hashes": [
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x5E69021F",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1DEA4399",
+          "0x0C1A2475",
+          "0x7B42B702",
+          "0x62DF9900",
+          "0x28DF8FA9",
+          "0x4FFE73DC",
+          "0x1185171F",
+          "0xC1EA89C1"
+        ]
+      },
+      {
+        "file": "ingame_menu.bgin",
+        "name": "progress_bar",
+        "span": {
+          "offset": 1542146,
+          "length": 263
+        },
+        "property_hashes": [
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x5E69021F",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1DEA4399",
+          "0x0C1A2475",
+          "0x7B42B702",
+          "0x62DF9900",
+          "0x28DF8FA9",
+          "0x4FFE73DC",
+          "0x1185171F",
+          "0xC1EA89C1"
+        ]
+      }
+    ],
+    "0x1B16669A": [
+      {
+        "file": "popups.bgin",
+        "name": "card_items",
+        "span": {
+          "offset": 131260,
+          "length": 5615
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      },
+      {
+        "file": "popups.bgin",
+        "name": "card_front_open",
+        "span": {
+          "offset": 136875,
+          "length": 403
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      },
+      {
+        "file": "popups.bgin",
+        "name": "card_front_idle",
+        "span": {
+          "offset": 137278,
+          "length": 403
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      },
+      {
+        "file": "popups.bgin",
+        "name": "card_front",
+        "span": {
+          "offset": 137681,
+          "length": 398
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      },
+      {
+        "file": "popups.bgin",
+        "name": "card_counter",
+        "span": {
+          "offset": 138079,
+          "length": 1507
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      },
+      {
+        "file": "popups.bgin",
+        "name": "image_ animation",
+        "span": {
+          "offset": 710315,
+          "length": 2028
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      },
+      {
+        "file": "popups.bgin",
+        "name": "didomi_notice",
+        "span": {
+          "offset": 757601,
+          "length": 11088
+        },
+        "property_hashes": [
+          "0x4F50C861",
+          "0x28C8DE16",
+          "0x69F9BB03",
+          "0x71B64C87",
+          "0x770E34FE",
+          "0x56D1D428",
+          "0x72688011",
+          "0xA21C7CC3",
+          "0x01A9B305",
+          "0x497D3FA3",
+          "0x28089FC6",
+          "0x1B458D3E",
+          "0xA15CC0EF",
+          "0xAA0101F9",
+          "0x3048C1EB",
+          "0xEE17FF22",
+          "0x1A8132D8",
+          "0x4271CB1A",
+          "0x490CC48A",
+          "0xE4701D33",
+          "0xA0D1CDBA"
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Вторая таблица содержит записи без обычного type/size/name, содержимое пока не расшифровано.",
+    "Ни один продуктовый кодек ещё не поддерживает исследовательские изменения.",
+    "Побайтовое совпадение исследовательского roundtrip доказывает wire сохранность проверенного корпуса, не игровую семантику.",
+    "Имена 4 type hashes и 31 property hashes отсутствуют в текущем словаре; отсутствие имени не доказывает новизну относительно1.6.0.",
+    "Семантика ключей вариантов0xCF1A96C9/0x441CB3AD неизвестна.",
+    "Проверка на телефоне ограничена чтением входов; сохранённые исследовательские файлы в игру не передавались."
+  ]
+}

@@ -838,3 +838,14 @@ summary {
 .type-card > [role="option"] { height: 100%; padding-top: 26px; }
 .type-choices .type-docs { position: absolute; top: 5px; right: 5px; width: 25px; height: 25px; min-height: 0; padding: 3px; display: grid; place-items: center; border-radius: 3px; }
 .type-docs svg { width: 18px; height: 18px; }
+
+#screen { max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.screen-picker-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+#screenQuery { flex: 1; min-width: 160px; }
+#screenResults { height: 50vh; overflow: auto; position: relative; }
+.inspection-controls { flex-wrap: wrap; flex-shrink: 0; gap: 8px; }
+.inspection-controls label { display: flex; align-items: center; gap: 5px; }
+#inspectionDepth { width: 48px; }
+.layer-cut { flex: 1; min-width: 200px; }
+#layerCut { min-width: 65px; flex: 1; }
+#layerCount { min-width: 58px; font-variant-numeric: tabular-nums; }

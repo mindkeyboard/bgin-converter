@@ -4,18 +4,19 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "octane-bgin-json"
-version = "0.4.0"
+version = "0.6.0"
 description = "Editable two-way Binary GIN and JSON converter"
 requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
-render = ["Pillow>=10.1", "texture2ddecoder>=1.0.6"]
-mcp = ["mcp>=1.26,<2", "playwright>=1.50,<2", "Pillow>=10.1", "texture2ddecoder>=1.0.6"]
+render = ["Pillow>=10.1", "texture2ddecoder>=1.0.6", "lz4>=4.4,<5", "zstd==1.5.7.2"]
+mcp = ["mcp>=1.26,<2", "playwright>=1.50,<2", "Pillow>=10.1", "texture2ddecoder>=1.0.6", "lz4>=4.4,<5", "zstd==1.5.7.2"]
 
 [project.scripts]
 bgin-json = "bgin_json.cli:main"
 bgin-mcp = "bgin_json.mcp_server.server:main"
+bgin-texture = "bgin_json.texture_conversion:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

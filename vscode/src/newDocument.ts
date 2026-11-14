@@ -17,9 +17,9 @@ export function requiresDocumentName(text: string) {
   } catch { return false; }
 }
 
-export async function readDocumentText(uri: vscode.Uri, backend: Backend) {
+export async function readDocumentText(uri: vscode.Uri, backend: Backend, sourceBytes?: Uint8Array) {
   if (uri.scheme === "untitled") return emptyDocumentText();
-  const bytes = await vscode.workspace.fs.readFile(uri);
+  const bytes = sourceBytes ?? await vscode.workspace.fs.readFile(uri);
   if (bytes.byteLength === 0) return emptyDocumentText();
   // Nonempty invalid input must still fail the binary decoder.
   return (

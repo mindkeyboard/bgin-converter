@@ -26,6 +26,9 @@ import { setLanguage, t } from "./i18n";
 import { fits, jsonControl, parameterControl, parameterHelp, ParameterSpec } from "./propertyControls";
 import { PreviewSettings } from "./previewControls";
 import { parseClipboardObject } from "./clipboard";
+import { formatProfiles, formatLabel } from "./formatProfiles";
+import { pickScreen } from "./screenPicker";
+import { PreviewInspection, InspectionState, inspectionControls } from "./previewInspection";
 
 declare function acquireVsCodeApi(): {
   postMessage: (m: any) => void;
@@ -42,6 +45,10 @@ let text = "",
   options: any = {},
   selected = saved.selected || "",
   mode = saved.mode || "tree";
+let revision = 0, editSequence = 0;
+let editInFlight: { id: number; text: string } | undefined;
+let queuedEdit: string | undefined;
+let sharedConflict: { text: string; revision: number } | undefined;
 let hide = !!saved.hide,
   expandedPreview = !!saved.expandedPreview,
   split = saved.split || 52,
@@ -68,6 +75,9 @@ let pendingPreview:
       isResource: boolean;
     }
   | undefined;
+const inspectionState: InspectionState = { mode: ["normal", "exploded", "xray"].includes(saved.inspection?.mode) ? saved.inspection.mode : "normal", depth: Math.max(1, Math.min(12, Number(saved.inspection?.depth) || 1)), cut: 0 };
+let inspection: PreviewInspection | undefined;
+let inspectionWidth = 0, inspectionHeight = 0;
 let previewIsResource = false,
   jsonAstText = "",
   jsonAst: ReturnType<typeof parseTree>;
@@ -77,7 +87,7 @@ let openNodes = new Set<string>(saved.openNodes || []),
 const app = $("app");
 app.innerHTML = `
 <header class="toolbar">
-  <strong>Binary GIN</strong><button id="treeMode">Hierarchy</button><button id="jsonMode">JSON</button>
+  <strong>Binary GIN</strong><span id="formatProfile" title="Source binary format; saving preserves this format"></span><button id="treeMode">Hierarchy</button><button id="jsonMode">JSON</button>
   <span class="spacer"></span><button id="editorDocs" class="documentation-button" title="Open the editor guide">Editor guide</button><button id="openDocs" class="documentation-button">GIN documentation</button><button id="editorSettings">Editor settings</button><button id="resourceButton">Resources</button><button id="togglePreview" title="Toggle preview">Preview</button><button id="expandPreview" title="Expand preview">⛶</button>
 </header>
 <div id="banner" role="alert" hidden></div>
@@ -85,7 +95,7 @@ app.innerHTML = `
 <main id="workspace">
  <section id="editing">
   <div id="hierarchy">
-   <div class="toolbar"><select id="screen" aria-label="Screen"></select><button id="newScreen" title="Create a new screen" disabled>New screen…</button><button id="search">Find object…</button><button id="moveUp" title="Move up" aria-label="Move up">↑</button><button id="moveDown" title="Move down" aria-label="Move down">↓</button><span class="spacer"></span><button id="clearSelection">Clear selection</button></div>
+   <div class="toolbar"><button id="screen" aria-label="Screen" aria-haspopup="dialog">Choose screen…</button><button id="newScreen" title="Create a new screen" disabled>New screen…</button><button id="search">Find object…</button><button id="moveUp" title="Move up" aria-label="Move up">↑</button><button id="moveDown" title="Move down" aria-label="Move down">↓</button><span class="spacer"></span><button id="clearSelection">Clear selection</button></div>
    <p id="emptyDocument" hidden>No screens yet. Click New screen to start creating this BGIN file.</p><button id="pasteScreenEmpty" hidden>Paste as screen</button>
    <div id="tree" role="tree" aria-label="Object hierarchy"></div>
    <div id="inspectorDivider" role="separator" tabindex="0" aria-label="Tree and properties size" aria-orientation="horizontal"></div>
@@ -100,6 +110,7 @@ app.innerHTML = `
  <div id="divider" role="separator" tabindex="0" aria-label="Preview width"></div>
  <section id="preview">
   <div class="toolbar"><strong>Preview</strong><button id="refreshPreview" class="primary" title="Render preview">Refresh</button><button id="cancelPreview" hidden>Stop</button><button id="settingsToggle" title="Preview settings" disabled>Settings</button><button id="fit">Fit</button><button id="zoomOut">−</button><input id="zoom" type="number" min="5" max="800" step="5" aria-label="Zoom"><span>%</span><button id="zoomIn">+</button><button id="prevFrame" title="Previous Movie frame">‹</button><button id="nextFrame" title="Next Movie frame">›</button></div>
+  <div id="inspectionControls" class="toolbar inspection-controls"></div>
   <div id="stage"><div id="scene"></div><div id="empty">Click Refresh to render the preview</div></div>
   <div id="stats"></div><details id="warnings"><summary id="warningCount">Render notes</summary><ul id="warningList"></ul></details>
  </section>
@@ -132,6 +143,12 @@ function showNameRequired() {
   const description = document.createElement("p");
   description.textContent = t("This empty draft has no document name. Enter a name to start editing.");
   const form = document.createElement("form"), label = document.createElement("label"), input = document.createElement("input"), submit = document.createElement("button");
+  const formatCaption = document.createElement("label"), format = document.createElement("select");
+  formatCaption.textContent = t("BGIN format");
+  formatCaption.htmlFor = "newFormat";
+  format.id = "newFormat";
+  for (const profile of formatProfiles) format.add(new Option(profile.label, profile.id));
+  format.value = "a8-1.6.0";
   label.textContent = t("Document name");
   input.id = "documentName";
   input.required = true;
@@ -144,9 +161,9 @@ function showNameRequired() {
   input.oninput = () => { submit.disabled = !input.value.trim() || new TextEncoder().encode(input.value.trim()).length > 65535; };
   form.onsubmit = event => {
     event.preventDefault();
-    if (!submit.disabled) vscode.postMessage({ type: "setDocumentName", name: input.value.trim() });
+    if (!submit.disabled) vscode.postMessage({ type: "setDocumentName", name: input.value.trim(), format: format.value });
   };
-  form.append(label, input, submit);
+  form.append(label, input, formatCaption, format, submit);
   modal.body.append(description, form);
   modal.open();
   input.focus();
@@ -190,6 +207,7 @@ function persist() {
     fit,
     options,
     openNodes: [...openNodes],
+    inspection: { mode: inspectionState.mode, depth: inspectionState.depth },
   });
 }
 function report(message: string) {
@@ -293,7 +311,7 @@ editor = new EditorView({
       const changed = next !== text;
       if (changed) {
         text = next;
-        vscode.postMessage({ type: "edit", text });
+        queueEdit(text);
         clearTimeout(editTimer);
         editTimer = window.setTimeout(() => {
           parse();
@@ -351,6 +369,7 @@ function syncEditor() {
 function parse() {
   try {
     const next = JSON.parse(text);
+    document.querySelector<HTMLDialogElement>("#screenPicker")?.close();
     if (doc && next.name !== doc.name) {
       openNodes = new Set(
         (next.screens || []).map((_: any, i: number) => `/screens/${i}`),
@@ -360,6 +379,7 @@ function parse() {
       options.selected = "";
     }
     doc = next;
+    $("formatProfile").textContent = formatLabel(doc?.format ?? "a8-1.6.0");
     if (!doc || !Array.isArray(doc.screens))
       throw Error("screens must be an array");
     if (typeof doc.name !== "string" || !doc.name.trim()) showNameRequired();
@@ -396,12 +416,48 @@ function commit(next: any) {
   clearTimeout(editTimer);
   text = JSON.stringify(next, null, 2) + "\n";
   syncEditor();
-  vscode.postMessage({ type: "edit", text });
+  queueEdit(text);
   populateScreens();
   drawTree();
   if (selected) inspect();
   persist();
   invalidatePreview();
+}
+function queueEdit(next: string) {
+  queuedEdit = next;
+  sendQueuedEdit();
+}
+function sendQueuedEdit() {
+  if (editInFlight || sharedConflict || queuedEdit === undefined) return;
+  const next = queuedEdit;
+  queuedEdit = undefined;
+  editInFlight = { id: ++editSequence, text: next };
+  vscode.postMessage({ type: "edit", text: next, baseRevision: revision, editId: editInFlight.id });
+}
+function showSharedConflict(snapshot: { text: string; revision: number }) {
+  sharedConflict = snapshot;
+  queuedEdit = text;
+  report("");
+  $("banner").hidden = false;
+  $("banner").replaceChildren();
+  const message = document.createElement("span"), copy = document.createElement("button"), reload = document.createElement("button");
+  message.textContent = t("Another client changed this document. Your local JSON is kept here; copy it before loading the shared revision.");
+  copy.textContent = t("Copy my local JSON");
+  copy.onclick = () => vscode.postMessage({ type: "clipboardWrite", text });
+  reload.textContent = t("Load shared revision");
+  reload.onclick = () => {
+    if (!sharedConflict) return;
+    text = sharedConflict.text;
+    revision = sharedConflict.revision;
+    sharedConflict = undefined;
+    editInFlight = undefined;
+    queuedEdit = undefined;
+    report("");
+    syncEditor();
+    parse();
+    invalidatePreview();
+  };
+  $("banner").append(message, copy, reload);
 }
 function at(path: string): any {
   return path
@@ -413,7 +469,7 @@ function reveal(path: string) {
   const screen = Number(path.split("/")[2]);
   if (Number.isInteger(screen)) {
     options.screen = screen;
-    $<HTMLSelectElement>("screen").value = String(screen);
+    populateScreens();
   }
   let prefix = path.slice(0, path.lastIndexOf("/"));
   while (prefix.includes("/")) {
@@ -432,7 +488,7 @@ function select(path: string, updateInspector = true) {
     const screen = Number(path.split("/")[2]);
     if (Number.isInteger(screen) && screen !== options.screen) {
       options.screen = screen;
-      $<HTMLSelectElement>("screen").value = String(screen);
+      populateScreens();
       drawTree();
     }
   }
@@ -484,18 +540,13 @@ function rowsFor(root: any, path: string, needle = "", all = false): TreeRow[] {
 }
 
 function populateScreens() {
-  const select = $<HTMLSelectElement>("screen");
-  select.replaceChildren();
-  for (const [i, screen] of doc.screens.entries()) {
-    const o = new Option(screen.name + " · " + screen.type, String(i));
-    select.add(o);
-  }
-  options.screen = Math.max(
-    0,
-    Math.min(doc.screens.length - 1, Number(options.screen) || 0),
-  );
-  select.value = String(options.screen);
-  select.disabled = !doc.screens.length;
+  const button = $<HTMLButtonElement>("screen");
+  options.screen = Math.max(0, Math.min(doc.screens.length - 1, Number(options.screen) || 0));
+  button.value = String(options.screen);
+  button.dataset.count = String(doc.screens.length);
+  button.textContent = doc.screens[options.screen]?.name || t("Choose screen…");
+  button.title = t("Choose screen");
+  button.disabled = !doc.screens.length;
   $("emptyDocument").hidden = !!doc.screens.length;
   $("pasteScreenEmpty").hidden = !!doc.screens.length;
   $<HTMLButtonElement>("newScreen").disabled = !catalog;
@@ -706,13 +757,12 @@ $("jsonMode").onclick = () => {
   layout();
   editor.focus();
 };
-$("screen").onchange = () => {
-  options.screen = Number($<HTMLSelectElement>("screen").value);
-  selected = "";
-  options.selected = "";
-  drawTree();
-  persist();
-  invalidatePreview();
+$("screen").onclick = () => {
+  if (!doc) return;
+  pickScreen(doc.screens, options.screen, index => {
+    options.screen = index; selected = ""; options.selected = "";
+    populateScreens(); drawTree(); persist(); invalidatePreview();
+  });
 };
 $("search").onclick = searchObjects;
 $("moveUp").onclick = () => move(-1);
@@ -1156,6 +1206,11 @@ $("divider").onkeydown = (e) => {
   }
 };
 
+const updateInspectionControls = inspectionControls($("inspectionControls"), inspectionState, () => {
+  if (!ready || previewText !== text || previewScreen !== options.screen) return;
+  applyPreviewSelection(); persist();
+});
+updateInspectionControls(0, false);
 const previewSettings = new PreviewSettings(
   () => options,
   (keys) => {
@@ -1185,6 +1240,7 @@ function cancelPreview() {
 }
 function invalidatePreview() {
   previewDirty = true;
+  updateInspectionControls(inspection?.layers || 0, false);
   cancelPreview();
   $("stats").textContent =
     previewScreen < 0
@@ -1209,21 +1265,13 @@ function applyPreviewSelection() {
     invalidatePreview();
     return false;
   }
-  for (const group of Array.from(
-    $("scene").querySelectorAll<SVGElement>("g[data-path]"),
-  )) {
-    const path = group.getAttribute("data-path") || "";
-    group.style.display =
-      options.selectionOnly &&
-      selected &&
-      path !== selected &&
-      !path.startsWith(selected + "/")
-        ? "none"
-        : "";
+  if (inspection) {
+    const size = inspection.apply(inspectionState, selected, options.selectionOnly);
+    inspectionWidth = size.width; inspectionHeight = size.height;
+    resizeScene();
   }
   if (!previewDirty)
-    $("stats").textContent =
-      `${previewWidth} × ${previewHeight} · ${selected && options.selectionOnly ? "selected branch" : "whole screen"} · without re-rendering`;
+    $("stats").textContent = `${previewWidth} × ${previewHeight} · ${inspectionState.mode === "normal" && !inspectionState.cut ? (selected && options.selectionOnly ? "selected branch" : "whole screen") : t("Whole screen inspection")} · ${t("without re-rendering")}`;
   return true;
 }
 function requestPreview() {
@@ -1265,8 +1313,8 @@ $("cancelPreview").onclick = () => {
 function resizeScene() {
   const scene = $("scene"),
     stage = $("stage");
-  const width = previewWidth || options.width,
-    height = previewHeight || options.height;
+  const width = inspectionWidth || previewWidth || options.width,
+    height = inspectionHeight || previewHeight || options.height;
   if (!width || !height) return;
   const factor = fit
     ? Math.min(
@@ -1357,6 +1405,10 @@ window.addEventListener("message", (event) => {
     $("workspace").inert = false;
     document.querySelector<HTMLDialogElement>("#documentNameDialog")?.close();
     text = m.text;
+    revision = m.revision ?? 0;
+    editInFlight = undefined;
+    queuedEdit = undefined;
+    sharedConflict = undefined;
     catalog = m.catalog;
     resources = m.resources;
     resourcePanel.update(m.resourceSettings || m.resources);
@@ -1377,6 +1429,11 @@ window.addEventListener("message", (event) => {
     invalidatePreview();
   }
   if (m.type === "document") {
+    if (m.revision < revision) return;
+    if (sharedConflict || queuedEdit !== undefined || editInFlight) {
+      if (m.text !== text) { showSharedConflict({ text: m.text, revision: m.revision }); return; }
+    }
+    revision = m.revision;
     if (!ready) { text = m.text; return; }
     if (m.text !== text) {
       clearTimeout(editTimer);
@@ -1385,6 +1442,15 @@ window.addEventListener("message", (event) => {
       parse();
       invalidatePreview();
     }
+  }
+  if (m.type === "editAccepted" && m.editId === editInFlight?.id) {
+    revision = Math.max(revision, m.revision);
+    editInFlight = undefined;
+    sendQueuedEdit();
+  }
+  if (m.type === "editConflict") {
+    editInFlight = undefined;
+    showSharedConflict({ text: m.text, revision: m.revision });
   }
   if (m.type === "clipboardRead") acceptPaste(m.text, m.target);
   if (
@@ -1428,7 +1494,12 @@ window.addEventListener("message", (event) => {
     for (const el of [svg, ...Array.from(svg.querySelectorAll("*"))])
       for (const a of Array.from(el.attributes))
         if (a.name.startsWith("on")) el.removeAttribute(a.name);
-    $("scene").replaceChildren(document.importNode(svg, true));
+    const mounted = document.importNode(svg, true) as unknown as SVGSVGElement;
+    $("scene").replaceChildren(mounted);
+    inspectionState.cut = 0;
+    inspection = new PreviewInspection(mounted, m.geometry, m.width, m.height);
+    updateInspectionControls(inspection.layers, !previewIsResource);
+    inspectionWidth = m.width; inspectionHeight = m.height;
     $("empty").hidden = true;
     resizeScene();
     $("stats").textContent =

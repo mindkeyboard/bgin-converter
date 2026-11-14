@@ -1,6 +1,7 @@
 const vscode = require("vscode");
 const assert = require("node:assert/strict");
 const path = require("node:path");
+const fs = require("node:fs/promises");
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 exports.run = async () => {
   const extension = vscode.extensions.getExtension("a8devtools.bgin-editor");
@@ -8,6 +9,7 @@ exports.run = async () => {
   const {
     provider,
     backend,
+    bridge,
     discoverResources,
     scanBginFolder,
     saveResourceFolders,
@@ -16,8 +18,8 @@ exports.run = async () => {
     editorGuideUrl,
   } = await extension.activate();
   assert.deepEqual(await backend.call("ping"), { ready: true });
-  assert.equal(editorGuideUrl("ru"), "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.5.0/");
-  assert.equal(editorGuideUrl("en"), "https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.5.0/");
+  assert.equal(editorGuideUrl("ru"), "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.2/");
+  assert.equal(editorGuideUrl("en"), "https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.2/");
   assert.match(documentationUrl("en", "gin::LabelWidget"), /\/en\/reference\/\?view=class&name=gin::LabelWidget$/);
   assert.match(documentationUrl("ru", "https://wrong.invalid"), /name=gin$/);
   const onboardingState = new Map();
@@ -55,7 +57,7 @@ exports.run = async () => {
       if (!oldDocument) await delay(100);
     }
     assert(oldDocument?.panels.size, "Old BGIN opens in the real custom editor");
-    assert.equal(JSON.parse(oldDocument.text).format, "legacy");
+    assert.equal(JSON.parse(oldDocument.text).format, "a8-0.0.2");
     const legacyOutput = legacyCopy.with({ path: legacyCopy.path + ".saved.bgin" });
     await provider.saveCustomDocumentAs(oldDocument, legacyOutput);
     assert.deepEqual(Buffer.from(await vscode.workspace.fs.readFile(legacyOutput)), oldBytes, "Old custom editor Save As is byte exact");
@@ -65,7 +67,7 @@ exports.run = async () => {
     await vscode.commands.executeCommand("workbench.action.files.save");
     const readback = await backend.call("decode", { data: Buffer.from(await vscode.workspace.fs.readFile(legacyCopy)).toString("base64") });
     assert.equal(JSON.parse(readback.text).screens[0].name, oldTree.screens[0].name);
-    assert.equal(JSON.parse(readback.text).format, "legacy");
+    assert.equal(JSON.parse(readback.text).format, "a8-0.0.2");
     assert.deepEqual(Buffer.from(await vscode.workspace.fs.readFile(oldUri)), oldBytes);
     await vscode.commands.executeCommand("workbench.action.closeActiveEditor");
   }
@@ -89,8 +91,10 @@ exports.run = async () => {
   assert.deepEqual(Buffer.from(await vscode.workspace.fs.readFile(convertedBinary)), original, "Sidebar conversion round trip is byte exact");
   await assert.rejects(() => converter.convert(uri, uri, "json"), /different files/);
   // Save the real host-generated HTML for the browser accessibility and message test.
-  const converterView = { webview: { options: {}, html: "", onDidReceiveMessage: () => ({ dispose() {} }) }, onDidDispose: () => ({ dispose() {} }) };
+  let converterReceive;
+  const converterView = { webview: { options: {}, html: "", onDidReceiveMessage: receive => { converterReceive = receive; return { dispose() {} }; } }, onDidDispose: () => ({ dispose() {} }) };
   converter.resolveWebviewView(converterView);
+  await converterReceive({ type: "direction", to: "bgin" });
   await vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "converter.html"), Buffer.from(converterView.webview.html));
   await vscode.commands.executeCommand("vscode.openWith", uri, "bgin.editor");
   let doc;
@@ -141,6 +145,15 @@ exports.run = async () => {
   assert.equal(channelVisits, 1, "Acceptance after closing keeps the visit one-time");
   await receiveGate({ type: "ready" });
   assert(gateMessages.some(m => m.type === "init"));
+  const sharedInitial = gateMessages.findLast(m => m.type === "init");
+  assert.equal(sharedInitial.revision, doc.revision, "Initial webview state carries its live revision");
+  const unchangedRevision = doc.revision;
+  await receiveGate({ type: "edit", text: "{}", baseRevision: unchangedRevision - 1, editId: 37 });
+  assert.equal(doc.revision, unchangedRevision, "Stale webview edit cannot overwrite a newer shared document");
+  assert.equal(doc.text, gatedText);
+  assert(gateMessages.some(m => m.type === "editConflict" && m.editId === 37 && m.text === doc.text && m.revision === doc.revision));
+  await receiveGate({ type: "edit", text: doc.text, baseRevision: doc.revision, editId: 38 });
+  assert(gateMessages.some(m => m.type === "editAccepted" && m.editId === 38 && m.revision === doc.revision));
   disposeGate();
   provider.onboarding.openChannel = previousChannelOpener;
   await provider.context.globalState.update("bgin.firstTermsChannelVisited", previousChannelVisit);
@@ -281,8 +294,9 @@ exports.run = async () => {
   await receiveName({ type: "ready" });
   assert(nameMessages.some(m => m.type === "nameRequired"));
   assert(!nameMessages.some(m => m.type === "init"), "Editor contents stay gated until a name is set");
-  await receiveName({ type: "setDocumentName", name: "My Interface" });
+  await receiveName({ type: "setDocumentName", name: "My Interface", format: "a8-1.6.0" });
   assert.equal(JSON.parse(blank.text).name, "My Interface");
+  assert.equal(JSON.parse(blank.text).format, "a8-1.6.0", "New documents retain their explicitly chosen format");
   assert(nameMessages.some(m => m.type === "nameAccepted"));
   await receiveName({ type: "ready" });
   assert(nameMessages.some(m => m.type === "init"));
@@ -425,6 +439,20 @@ exports.run = async () => {
     bginDirectory,
     "Discovery chooses the gui folder",
   );
+  const zdataRoot = await fs.mkdtemp(path.join(resourceDirectory, "zdata-")),
+    packs = path.join(zdataRoot, "files", "assetpacks"),
+    padData = path.join(packs, "common_pack", "12345", "67890", "assets", "data");
+  await fs.mkdir(path.join(padData, "gui"), { recursive: true });
+  await fs.mkdir(path.join(padData, "texter_fonts"), { recursive: true });
+  await fs.mkdir(path.join(packs, "textures_pack1"), { recursive: true });
+  await fs.writeFile(path.join(padData, "gui", "partial.bgin"), original);
+  const pad = await discoverResources(zdataRoot, "zdata");
+  assert.equal(pad.resourceSettings.assetRoot, padData);
+  assert.equal(pad.resourceSettings.bginRoot, path.join(padData, "gui"));
+  assert.equal(pad.resourceSettings.textureRoot, packs);
+  assert.equal(pad.resourceSettings.fontRoot, path.join(padData, "texter_fonts"));
+  await fs.mkdir(path.join(packs, "common_pack", "99999", "99999", "assets", "data"), { recursive: true });
+  await assert.rejects(discoverResources(zdataRoot, "zdata"), /Multiple common_pack versions/);
   assert.equal(
     (await scanBginFolder(resourceDirectory)).bindings[JSON.parse(clean).name],
     boundFile,
@@ -633,11 +661,148 @@ exports.run = async () => {
   await vscode.workspace
     .getConfiguration("bgin", uri)
     .update("resourceFolders", {}, vscode.ConfigurationTarget.WorkspaceFolder);
+
+  // Two independently authenticated clients share the same unsaved VS Code text.
+  // This exercises the real loopback bridge and Provider rather than a mock owner.
+  for (let i = 0; i < 100 && !bridge.state().running; i++) await delay(50);
+  assert(bridge.state().running, "Editor MCP bridge is listening");
+  const descriptor = JSON.parse(Buffer.from(await vscode.workspace.fs.readFile(vscode.Uri.file(bridge.state().discoveryFile))).toString("utf8"));
+  const bridgeRpc = (method, params = {}, sessionId) => new Promise((resolve, reject) => {
+    const request = require("node:http").request(descriptor.endpoint, { method: "POST", headers: { Authorization: "Bearer " + descriptor.token, "Content-Type": "application/json" } }, response => {
+      const chunks = [];
+      response.on("data", chunk => chunks.push(chunk));
+      response.on("end", () => { try { resolve(JSON.parse(Buffer.concat(chunks).toString("utf8"))); } catch (error) { reject(error); } });
+    });
+    request.on("error", reject);
+    request.end(JSON.stringify({ method, params, sessionId, cursor: 0 }));
+  });
+  const clientA = (await bridgeRpc("connect", { name: "Extension test A" })).result.sessionId;
+  const clientB = (await bridgeRpc("connect", { name: "Extension test B" })).result.sessionId;
+  const sharedUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "shared-clients.bgin");
+  await vscode.workspace.fs.writeFile(sharedUri, original);
+  const sharedOpened = await bridgeRpc("documents/open", { path: sharedUri.fsPath }, clientA);
+  assert(!sharedOpened.error, JSON.stringify(sharedOpened.error));
+  const shared = provider.documents.get(sharedUri.toString());
+  assert(shared?.panels.size);
+  const base = (await bridgeRpc("documents/read", { documentId: sharedUri.toString() }, clientB)).result;
+  assert.equal(base.text, shared.text);
+  const aiDocument = JSON.parse(shared.text);
+  aiDocument.screens[0].name = "client_a_unsaved";
+  const aiText = JSON.stringify(aiDocument, null, 2);
+  await bridgeRpc("operations/begin", { operationId: "test-edit-a", name: "Edit property", documentId: base.documentId }, clientA);
+  const editedA = await bridgeRpc("documents/edit", { operationId: "test-edit-a", documentId: base.documentId, text: aiText, baseRevision: base.revision }, clientA);
+  assert(!editedA.error, JSON.stringify(editedA.error));
+  assert.equal(shared.text, aiText, "Client edit is immediately visible in the live document");
+  assert.deepEqual(Buffer.from(await vscode.workspace.fs.readFile(sharedUri)), original, "MCP edit stays unsaved until an explicit save");
+  const afterA = shared.revision;
+  const retriedA = await bridgeRpc("documents/edit", { operationId: "test-edit-a", documentId: base.documentId, text: aiText, baseRevision: base.revision }, clientA);
+  assert(!retriedA.error);
+  assert.equal(shared.revision, afterA, "Retrying the same operation never applies a duplicate edit");
+  await vscode.commands.executeCommand("vscode.openWith", sharedUri, "bgin.editor");
+  await vscode.commands.executeCommand("undo");
+  await delay(100);
+  assert.equal(shared.text, base.text, "MCP edits use the normal VS Code undo history");
+  await vscode.commands.executeCommand("redo");
+  await delay(100);
+  assert.equal(shared.text, aiText, "Normal VS Code redo restores the MCP edit");
+  const manualInvalid = '{"name":"manual-in-progress","screens": [}';
+  provider.edit(shared, manualInvalid);
+  await bridgeRpc("operations/begin", { operationId: "test-edit-b", name: "Stale edit", documentId: base.documentId }, clientB);
+  const staleB = await bridgeRpc("documents/edit", { operationId: "test-edit-b", documentId: base.documentId, text: aiText, baseRevision: afterA }, clientB);
+  assert.equal(staleB.error.code, "revision_conflict");
+  const readB = await bridgeRpc("documents/read", { documentId: base.documentId }, clientB);
+  assert.equal(readB.result.text, manualInvalid, "A second client reads the user's unsaved invalid JSON, not a last-valid copy");
+  assert(readB.changes.some(change => change.documentId === base.documentId && change.revision === shared.revision), "The change feed includes the user's new revision");
+  bridge.pauseSession(clientA, true);
+  await bridgeRpc("operations/begin", { operationId: "test-panel-render", name: "Render preview", documentId: base.documentId }, clientB);
+  await vscode.workspace.fs.writeFile(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "converter-clients.html"), Buffer.from(converterView.webview.html));
+  provider.edit(shared, aiText);
+
+  // A manual edit arriving during asynchronous validation must win the CAS race.
+  const callBeforeRace = backend.call;
+  let validated, releaseValidation;
+  const validatedGate = new Promise(resolve => { validated = resolve; });
+  const validationGate = new Promise(resolve => { releaseValidation = resolve; });
+  let holdValidation = true;
+  backend.call = async (method, params) => {
+    const result = await callBeforeRace(method, params);
+    if (method === "validate" && holdValidation) {
+      holdValidation = false;
+      validated();
+      await validationGate;
+    }
+    return result;
+  };
+  try {
+    const pendingEdit = provider.applySharedEdit(base.documentId, aiText + "\n", shared.revision, "Racing MCP edit");
+    const rejectedRace = assert.rejects(pendingEdit, /revision conflict/i);
+    await validatedGate;
+    provider.edit(shared, manualInvalid);
+    releaseValidation();
+    await rejectedRace;
+    assert.equal(shared.text, manualInvalid, "Validation never overwrites an intervening manual edit");
+  } finally { releaseValidation(); backend.call = callBeforeRace; }
+  provider.edit(shared, aiText);
+  const cancelled = new AbortController();
+  cancelled.abort();
+  await assert.rejects(() => provider.applySharedEdit(base.documentId, aiText + "\n", shared.revision, "Cancelled edit", cancelled.signal), /cancelled/i);
+  assert.equal(shared.text, aiText);
+
+  bridge.pauseSession(clientA, false);
+  await bridgeRpc("operations/begin", { operationId: "test-save-a", name: "Save shared document", documentId: base.documentId }, clientA);
+  const savedA = await bridgeRpc("documents/save", { operationId: "test-save-a", documentId: base.documentId, baseRevision: shared.revision }, clientA);
+  assert(!savedA.error, JSON.stringify(savedA.error));
+  const savedShared = JSON.parse((await backend.call("decode", { data: Buffer.from(await vscode.workspace.fs.readFile(sharedUri)).toString("base64") })).text);
+  assert.equal(savedShared.screens[0].name, "client_a_unsaved", "Explicit MCP save writes the current shared text");
+  assert(!vscode.window.tabGroups.all.some(group => group.tabs.some(tab => tab.isDirty && tab.input instanceof vscode.TabInputCustom && tab.input.uri.toString() === sharedUri.toString())), "Explicit MCP save clears the editor dirty flag");
+
+  const profileSnapshot = shared.text;
+  const wrongProfile = JSON.parse(profileSnapshot);
+  wrongProfile.format = wrongProfile.format === "a8-5.8.0" ? "a8-1.6.0" : "a8-5.8.0";
+  provider.edit(shared, JSON.stringify(wrongProfile));
+  const incompatibleSave = sharedUri.with({ path: sharedUri.path + ".wrong-profile.bgin" });
+  await assert.rejects(() => provider.saveCustomDocumentAs(shared, incompatibleSave), /source.*format|converter|conversion/i);
+  await assert.rejects(() => vscode.workspace.fs.stat(incompatibleSave), "Changing JSON format cannot silently change the saved binary profile");
+  provider.edit(shared, profileSnapshot);
+
+  // Saving must reject both a changed disk input and an edited in-flight snapshot.
+  const conflictUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "disk-conflict.bgin");
+  await vscode.workspace.fs.writeFile(conflictUri, original);
+  const diskDocument = await provider.openCustomDocument(conflictUri, {});
+  const external = Buffer.concat([original, Buffer.from([0])]);
+  await vscode.workspace.fs.writeFile(conflictUri, external);
+  await assert.rejects(() => provider.saveCustomDocument(diskDocument), /outside the editor/i);
+  assert.deepEqual(Buffer.from(await vscode.workspace.fs.readFile(conflictUri)), external, "Disk conflict leaves external bytes intact");
+  diskDocument.dispose();
+  const saveRaceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, "save-race.bgin");
+  await vscode.workspace.fs.writeFile(saveRaceUri, original);
+  const saveDocument = await provider.openCustomDocument(saveRaceUri, {});
+  let encoding, releaseEncoding;
+  const encodingGate = new Promise(resolve => { encoding = resolve; });
+  const encodeGate = new Promise(resolve => { releaseEncoding = resolve; });
+  const callBeforeSave = backend.call;
+  backend.call = async (method, params) => {
+    const result = await callBeforeSave(method, params);
+    if (method === "encode") { encoding(); await encodeGate; }
+    return result;
+  };
+  try {
+    const pendingSave = provider.saveCustomDocument(saveDocument);
+    const rejectedSave = assert.rejects(pendingSave, /changed while saving/i);
+    await encodingGate;
+    provider.edit(saveDocument, manualInvalid);
+    releaseEncoding();
+    await rejectedSave;
+    assert.deepEqual(Buffer.from(await vscode.workspace.fs.readFile(saveRaceUri)), original, "An outdated save snapshot never replaces disk contents");
+  } finally { releaseEncoding(); backend.call = callBeforeSave; saveDocument.dispose(); }
+  bridge.disconnectSession(clientA);
+  bridge.disconnectSession(clientB);
+
   await vscode.workspace.fs.writeFile(uri, original);
   await provider.revertCustomDocument(doc);
   await termsSettings.update("acceptedTermsVersion", previousTerms, vscode.ConfigurationTarget.Global);
   console.log(
-    "BGIN_EXTENSION_TESTS: binary editing, empty/untitled drafts, first screen save, undo/redo, corrupt input rejection, Problems, zero automatic renders/compilations, independent workers, cancellation and resource panel command: passed.",
+    "BGIN_EXTENSION_TESTS: binary editing, explicit profiles, webview revision checks, two live MCP clients, invalid manual JSON, CAS validation race, cancellation, disk/save conflicts, undo/redo, drafts, Problems, independent workers and resource panel command: passed.",
   );
   await vscode.commands.executeCommand("workbench.action.closeAllEditors");
 };

@@ -11,8 +11,12 @@ const executable = path.join(
   "backend",
   process.platform === "win32" ? "bgin_backend.exe" : "bgin_backend",
 );
-const p = spawn(executable, [], {
+// Source-mode tests are useful while compiling a fresh native distribution.
+// The default still verifies the worker actually staged in the VS Code package.
+const sourcePython = process.env.BGIN_TEST_PYTHON;
+const p = spawn(sourcePython || executable, sourcePython ? ["-m", "bgin_json.rpc"] : [], {
   windowsHide: true,
+  env: sourcePython ? { ...process.env, PYTHONPATH: [path.join(project, "src"), path.join(project, "vendor"), process.env.PYTHONPATH].filter(Boolean).join(path.delimiter) } : process.env,
 });
 let serial = 0;
 const pending = new Map();
@@ -94,6 +98,9 @@ const rpc = (method, params = {}) =>
       releaseRender,
       activeRequest;
     let clipboard = "";
+    let revision = 0;
+    let rejectNextEdit = false;
+    const editPackets = [];
     let acceptedTerms = 0;
     const openedDocs = [];
     let guideOpens = 0;
@@ -101,14 +108,20 @@ const rpc = (method, params = {}) =>
     const resourceFolder = path.join(project, "build", "external-resources");
     let savedResourceFolders;
     page.on("pageerror", (e) => errors.push(String(e)));
-    const send = (m) =>
-      page.evaluate(
+    const send = (m) => {
+      if (m.type === "document") {
+        text = m.text;
+        m = { ...m, revision: ++revision };
+      }
+      return page.evaluate(
         (m) => window.dispatchEvent(new MessageEvent("message", { data: m })),
         m,
       );
+    };
     await page.exposeFunction("send", async (m) => {
       if (m.type === "setDocumentName") {
-        text = JSON.stringify({ ...JSON.parse(text), name: m.name });
+        text = JSON.stringify({ ...JSON.parse(text), name: m.name, format: m.format });
+        assert.equal(m.format, "a8-1.6.0", "New document sends the explicitly selected binary profile");
         await page.evaluate(name => { window.lastName = name; }, m.name);
       }
       if (m.type === "acceptTerms") {
@@ -124,6 +137,7 @@ const rpc = (method, params = {}) =>
         await send({
           type: "init",
           text,
+          revision,
           catalog,
           resources: { bindings: {} },
           defaults: { debugFill: true, names: true },
@@ -184,7 +198,17 @@ const rpc = (method, params = {}) =>
       if (m.type === "cancelRender")
         await send({ type: "renderCancelled", requestId: activeRequest });
       if (m.type === "edit") {
+        editPackets.push({ ...m });
+        assert(Number.isInteger(m.baseRevision), "Every webview edit supplies its base revision");
+        assert(Number.isInteger(m.editId), "Every webview edit supplies its request identity");
+        if (rejectNextEdit || m.baseRevision !== revision) {
+          rejectNextEdit = false;
+          await send({ type: "editConflict", text, revision, editId: m.editId });
+          return;
+        }
         text = m.text;
+        revision++;
+        await send({ type: "editAccepted", revision, editId: m.editId });
         try {
           JSON.parse(text);
           await send({ type: "syntax", errors: [] });
@@ -302,6 +326,30 @@ const rpc = (method, params = {}) =>
     await page.locator("#scene svg").waitFor();
     assert.equal(renderCount, 1);
     const originalGeometry = structuredClone(last.geometry);
+
+    // Inspect all branches of this open screen, without object IDs or new renders.
+    const inspectionText = text, inspectionRenders = renderCount;
+    await page.locator("#inspectionMode").selectOption("exploded");
+    assert.equal(await page.locator('#scene [data-inspection-labels] text').count(), 3);
+    const transforms = await page.locator('#scene g[data-path]').evaluateAll(nodes => nodes.map(n => ({ path: n.dataset.path, transform: n.getAttribute("transform") })));
+    assert.notEqual(transforms[0].transform, transforms[1].transform, "Parent paint has its own cell");
+    assert.equal(transforms[1].transform, transforms[2].transform, "Child paint retains its parent branch geometry");
+    assert.notEqual(transforms[1].transform, transforms[3].transform, "Overlapping branches are spread into different cells");
+    assert.equal(await page.locator('#scene g[data-path]').evaluateAll(nodes => nodes.filter(n => n.style.display !== "none").length), 5, "Inspection covers the whole open screen despite its current selection");
+    await page.locator("#inspectionDepth").fill("2"); await page.locator("#inspectionDepth").dispatchEvent("change");
+    assert.equal(await page.locator('#scene [data-inspection-labels] text').count(), 5);
+    if (process.env.BGIN_INSPECTION_SCREENSHOT) await page.screenshot({ path: process.env.BGIN_INSPECTION_SCREENSHOT });
+    await page.locator("#layerCut").fill("3"); await page.locator("#layerCut").dispatchEvent("input");
+    assert.equal(await page.locator('#scene g[data-path]').evaluateAll(nodes => nodes.filter(n => n.style.display !== "none").length), 2, "Cut removes the three topmost painted objects");
+    await page.locator("#resetInspection").click();
+    assert.equal(await page.locator('#scene g[data-path][transform]').count(), 0, "Reset restores original transforms");
+    assert.equal(await page.locator('#scene svg').getAttribute("viewBox"), `0 0 ${last.width} ${last.height}`);
+    await page.locator("#inspectionMode").selectOption("xray");
+    assert((await page.locator('#scene g[data-path]').evaluateAll(nodes => nodes.every(n => Number(n.getAttribute("opacity")) <= 0.18))));
+    await page.locator("#resetInspection").click();
+    assert.equal(renderCount, inspectionRenders, "Inspection never starts another render");
+    assert.equal(text, inspectionText, "Inspection never edits BGIN properties");
+
     await page.locator('.tree-row[data-path="/screens/0/children/1"]').click();
     await page.waitForFunction(
       () =>
@@ -1008,6 +1056,8 @@ const rpc = (method, params = {}) =>
     text = JSON.stringify({ screens: [] });
     await send({ type: "document", text });
     await page.locator("#documentNameDialog").waitFor({ state: "visible" });
+    assert.deepEqual(await page.locator("#newFormat option").allTextContents(), ["~0.0.2", "~1.6.0", "~3.7.0", "~5.8.0"]);
+    assert.equal(await page.locator("#newFormat").inputValue(), "a8-1.6.0");
     assert(await page.locator("#workspace").evaluate(el => el.inert), "Unnamed document cannot be edited");
     await page.keyboard.press("Escape");
     assert(await page.locator("#documentNameDialog").isVisible(), "Escape cannot bypass naming");
@@ -1022,6 +1072,7 @@ const rpc = (method, params = {}) =>
     await page.locator("#documentNameDialog").waitFor({ state: "detached" });
     text = JSON.stringify({
       name: "new_interface",
+      format: "a8-1.6.0",
       dialect: "ui",
       screens: [],
     });
@@ -1070,10 +1121,10 @@ const rpc = (method, params = {}) =>
       .getByRole("button", { name: "Create", exact: true })
       .click();
     await page.waitForFunction(
-      () => document.querySelector("#screen").options.length === 1,
+      () => Number(document.querySelector("#screen").dataset.count) === 1,
     );
     const firstScreenText = text;
-    assert.equal(await page.locator("#screen").inputValue(), "0");
+    assert.equal(await page.locator("#screen").getAttribute("value"), "0");
     assert.equal(
       await page
         .locator('#tree [data-path="/screens/0"]')
@@ -1094,19 +1145,19 @@ const rpc = (method, params = {}) =>
       .getByRole("button", { name: "Create", exact: true })
       .click();
     await page.waitForFunction(
-      () => document.querySelector("#screen").options.length === 2,
+      () => Number(document.querySelector("#screen").dataset.count) === 2,
     );
     const secondScreenText = text;
-    assert.equal(await page.locator("#screen").inputValue(), "1");
+    assert.equal(await page.locator("#screen").getAttribute("value"), "1");
     await send({ type: "document", text: firstScreenText });
     assert.equal(
-      await page.locator("#screen").inputValue(),
+      await page.locator("#screen").getAttribute("value"),
       "0",
       "Undo restores the previous screen",
     );
     await send({ type: "document", text: secondScreenText });
     assert.equal(
-      await page.locator("#screen").inputValue(),
+      await page.locator("#screen").getAttribute("value"),
       "1",
       "Redo restores the created screen selection",
     );
@@ -1131,7 +1182,10 @@ const rpc = (method, params = {}) =>
       .locator("#newScreenDialog")
       .getByRole("button", { name: "Close", exact: true })
       .click();
-    await page.locator("#screen").selectOption("0");
+    await page.locator("#screen").click();
+    await page.locator("#screenQuery").fill("first_screen");
+    await page.locator('#screenResults [data-path="/screens/0"]').click();
+    await page.locator("#openScreen").click();
     assert.equal(
       await page.locator("#tree .tree-row").first().getAttribute("data-path"),
       "/screens/0",
@@ -1167,7 +1221,7 @@ const rpc = (method, params = {}) =>
       .getByRole("button", { name: "Create", exact: true })
       .click();
     await page.waitForFunction(
-      () => document.querySelector("#screen").options.length === 1,
+      () => Number(document.querySelector("#screen").dataset.count) === 1,
     );
     assert.equal(JSON.parse(text).dialect, "sprites");
     assert.equal(JSON.parse(text).screens[0].type, "Sprite");
@@ -1177,6 +1231,27 @@ const rpc = (method, params = {}) =>
       rendersBeforeEmpty,
       "Creating and switching screens never renders automatically",
     );
+    const pickerRoots = ["template_dialog", "screenMain", "popup_warning", "template_card", "screenGarage", "#ABCD1234"].map(name => ({ name, type: "StackContainer", properties: {}, children: [] }));
+    pickerRoots[4].children = [{ name: "nested", type: "StackContainer", children: [{ name: "caption", type: "Label", properties: {} }], properties: {} }];
+    const pickerBefore = renderCount;
+    await send({ type: "document", text: JSON.stringify({ name: "picker_fixture", screens: pickerRoots }) });
+    await page.locator("#screen").click();
+    assert.deepEqual(await page.locator("#screenPrefix option").allTextContents(), ["All prefixes", "Without prefix (1)", "popup (1)", "screen (2)", "template (2)"]);
+    assert.match(await page.locator('#screenResults [data-path="/screens/0"] small').textContent(), /Objects: 1$/);
+    assert.match(await page.locator('#screenResults [data-path="/screens/4"] small').textContent(), /Objects: 3$/);
+    await page.locator("#screenView").selectOption("prefix");
+    await page.locator("#screenPrefix").selectOption("screen");
+    await page.locator("#screenQuery").fill("garage");
+    assert.match(await page.locator('#screenResults [data-path="/screens/4"] small').textContent(), /Objects: 3$/, "Prefix grouping and search retain the full nested-object count");
+    await page.locator('#screenResults [data-path="/screens/4"]').click();
+    await page.locator("#openScreen").click();
+    assert.equal(await page.locator("#screen").textContent(), "screenGarage");
+    assert.equal(renderCount, pickerBefore, "Searching and choosing a screen stays manual-render only");
+    await page.locator("#screen").click();
+    await send({ type: "document", text: JSON.stringify({ name: "picker_fixture_changed", screens: pickerRoots.slice(0, 2) }) });
+    assert.equal(await page.locator("#screenPicker").count(), 0, "Shared document updates close a stale screen chooser");
+
+
     // New controls work on the fixed catalog, screen roots and the native clipboard protocol.
     text = initial;
     await send({ type: "document", text });
@@ -1199,10 +1274,10 @@ const rpc = (method, params = {}) =>
     await page.getByRole("menuitem", { name: "Duplicate", exact: true }).click();
     assert.equal(JSON.parse(text).screens.length, 2);
     await page.locator('#moveUp').click();
-    assert.equal(await page.locator('#screen').inputValue(), '0');
+    assert.equal(await page.locator('#screen').getAttribute('value'), '0');
     assert.match(JSON.parse(text).screens[0].name, /_copy$/);
     await page.locator('#moveDown').click();
-    assert.equal(await page.locator('#screen').inputValue(), '1');
+    assert.equal(await page.locator('#screen').getAttribute('value'), '1');
     await page.locator('#editorSettings').click();
     await page.locator('#interfaceLanguage').selectOption('ru');
     await page.waitForFunction(() => document.documentElement.lang === 'ru');
@@ -1237,6 +1312,21 @@ const rpc = (method, params = {}) =>
     await page.locator('#newScreenDialog').getByRole('button', {name:'Create',exact:true}).click();
     assert.equal(JSON.parse(text).screens[0].type, 'TextStyle');
     await rpc('encode', { text });
+    // A rejected full-text edit must retain the user's invalid local draft.
+    // Loading the shared snapshot is an explicit action, never a silent overwrite.
+    await page.locator('#jsonMode').click();
+    const sharedText = text;
+    rejectNextEdit = true;
+    await page.locator('#jsonEditor .cm-content').fill('{"screens": [}');
+    await page.getByRole('button', { name: 'Copy my local JSON', exact: true }).waitFor();
+    assert.equal(await page.locator('#jsonEditor .cm-content').innerText(), '{"screens": [}');
+    assert.equal(text, sharedText, 'Rejected edit leaves the authoritative shared document intact');
+    await page.getByRole('button', { name: 'Copy my local JSON', exact: true }).click();
+    await page.waitForTimeout(30);
+    assert.equal(clipboard, '{"screens": [}', 'Local invalid JSON remains recoverable through the clipboard');
+    await page.getByRole('button', { name: 'Load shared revision', exact: true }).click();
+    assert.equal((await page.locator('#jsonEditor .cm-content').innerText()).trimEnd(), sharedText.trimEnd());
+    assert(editPackets.length > 10, 'Revision protocol was used by manual and hierarchy edits');
     assert.equal(errors.length, 0, errors.join("\n"));
     console.log(
       `BGIN_PERFORMANCE: root selection, 9721 nodes: ${selectionMs.toFixed(1)} ms; zero automatic renders.`,

@@ -15,6 +15,10 @@ def properties(node):
 
 def value(props, name, default=None):
     result = props.get(name, default)
+    # The preview uses the primary value. Variant selection belongs to the
+    # newer engine and is not inferred from its unknown hashed selector keys.
+    if isinstance(result, dict) and set(result) == {"value", "variants"}:
+        result = result["value"]
     if isinstance(result, dict):
         for kind in ("number", "vector", "string", "path"):
             if kind in result:

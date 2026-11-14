@@ -22,6 +22,11 @@ class SchemaTests(unittest.TestCase):
         for flags in range(64):
             validator.validate(parse(sprite_document(flags)))
         validator.validate(parse(document([node(properties=[prop(1024, 2, text("a") + text("b"))])])))
+        from test_profiles import wire
+        from test_independent_profiles import animation_fixture
+        for profile in ("a8-3.7.0", "a8-5.8.0"):
+            validator.validate(parse(wire(profile, unknown=True)))
+        validator.validate(parse(animation_fixture()))
         doc = parse(document())
         doc["screens"][0]["type_hash"] = "forbidden"
         self.assertFalse(validator.is_valid(doc))

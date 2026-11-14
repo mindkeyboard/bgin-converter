@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from bgin_json.render import textures
+from bgin_json.resource_formats import check_texture_target, require_texture_target
 
 try:
     import texture2ddecoder
@@ -64,6 +65,22 @@ def ktx(levels, width=4, height=4, fmt=0x8D64, hybrid=True, metadata=b""):
             for level in levels
         )
     )
+
+
+def envelope(codec, levels):
+    """Author an observed jetc table from (packed bytes, decoded size) pairs."""
+    table, payload, offset = [], [], 0
+    for packed, decoded in levels:
+        table.append(struct.pack("<III", offset, len(packed), decoded))
+        payload.append(packed)
+        offset += len(packed)
+    return codec + b"jetc" + struct.pack("<I", 12 * len(levels)) + b"".join(table), b"".join(payload)
+
+
+def zstd06_raw(raw):
+    # Zstd v0.6, known one-byte content size, a raw block, and an end block.
+    assert 0 < len(raw) < 256
+    return b"\x26\xb5\x2f\xfd\x40" + bytes([len(raw)]) + bytes([0x40, 0, len(raw)]) + raw + b"\xc0\0\0"
 
 
 # ETC1 individual mode with different left/right colours and asymmetric selectors.
@@ -170,6 +187,95 @@ class TextureTests(unittest.TestCase):
                     image.getpixel((0, 0)),
                     (17, 34, 51, 68 if len(channels) == 4 else 255),
                 )
+
+    def test_lz4_pvr_envelope_is_unpacked_before_gpu_decode(self):
+        import lz4.block
+
+        first, second = SHARED * 4, OTHER
+        metadata, payload = envelope(b"jlz4", [
+            (lz4.block.compress(first, store_size=False), len(first)),
+            (lz4.block.compress(second, store_size=False), len(second)),
+        ])
+        actual = textures.decode(pvr(payload, 8, 8, metadata=metadata, mips=2))
+        reference = textures.decode(pvr(first, 8, 8))
+        self.assertEqual(actual.tobytes(), reference.tobytes())
+        # Validate every mip, even though only level zero is displayed.
+        with self.assertRaises(ValueError):
+            textures.decode(pvr(payload[:-1], 8, 8, metadata=metadata, mips=2))
+
+    def test_legacy_zstd_envelope_decodes_authored_frame(self):
+        import zstd
+
+        if not zstd.ZSTD_legacy_support():
+            self.skipTest("zstd must be built with ZSTD_LEGACY=1")
+        metadata, payload = envelope(b"zstd", [(zstd06_raw(SHARED), 8)])
+        image = textures.decode(pvr(payload, metadata=metadata))
+        self.assertEqual(image.tobytes(), textures.decode(pvr(SHARED)).tobytes())
+        with patch.object(zstd, "decompress", side_effect=AssertionError("must reject before allocation")):
+            bad = payload[:5] + b"\xff" + payload[6:]
+            with self.assertRaisesRegex(ValueError, "output size"):
+                textures.decode(pvr(bad, metadata=metadata))
+
+    def test_standard_zstd_frame_is_bounded_and_not_magic_patched(self):
+        import zstd
+
+        frame = zstd.compress(SHARED)
+        metadata, payload = envelope(b"zstd", [(frame, len(SHARED))])
+        actual = textures.decode(pvr(payload, metadata=metadata))
+        self.assertEqual(actual.tobytes(), textures.decode(pvr(SHARED)).tobytes())
+        meta, packed = envelope(b"zstd", [(frame + frame, len(SHARED))])
+        with self.assertRaisesRegex(ValueError, "concatenated"):
+            textures.decode(pvr(packed, metadata=meta))
+
+    def test_compression_tables_refuse_wrong_sizes_gaps_and_extra_frames(self):
+        metadata, payload = envelope(b"zstd", [(zstd06_raw(SHARED), 8)])
+        for changed in (metadata[:12] + struct.pack("<III", 1, len(payload), 8),
+                        metadata[:12] + struct.pack("<III", 0, len(payload), 16),
+                        metadata[:8] + struct.pack("<I", 24) + metadata[12:]):
+            with self.subTest(metadata=changed.hex()), self.assertRaises(ValueError):
+                textures.decode(pvr(payload, metadata=changed))
+        with self.assertRaisesRegex(ValueError, "Unexpected bytes"):
+            textures.decode(pvr(payload + b"extra", metadata=metadata))
+        for frame in (zstd06_raw(SHARED)[:-1], zstd06_raw(SHARED) + zstd06_raw(OTHER)):
+            meta, data = envelope(b"zstd", [(frame, 8)])
+            with self.assertRaises(ValueError):
+                textures.decode(pvr(data, metadata=meta))
+
+    def test_new_gpu_format_dispatch_and_block_rounding(self):
+        for fmt, kind, block in ((22, "etc2", SHARED), (23, "etc2a8", b"\0" * 8 + SHARED),
+                                  (24, "etc2a1", SHARED), (7, "bc1", b"\0" * 8),
+                                  (11, "bc3", b"\0" * 16)):
+            method = getattr(texture2ddecoder, "decode_" + kind)
+            with self.subTest(fmt=fmt), patch.object(texture2ddecoder, "decode_" + kind, wraps=method) as decoder:
+                self.assertEqual(textures.decode(pvr(block, 3, 2, fmt)).size, (3, 2))
+                decoder.assert_called_once_with(block, 3, 2)
+        # ASTC void-extent block: RGBA sixteen-bit constants, independent of texel index.
+        block = bytes.fromhex("fcfdffffffffffff0000ffff0000ffff")
+        image = textures.decode(pvr(block, 7, 5, 34))
+        self.assertEqual(image.size, (7, 5))
+        self.assertEqual(image.getpixel((0, 0)), (0, 255, 0, 255))
+        with self.assertRaisesRegex(ValueError, "Truncated compressed"):
+            textures.decode(pvr(block, 9, 5, 34))
+
+    def test_resource_compatibility_is_independent_of_preview_success(self):
+        astc = pvr(bytes.fromhex("fcfdffffffffffff0000ffff0000ffff"), 4, 4, 34)
+        self.assertEqual(textures.decode(astc).size, (4, 4))
+        for profile in ("a8-0.0.2", "a8-1.6.0", "a8-3.7.0"):
+            with self.subTest(profile=profile), self.assertRaisesRegex(ValueError, "ASTC"):
+                require_texture_target(astc, profile)
+        result = check_texture_target(astc, "a8-5.8.0")
+        self.assertFalse(result["runtime_verified"])
+        self.assertIsNone(result["compatible"])
+        metadata, payload = envelope(b"zstd", [(zstd06_raw(SHARED), 8)])
+        result = check_texture_target(pvr(payload, metadata=metadata), "a8-1.6.0")
+        self.assertFalse(result["compatible"])
+        self.assertIn("zstd/jetc", result["issues"][0])
+        with self.assertRaisesRegex(ValueError, "ETC2"):
+            require_texture_target(ktx([SHARED], fmt=0x9274, hybrid=False), "a8-1.6.0")
+        # The old engine's KTY stream contains an ETC1 substitute for ETC2-only blocks.
+        self.assertFalse(check_texture_target(ktx([SHARED]), "a8-1.6.0")["issues"])
+        with self.assertRaisesRegex(ValueError, "unknown"):
+            require_texture_target(b"unknown", "a8-1.6.0")
 
     def test_pvrtc_header_variant_and_minimum_block_footprint(self):
         for fmt, two_bit in ((0, True), (1, True), (2, False), (3, False)):

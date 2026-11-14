@@ -314,12 +314,9 @@ def _decode_sprite_node(data: bytes, offset: int, limit: int) -> BginNode:
     return _decode_sprite_generic_node(data, offset, limit)
 
 
-def decode_document(
+def _decode_hashed_document(
     data: bytes, dialect: BginDialect | str = BginDialect.AUTO
 ) -> BginDocument:
-    if data[4:14] == b"\x08\x00Database":
-        from .legacy import decode_legacy
-        return decode_legacy(data, dialect)
     reader = ByteReader(data)
     magic = reader.u32()
     file_hash = reader.u32()
@@ -369,7 +366,32 @@ def decode_document(
         directory_count=directory_count,
         directory_trailing_bytes=directory_trailing_bytes,
         source_bytes=data,
+        wire_format="a8-1.6.0",
     )
+
+
+def decode_document(data: bytes, dialect: BginDialect | str = BginDialect.AUTO,
+                    wire_format: str = "auto") -> BginDocument:
+    """Identify a validated profile; extended profiles require complete decoding."""
+    from .profiles import canonical_profile, decode_extended, has_extended_directory
+    selected = "auto" if wire_format == "auto" else canonical_profile(wire_format)
+    if data[4:14] == b"\x08\x00Database":
+        if selected not in ("auto", "a8-0.0.2"):
+            raise BginError("Requested BGIN profile does not match the legacy header")
+        from .legacy import decode_legacy
+        result = decode_legacy(data, dialect)
+        result.wire_format = "a8-0.0.2"
+        return result
+    if selected in ("a8-3.7.0", "a8-5.8.0") or has_extended_directory(data):
+        if selected in ("a8-0.0.2", "a8-1.6.0"):
+            raise BginError("Requested BGIN profile does not match the extended directory")
+        return decode_extended(data, dialect, selected)
+    if selected not in ("auto", "a8-1.6.0"):
+        raise BginError("Requested BGIN profile does not match the header")
+    try:
+        return _decode_hashed_document(data, dialect)
+    except ReaderError as error:
+        raise BginError(str(error)) from error
 
 
 def _as_values(value: Any, count: int | None) -> list[Any]:
@@ -519,9 +541,28 @@ def _encode_sprite_movie_payload(
 
 
 def encode_document(document: BginDocument, force: bool = False) -> bytes:
-    if document.wire_format == "legacy":
+    from .profiles import canonical_profile, encode_extended
+    selected = canonical_profile(document.wire_format)
+    if selected != "a8-5.8.0":
+        for screen in document.screens:
+            for node in screen.node.structural_nodes():
+                if (node.decoded and node.sprite_movie is None
+                        and len(node.metadata) != 20):
+                    raise BginError("This BGIN profile requires a 20-byte transform block")
+                if any(prop.variants for prop in node.properties):
+                    raise BginError("This BGIN profile cannot store property variants")
+                if node.sprite_movie is not None:
+                    for track in node.sprite_movie.tracks:
+                        for frame in track.keyframes:
+                            if frame.color_channels:
+                                raise BginError("This BGIN profile cannot store 5.8.0 color channels")
+    if selected == "a8-0.0.2":
         from .legacy import encode_legacy
         return encode_legacy(document, force)
+    if selected in ("a8-3.7.0", "a8-5.8.0"):
+        # Rebuild modern records even when clean: profile verification must never
+        # pass merely because the original file bytes were retained by the model.
+        return encode_extended(document)
     if not document.is_dirty() and not force:
         return document.source_bytes
 

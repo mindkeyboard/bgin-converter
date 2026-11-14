@@ -53,7 +53,7 @@ def _plain(value, path):
 def _property(p, path):
     name = p.get("literal_name", PROPERTY_NAMES.get(int(p["hash"], 16)))
     if name is None:
-        fail("Property spelling is absent from the vocabulary", path, p["span"]["offset"])
+        name = "#" + p["hash"][2:].upper().zfill(8)
     kind, values = int(p["kind"], 16), p["values"]
     if kind == 4:
         converted = []
@@ -64,7 +64,7 @@ def _property(p, path):
             h = int(token["name_hash"], 16)
             label = PROPERTY_NAMES.get(h) or token["name"]
             if not label or h not in PROPERTY_NAMES and jet_hash(label) != h:
-                fail("Enum spelling is absent from the vocabulary", path)
+                label = f"#{h:08X}"
             value = {"enum": label}
             registered = ENUMS.get(name, {}).get(label)
             default = registered or (0, h, "")
@@ -88,6 +88,13 @@ def _property(p, path):
             value = {"vectors": values}
         elif KIND_NAMES[kind] != inferred:
             value = {KIND_NAMES[kind]: value}
+    if p.get("variants"):
+        variants = []
+        for item in p["variants"]:
+            variant = dict(p, count=item["count"], values=item["values"], variants=[])
+            variants.append({"key": "#" + item["hash"][2:].upper().zfill(8),
+                             "value": _property(variant, path + "/variants")[1]})
+        value = {"value": value, "variants": variants}
     return name, value
 
 
@@ -111,12 +118,19 @@ def _frame(f, path):
         out["event"] = {"name": e["name"], "arguments": [e["value_a"], e["value_b"], e["flags"]]}
     if "color_properties" in f:
         out["colors"] = _properties(f["color_properties"], path + "/colors")
+    if "color_channels" in f:
+        out["color_channels"] = [{"key": "#" + c["hash"][2:].upper().zfill(8),
+                                  "interpolation": c["interpolation"],
+                                  "value": _plain(c["values"], path + "/color_channels")}
+                                 for c in f["color_channels"]]
     return out
 
 
 def _node(n, path):
     type_name = n.get("literal_type", TYPE_NAMES.get(int(n["type_hash"], 16)))
-    if type_name is None or not n["decoded"]:
+    if type_name is None:
+        type_name = "#" + n["type_hash"][2:].upper().zfill(8)
+    if not n["decoded"]:
         fail("Node type is not supported by the editable format", path, n["span"]["offset"])
     out = {"type": type_name, "name": n["name"]}
     if "sprite_movie" in n:
@@ -138,7 +152,7 @@ def _node(n, path):
             out["tracks"] = tracks
     else:
         raw = bytes.fromhex(n["metadata_hex"])
-        if raw != IDENTITY:
+        if raw and raw != IDENTITY:
             transform = list(struct.unpack("<5f", raw))
             if not all(math.isfinite(v) for v in transform):
                 fail("Non-finite transform cannot be represented in editable JSON", path)
@@ -150,21 +164,19 @@ def _node(n, path):
     return out
 
 
-def parse(data: bytes, *, dialect="auto", limits: Limits | None = None):
+def parse(data: bytes, *, dialect="auto", limits: Limits | None = None, format="auto"):
     """Decode to clean JSON without a source file or companion state."""
     if isinstance(data, bytes) and not data:
         if dialect not in _wire.DIALECTS:
             raise ValueError(f"dialect must be one of {_wire.DIALECTS}")
         from .drafts import empty_draft
         return empty_draft()
-    wire = _wire.parse(data, dialect=dialect, limits=limits)
+    wire = _wire.parse(data, dialect=dialect, limits=limits, format=format)
     header = wire["header"]
     legacy = wire.get("format") == "legacy"
     if not legacy and (int(header["file_hash"], 16) != FILE_SIGNATURE or header["directory_extra_hex"]):
         fail("Unsupported BGIN header variant")
-    out = {"name": header["name"]}
-    if legacy:
-        out["format"] = "legacy"
+    out = {"name": header["name"], "format": wire["profile"]}
     auto = {"sprites": "sprites", "widgets": "templates"}.get(header["name"].lower(), "ui")
     if wire["dialect"] != auto:
         out["dialect"] = wire["dialect"]
@@ -178,8 +190,8 @@ def parse(data: bytes, *, dialect="auto", limits: Limits | None = None):
     return out
 
 
-def load(path: str | Path, *, dialect="auto", limits: Limits | None = None):
+def load(path: str | Path, *, dialect="auto", limits: Limits | None = None, format="auto"):
     limits = limits or Limits()
     with Path(path).open("rb") as stream:
         data = stream.read(limits.max_bytes + 1)
-    return parse(data, dialect=dialect, limits=limits)
+    return parse(data, dialect=dialect, limits=limits, format=format)

@@ -10,6 +10,7 @@ from ..parser import load
 from ..header import read_namespace
 from ..vocabulary import ENUMS
 from . import textures
+from .archives import TextureArchives
 from .model import properties, value
 
 
@@ -32,10 +33,12 @@ class Resources:
         self.header_cache = {}
         self.fonts = {}
         self.directories = {}
+        self.archives = TextureArchives()
         self.configure(config, source, warnings)
 
     def configure(self, config, source, warnings):
         self.config, self.warnings = config, warnings
+        self.archives.candidates.clear()
         self.source = Path(source).resolve() if source else None
         self.root = (
             Path(config["assetRoot"]).resolve()
@@ -194,12 +197,21 @@ class Resources:
                 if not resolved.is_relative_to(search_root):
                     raise ValueError("Resource path leaves selected root")
                 return resolved
+        if folder == "textures_android":
+            return self.archives.resolve(search_root, name)
         raise FileNotFoundError(name)
+
+    def alpha_file(self, root, path):
+        source = value(properties(root), "Source", "")
+        try:
+            return self.resolve_file(str(source) + "__alpha")
+        except FileNotFoundError:
+            return path.with_suffix(path.suffix + "__alpha")
 
     def texture(self, root, alpha):
         source = value(properties(root), "Source", "")
         path = self.resolve_file(source)
-        mask = path.with_suffix(path.suffix + "__alpha")
+        mask = self.alpha_file(root, path)
         key = (
             str(path),
             path.stat().st_mtime_ns,
@@ -209,7 +221,7 @@ class Resources:
         if key in self.image_cache:
             self.image_cache.move_to_end(key)
             return self.image_cache[key]
-        image = textures.read(path, alpha)
+        image = textures.read(path, alpha, mask_path=mask)
         size = image.width * image.height * 4
         while self.image_cache and self.image_bytes + size > 128 * 1024 * 1024:
             _, old = self.image_cache.popitem(last=False)
@@ -242,7 +254,7 @@ class Resources:
 
     def png(self, root, alpha, crop=None):
         path = self.resolve_file(value(properties(root), "Source", ""))
-        mask = path.with_suffix(path.suffix + "__alpha")
+        mask = self.alpha_file(root, path)
         key = (
             str(path),
             path.stat().st_mtime_ns,

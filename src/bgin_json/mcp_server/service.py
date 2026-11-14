@@ -120,7 +120,7 @@ def differences(left, right, limit=200):
 
 
 class Service:
-    def __init__(self, config_path=None, core_path=None):
+    def __init__(self, config_path=None, core_path=None, *, load_config=True):
         self.config_lock = threading.RLock()
         self.config_path = Path(
             config_path or os.getenv("BGIN_MCP_CONFIG", ".bgin-mcp.json")
@@ -128,7 +128,7 @@ class Service:
         self.root = self.config_path.parent
         self.core_path = core_path or os.getenv("BGIN_CORE_PATH")
         self.settings = {"preview": {}, "resources": {}, "browserChannel": ""}
-        if self.config_path.exists():
+        if load_config and self.config_path.exists():
             # A removed resource directory must not prevent settings repair over MCP.
             self.settings = self.checked_settings(
                 read_json(self.config_path.read_text(encoding="utf-8-sig")),
@@ -373,7 +373,7 @@ class Service:
         candidates = (
             [Path(self.core_path)]
             if self.core_path
-            else [p / "tools" for p in Path(__file__).resolve().parents]
+            else [p / folder for p in Path(__file__).resolve().parents for folder in ("vendor", "tools")]
         )
         for candidate in candidates:
             if (candidate / "bgin_core" / "__init__.py").is_file():
@@ -397,16 +397,22 @@ class Service:
             binary = encode(doc)
             if binary:
                 core = self.core()
-                session = core.BginSession(binary, doc.get("dialect", "auto"))
-                if core.encode_document(session.snapshot(), force=True) != binary:
+                profile = doc.get("format", "a8-1.6.0")
+                # The original transaction codec predates the explicit profile
+                # argument but remains a valid independent check for old files.
+                if profile in ("a8-1.6.0", "a8-0.0.2", "legacy"):
+                    snapshot = core.decode_document(binary, doc.get("dialect", "auto"))
+                else:
+                    snapshot = core.decode_document(binary, doc.get("dialect", "auto"), wire_format=profile)
+                if core.encode_document(snapshot, force=True) != binary:
                     raise ValueError(
                         "Independent bgin_core check did not reproduce the compiled bytes"
                     )
-                if encode(parse(binary)) != binary:
+                if encode(parse(binary, format=profile)) != binary:
                     raise ValueError(
                         "Editable JSON round trip did not reproduce the compiled bytes"
                     )
-                data = session.data
+                data = binary
             else:
                 data = b""
         else:
@@ -522,8 +528,11 @@ class Service:
             "validation": validation,
         }
 
-    def resource_report(self, source, resources=None):
+    def resource_report(self, source, resources=None, target_format=None):
         from bgin_json.render.resources import Resources
+        from bgin_json.render.model import properties, value
+        from bgin_json.resource_formats import check_texture_target
+        from bgin_json.profiles import normalize_format
 
         doc, origin = self.load(source)
         config = self.resources(
@@ -534,6 +543,21 @@ class Service:
         if "name" in doc:
             cache.add_binding(doc["name"], doc)
         cache.audit(doc)
+        target_format = normalize_format(target_format or doc.get("format", "a8-1.6.0"))
+        texture_reports, seen = [], set()
+        # Inspect only textures reachable through the requested document and
+        # its loaded BGIN namespaces, without decoding the whole resource dump.
+        for bound in [doc, *cache.bindings.values()]:
+            for pointer, node in walk(bound):
+                reference = value(properties(node), "Source", "")
+                if not isinstance(reference, str) or not reference or reference in seen:
+                    continue
+                seen.add(reference)
+                try:
+                    path = cache.resolve_file(reference)
+                    texture_reports.append({"reference": reference, **check_texture_target(path.read_bytes(), target_format)})
+                except (OSError, ValueError) as error:
+                    texture_reports.append({"reference": reference, "compatible": None, "error": str(error), "runtime_verified": False})
         for key, path in config.items():
             if key != "bindings" and path and not Path(path).is_dir():
                 cache.errors.append(
@@ -547,7 +571,10 @@ class Service:
             "namespaces": {name: str(path) for name, path in cache.sources.items()},
             "errors": cache.errors,
             "warnings": sorted(warnings),
-            "scope": "BGIN references and configured directories; texture/font decoding is checked during render",
+            "target_format": target_format,
+            "textures": texture_reports,
+            "texture_conversion": "Separate operation; BGIN saving never transcodes textures",
+            "scope": "BGIN references, configured directories and known texture incompatibilities; game loading is unverified",
         }
 
     def compare(self, before, after, limit=200):

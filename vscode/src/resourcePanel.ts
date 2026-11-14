@@ -12,7 +12,7 @@ export class ResourcePanel {
     private element: HTMLElement,
     private send: (m: any) => void,
   ) {
-    element.innerHTML = `<div class="toolbar"><strong>Resources</strong><span class="spacer"></span><button id="closeResources" aria-label="Close resources">×</button></div><div class="dialog-body"><p class="resource-hint">Choose external resource folders. BGIN references use each file's internal namespace; files are loaded when needed.</p><fieldset id="resourceForm"><div id="resourceFolders"></div><div class="resource-discovery"><strong>Auto-fill from an extracted archive</strong><div class="path-picker"><input id="discoveryRoot" aria-label="Extracted archive folder" placeholder="Extracted archive folder"><button id="browseDiscoveryRoot" type="button">Browse…</button><button id="discoverResources" type="button">Auto-fill</button></div><p class="resource-hint">Finds gui, textures_android and texter_fonts folders. Review the paths before saving.</p></div><div class="toolbar resource-actions"><span id="resourceStatus" role="status"></span><span class="spacer"></span><button id="saveResources" type="button" class="primary">Save folders</button></div></fieldset></div>`;
+    element.innerHTML = `<div class="toolbar"><strong>Resources</strong><span class="spacer"></span><button id="closeResources" aria-label="Close resources">×</button></div><div class="dialog-body"><p class="resource-hint">Choose external resource folders. BGIN references use each file's internal namespace; files are loaded when needed.</p><fieldset id="resourceForm"><div id="resourceFolders"></div><div class="resource-discovery"><strong>Auto-fill resources</strong><label>Source layout<select id="resourceLayout" aria-label="Resource source layout"><option value="archive">Extracted archive</option><option value="zdata">Unpacked zdata / Play Asset Delivery</option></select></label><div class="path-picker"><input id="discoveryRoot" aria-label="Extracted archive folder" placeholder="Extracted archive folder"><button id="browseDiscoveryRoot" type="button">Browse…</button><button id="discoverResources" type="button">Auto-fill</button></div><p class="resource-hint">Finds GUI, textures and fonts in the selected layout. Partial folders are enough; missing paths remain optional. Review before saving.</p></div><div class="toolbar resource-actions"><span id="resourceStatus" role="status"></span><span class="spacer"></span><button id="saveResources" type="button" class="primary">Save folders</button></div></fieldset></div>`;
     const find = <T extends HTMLElement>(id: string) =>
       element.querySelector("#" + id) as T;
     this.form = find("resourceForm");
@@ -55,7 +55,7 @@ export class ResourcePanel {
       }
       this.form.disabled = true;
       this.status.textContent = t("Discovering resources…");
-      this.send({ type: "resourcesDiscover", root });
+      this.send({ type: "resourcesDiscover", root, layout: find<HTMLSelectElement>("resourceLayout").value });
     };
     element.addEventListener("click", (e) => {
       if (e.target === element) this.close();
@@ -115,11 +115,11 @@ export class ResourcePanel {
         this.status.textContent = m.error;
         return;
       }
-      this.current = { ...m.resourceSettings };
+      this.current = Object.fromEntries(Object.entries(this.fields).map(([key, input]) => [key, m.resourceSettings?.[key] || input.value.trim()]));
       this.populate();
       this.dirty = true;
       this.status.textContent =
-        (m.notes || []).join("\n") || t("Paths found · review and save");
+        (m.notes || []).map((note: string) => t(note)).join("\n") || t("Paths found · review and save");
     }
     if (m.type === "resourcesSaved") {
       this.form.disabled = false;

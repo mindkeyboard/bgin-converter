@@ -1,0 +1,762 @@
+{
+  "source": "user-supplied extracted cache installer; common_pack/58011/58011/assets/data/gui",
+  "files": [
+    {
+      "name": "background_posters_templates.bgin",
+      "bytes": 32690,
+      "sha256": "2606dca40bfe6eeb5d7c72df836028ae54a25e73bf28dfd9a9b6040988979a85",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "bike_career_menu.bgin",
+      "bytes": 995400,
+      "sha256": "8192c1b4545e1e9fea7f063be969be9ff26d51efdc3580e19ddc2acf5648d8de",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "bike_poster_images.bgin",
+      "bytes": 34389,
+      "sha256": "a12612e0c76d64a172781b144564acad6623fb3cffb24b15f80f5c014796c2e8",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "bike_poster_images_career.bgin",
+      "bytes": 20818,
+      "sha256": "eb55ee07e92afaeae3be7b7e2f29a57d42676fcd25d4506a434df3b8fbfa812d",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "booster_icon_templates.bgin",
+      "bytes": 31057,
+      "sha256": "f29eaa09b7ada8ce54f8756ad2db1d491cf3892c46013be68cc734fb0b4c2a07",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "bundle_menu.bgin",
+      "bytes": 44447,
+      "sha256": "fd8a0de698292338160442c779ea525ffb466f36c1dabd14d8f83e0d30d376cf",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "car_collection_images.bgin",
+      "bytes": 14341,
+      "sha256": "eac19761d94a0a48f415c8bc4495feb8bb6e4ec026f28b49fe5534cfe22f5ae5",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "car_collection_menu.bgin",
+      "bytes": 188334,
+      "sha256": "0ac4598665a01e3bea4010c4de9f9c41d3fc6d9a946c685cee4021b49ac00a40",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "car_logos.bgin",
+      "bytes": 32073,
+      "sha256": "26205ad8bd496b84bea2ad50dcb2dcb3777df477e932e78bec3d133b808d3011",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "car_poster_images.bgin",
+      "bytes": 533572,
+      "sha256": "3f8154ed7751968d3936e2e549a56cd25e2f9f23c1a901b6ab3ff0ae378c4708",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "car_series_menu.bgin",
+      "bytes": 479422,
+      "sha256": "a5436330c58723eee8a9773730b4d667dc83fc69974cd3f44ddad2f9f319034a",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "career_menu.bgin",
+      "bytes": 423506,
+      "sha256": "1ed6e39dc30cc078d3aca11cdb670bfa3310ad69f92144d2aec123353644ab2a",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "cmp_special_events.bgin",
+      "bytes": 1127421,
+      "sha256": "38bafa5fed3d340e267bf2f79341011b885d47f533cb5634c2af42511bb93c58",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "conflicts.bgin",
+      "bytes": 458930,
+      "sha256": "ef4f229572d17b1c6dbda4dca2fb49f90ffb3fa67ab0ea7ca88caa55362c98f0",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "controllers_menu.bgin",
+      "bytes": 306161,
+      "sha256": "78db9043a9c36953c29738af52db593eb0978297464bc2cd240d920cb51dea58",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "customization_menu.bgin",
+      "bytes": 250518,
+      "sha256": "8d00b5ecd015abc01b9f2debe17b719c4072dce235967dc9b702fd904c34c9a7",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "daily_tasks_menu.bgin",
+      "bytes": 184649,
+      "sha256": "681814a40004aaa0d2a21646d15c66ff394d36a2c0e282ed9f9a5f6a76c7456b",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "debug_menu.bgin",
+      "bytes": 19019,
+      "sha256": "fc6514876113635eb22d081d4bd8cb173814b70505ecaa812fcbdc0e40000398",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "decal_template_pack_images.bgin",
+      "bytes": 665,
+      "sha256": "ebf8de684cdcf3f678a41f623830b19f4b172e55abbcf33ea9e29ab990cc2d73",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "decal_thumbnails_templates.bgin",
+      "bytes": 2226903,
+      "sha256": "56283cf83dd7996bdead9590f49d9b71da8375a88a0420d60b7d9f506c9fd810",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "dialogues_templates.bgin",
+      "bytes": 1917971,
+      "sha256": "b9f594df04b17da212154171e9da1650e992151e79134cfb732b975636130adb",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "download_minigame.bgin",
+      "bytes": 34729,
+      "sha256": "e1e05f5322da2e72a8848a3af3333c00face4e50f7206c2d861c62cee93d7541",
+      "supported": false,
+      "error": "unsupported_records at 0x4B (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "end_race_screens.bgin",
+      "bytes": 2823364,
+      "sha256": "c699af3ff0dcd7915a1edb64fe2c6f8ba354bc4e7ab2082b2f9b568bb158a25b",
+      "supported": false,
+      "error": "unsupported_records at 0x542 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "enduro_menu.bgin",
+      "bytes": 2086688,
+      "sha256": "55210cd217a6a7328c8e1c0ae82434cb7077f241cac0d3d3ffab724a8f9b532c",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "energy_menu.bgin",
+      "bytes": 159254,
+      "sha256": "7e325a2012d128e1ab2804b11eed5d2cd1d114986cabdd89ffb67647c511a698",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "events_calendar.bgin",
+      "bytes": 184963,
+      "sha256": "501f0a3350413a580b990867117b639e81d4d3595aa06b986094bb56c0cdcc5d",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_anniversary.bgin",
+      "bytes": 597850,
+      "sha256": "7b55ebf72b66c3d5403b1c5c3ea09ea8e2ba908ea5343e7cdc1478b321581da2",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_anniversary_asphalt.bgin",
+      "bytes": 709104,
+      "sha256": "cbe3392a5a8a4502a49824dcc5cc2d966437d3728da2f2e5795649d5fbf95eb6",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_cny.bgin",
+      "bytes": 640751,
+      "sha256": "3bf0f88d5bf05f3dce20671b8e9df4de972bf95343d6392e1a06a3d7b07057eb",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_formula_e.bgin",
+      "bytes": 1088884,
+      "sha256": "5a0bdab270cc7077c9b442a77646cc3a3e1aa93a87a6b25c4b729ac8fe0ca2ad",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_halloween.bgin",
+      "bytes": 604949,
+      "sha256": "fe8e96641d534be02447e603ed18652791ad039d96dc2094a01d6cf0888dea3a",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_universal.bgin",
+      "bytes": 616486,
+      "sha256": "299f954f71246044e220c75973328dc70e0d67f6ee350ce3b22a483cb096ccc3",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "festival_winter.bgin",
+      "bytes": 612748,
+      "sha256": "d9f4245230b3ce9900a06f2ff8e2ba42b3b8ec589cb74bd1f820fdcb2caf0e39",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "garage_menu.bgin",
+      "bytes": 586592,
+      "sha256": "33ff76772d6bac9592bfba318f15af733258aaab9c3c29ba7e25b1d63370a60f",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "gauntlet_menu.bgin",
+      "bytes": 1977552,
+      "sha256": "bf19d9ee5879f1c2a5cef00e5c187b03277fa98347b3ad05e03c639428ec4add",
+      "supported": false,
+      "error": "unsupported_records at 0x13F (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "generic_templates.bgin",
+      "bytes": 79895,
+      "sha256": "d60b1754fbab7930d35c60676f0e44bdee6a182f62db957ef90f07dcff38bc82",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "hints_templates.bgin",
+      "bytes": 72588,
+      "sha256": "2fadc9caa547f29ae5ada788b4b036ec7d391834074fb246b3f25ef7feb1d8b5",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "holiday_event.bgin",
+      "bytes": 437405,
+      "sha256": "c6ef7900e2881c1672dd29e17b36841941e94340dea6a4c0b8a313d34f64c9f6",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "holiday_event_battle.bgin",
+      "bytes": 529480,
+      "sha256": "92da0aaacf37144beda7d3745a57a7c101d75088752d95ee3dc22a1834a3b548",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "holiday_event_halloween.bgin",
+      "bytes": 453003,
+      "sha256": "cca569ea9de70c5bf85169b42383265977f9658c92d0deed8da20420f6af6d51",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "holiday_event_universal.bgin",
+      "bytes": 457486,
+      "sha256": "8722aaddbc517cc3e699d4d657e3d169737a20e3472c25cc9ce293da338969ab",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "holiday_event_winter.bgin",
+      "bytes": 552405,
+      "sha256": "16b4d93575bf622b5d4a4a99e988379092d8982341322ff54873dcfe5b45d794",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "hw_special_events.bgin",
+      "bytes": 1050252,
+      "sha256": "ad0f24a33289e2adc311635fa7e1effda1f134d25d02819954ea84e14a262baa",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "iap_menu.bgin",
+      "bytes": 3040286,
+      "sha256": "eca57efe343ae381d9bde26ecbd71277270fa14e354f6792a08b529ce486efaf",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "iap_template_pack_images.bgin",
+      "bytes": 27931,
+      "sha256": "ef7d4ca31c7a293f8b8d7ca669a3dbd17aafaaef9ce594b66c30a808a5e87040",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "inbox.bgin",
+      "bytes": 174529,
+      "sha256": "00b845116cf00a936c01cadbf69e1b903ed800296fb8c0ea9c61f39400abc874",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "ingame_menu.bgin",
+      "bytes": 1774895,
+      "sha256": "bb516865769109bf972deed45991c652ef207805da2fe216563a9c6f20dabc5a",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "inventory.bgin",
+      "bytes": 393698,
+      "sha256": "d559dd8792b32063068b8e918fcad034fdd6d245654d98f2f159ccd7b5217af4",
+      "supported": false,
+      "error": "unsupported_records at 0xA3 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "leaderboards_menu.bgin",
+      "bytes": 256117,
+      "sha256": "344efdd5c4a4f4c76de7537ab1dafbe3f6c214282821055f2af68dd918aadca5",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "leaderboards_menu_new.bgin",
+      "bytes": 312232,
+      "sha256": "e5fe082b5b82b79475c5c5aece1c9a088f2a4abf3390320999a58c995127d76b",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "loading_menu.bgin",
+      "bytes": 2398966,
+      "sha256": "a42fdd764ec5f40b6e05b5a7a8b0b4f5f7dbcde3318626e57c3a69347303d35e",
+      "supported": false,
+      "error": "unsupported_records at 0x2D6 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "localization_menu.bgin",
+      "bytes": 72177,
+      "sha256": "7652c8a9b924e1db661c8ba11e6a7cd034585705d78bf4369367b5f90a76d369",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "localization_menu_init.bgin",
+      "bytes": 21032,
+      "sha256": "2e9d5ee46d8ce5e497aa5dfc2abfac802c1cadc0fcd5677aa41630544d40d51e",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "lottery_ads.bgin",
+      "bytes": 105007,
+      "sha256": "b8131191005acde759641446506c13afeb52be3285b83f2f9382e45e3373c6f9",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "lottery_boxes_templates.bgin",
+      "bytes": 29773,
+      "sha256": "440d8aae19ced78fa1d51d420efeb11436f616299417b6d088110e85c46624d1",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "lottery_milestone_tokens.bgin",
+      "bytes": 114897,
+      "sha256": "0e39aedc4eab43c17c065541c4cc3b4f2147f212c460d705b49a1f454697e12d",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "main_menu_new.bgin",
+      "bytes": 2622300,
+      "sha256": "fd895768fab4772a90a976abe1475e75edf55ff6e3d99f3b845ea9db4b6f1ca4",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "mclaren_special_events.bgin",
+      "bytes": 1277388,
+      "sha256": "e46f630a8137a80d59dfcaa525ee267ea014bb1932558368f644523ced5bf6f9",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "medals_templates.bgin",
+      "bytes": 80482,
+      "sha256": "def08eb0377703a3cbf24bd933b1c3fa3bdf9151d478254b6f488f1a3978956c",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "metal_menu.bgin",
+      "bytes": 210418,
+      "sha256": "bde2b4a76eaea4a50325f583404121d9bc1e52e82f51538944309a07a4642acf",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "microchip_menu.bgin",
+      "bytes": 311992,
+      "sha256": "2cd64e540ab9761dfb66e62c94a45132da48d3d3078f1f59383dbad89b9112b9",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "multiplayer.bgin",
+      "bytes": 2885342,
+      "sha256": "d6e4964678eb365b5c816cd3796facb0aaab6a8b95cbff3a78f625627e30ed38",
+      "supported": false,
+      "error": "unsupported_records at 0x15D (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "multiplayer_menu.bgin",
+      "bytes": 475876,
+      "sha256": "4de3735bb1030022d2d7dfc815e7de84920b053c00343ea4df6a3df1df3186cc",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "multiplayer_menu_ranked.bgin",
+      "bytes": 722969,
+      "sha256": "dfe45e57603c5e9dac8e99ef450f3fbe605d813cce37167de1183725c0e53283",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "multiplayer_season_2.bgin",
+      "bytes": 1798225,
+      "sha256": "b6357f779a4d3ac06e475d2309b628c9c25c6d0b3fda9ecc125d1ec62bd000c4",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "multiplayer_tutorial.bgin",
+      "bytes": 107337,
+      "sha256": "501a6c833fdf573dd7d454406810b93c41472e94134d513fe76ba0dd749ef01e",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "notification_templates.bgin",
+      "bytes": 27786,
+      "sha256": "959d42ab44306488fb90b9675c243e0117de6c73e0b9a5b448a32e588476c5f9",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "options_menu.bgin",
+      "bytes": 1270564,
+      "sha256": "7dadce4625e3fcde69b259307f2707ba4897feba40240268a7a5081ae3ff2680",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "popups.bgin",
+      "bytes": 3511994,
+      "sha256": "477970e6ac0261658abe55317ef152c49cecc8e6dc5d58fcf789b8003adcd6cd",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "porsche_special_events.bgin",
+      "bytes": 1057822,
+      "sha256": "dcf485de6188340f1b674d5eb86a2a9cc4397b0543232d2656aafe1c1920367b",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "profile.bgin",
+      "bytes": 30490,
+      "sha256": "05dd0bcf15f52ddfa5c82299cf10dd25a7cdcf4ee68c85facbbe57a0d084b33d",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "profile_avatar_customization_assets.bgin",
+      "bytes": 42423,
+      "sha256": "f308039c49300b688f63f753847f99a6530ecc37433f7020d54e2475241e3ce5",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "profile_social_menu.bgin",
+      "bytes": 1173742,
+      "sha256": "e84b4ba11a15a002ace62ee449ffc31089751eeb5438cd9d14114f037c7e8dbb",
+      "supported": false,
+      "error": "unsupported_records at 0x1C5 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "prokits_blueprint_icons_templates.bgin",
+      "bytes": 69421,
+      "sha256": "3d354bf83ae0eac362a7c28506cc54e59c426245337e3978df999330b221872f",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "prokits_box_templates.bgin",
+      "bytes": 1665395,
+      "sha256": "14737a7c60ee8b4921d7bdca0e17fd067a1c164ba7e105efa7abdf56d5311b9c",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "prokits_card_templates.bgin",
+      "bytes": 1755625,
+      "sha256": "9125f156afefef90521b5c1b970f2265b3c9e0bf045446ef0bdd13612194b553",
+      "supported": false,
+      "error": "unsupported_records at 0x800 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "prokits_menu.bgin",
+      "bytes": 1573716,
+      "sha256": "d897a7a960b648a48d8af827b17e4b82e2656852b2b133a7bf74cdb6eda0f92d",
+      "supported": false,
+      "error": "unsupported_records at 0x286 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "quick_run_menu.bgin",
+      "bytes": 40191,
+      "sha256": "f1273ae2624eb4a15088238557e906c98e7b6546464c92c405e3879897686b35",
+      "supported": false,
+      "error": "unsupported_records at 0x30 (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "replaykit_menu.bgin",
+      "bytes": 141977,
+      "sha256": "7f36f3ae39b1b349802c216f46f5a3b282faf143343390240aac5b831cfd4885",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "rnd_menu.bgin",
+      "bytes": 2142453,
+      "sha256": "22972225e7c20dfe87c01157ff623a96bf2b51ffdcc18381a07ca733b5960b45",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "scheme_controller_specific.bgin",
+      "bytes": 339924,
+      "sha256": "2a0cdb4dafbfc1d89f9c1027cdce8cc757a789c2f5ebab379e7fadb52686c998",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "sequences.bgin",
+      "bytes": 18034,
+      "sha256": "c6c9b45e1b66872ae339e879dc32d3686d18206ad4ddf217ef5009ccc5ae75d9",
+      "supported": false,
+      "error": "unsupported_records at 0x1B (/header): The second directory table uses unsupported records; saving would lose data"
+    },
+    {
+      "name": "special_events_entry_points.bgin",
+      "bytes": 8831,
+      "sha256": "a22ed6ff501e563c858bf021581c64a3feb8f90caa4d1a67cb52a65552697986",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "special_events_tutorial_templates.bgin",
+      "bytes": 3335181,
+      "sha256": "412a122021bc3b5bb6912529bb45083004a883f0c5ecef56baa6139759bacde8",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "splash_menu.bgin",
+      "bytes": 13507,
+      "sha256": "4571fd9b878debac90b7c8c814daf5a2ff0db39ae06a024c1303d7686149e5aa",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "sprites.bgin",
+      "bytes": 16529153,
+      "sha256": "b926577f46dcc3bc2901ad993fc6450ac645505bcf150ed46fea0b1f45d30d83",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "tag_racing_menu.bgin",
+      "bytes": 307801,
+      "sha256": "5fcc438da9c521e173442d86d719d213097fd669ee862ce6a7827936b939509d",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "test.bgin",
+      "bytes": 79990,
+      "sha256": "9430eea92d0c2b9eaa1f0df7496f545f87f8763041d72234551749c411c09bab",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "tle_menu.bgin",
+      "bytes": 1000402,
+      "sha256": "ac077d88df99bbd2bca44e2c740c23955d334bb2eafad7b2e2e2444cdd8c7ecf",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "top_bar.bgin",
+      "bytes": 724711,
+      "sha256": "520968797f7bc6bf214180c6f4635214727747a0339c1d66952a0a36a565a36a",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "tracker_menu.bgin",
+      "bytes": 118625,
+      "sha256": "2e23d9d3f08544f3546408269be3af135d24806480691777be0e2a43e7525def",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "transition_a9_special_events.bgin",
+      "bytes": 1107709,
+      "sha256": "688dc19cf8a3f9e91a5a7ed9556e8fcf4317d836db33310399974c8613d5c272",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "upgrades_icons_templates.bgin",
+      "bytes": 35690,
+      "sha256": "2ac4d5f628ed1002bfd5a46723726b8e0c13f99451b71d92db1548f93332116f",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "vip_menu.bgin",
+      "bytes": 474680,
+      "sha256": "7a4b5ddedb386b787e17661c786f62d8307d12a4e14901afe4757f43a2fa67fc",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "widgets.bgin",
+      "bytes": 187720,
+      "sha256": "d34627031df6b7fd833b6b7e162a9b070882c43a86a8f52f45b6cef17306c7e0",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    },
+    {
+      "name": "win_streak.bgin",
+      "bytes": 11973,
+      "sha256": "96f4cf57dd89d8fe3e9916afa2370e8e0593e70f457eb798ff882ddaf9b5c94a",
+      "supported": true,
+      "independent_exact": true,
+      "edit_verified": true
+    }
+  ]
+}

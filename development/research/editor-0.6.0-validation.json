@@ -1,0 +1,579 @@
+{
+  "version": "0.6.0",
+  "date": "2026-11-14",
+  "base_commit": "f4a1a3c068bd4d3838471b47859f9cfe569b4b61",
+  "uncommitted_changes": true,
+  "package": {
+    "path": "dist/bgin-editor-0.6.0-win32-x64.vsix",
+    "bytes": 17792150,
+    "sha256": "9e15caa6583aa7ad82cf7ec67d424ecd3bb25e282e93c56182bed8d1e1beccbb"
+  },
+  "worker_sha256": "e7ee544cfcd62a5272c9043fa345ffba4684388168dbc1363be606cb2a39552c",
+  "compiler_report_sha256": "a9641b8e9f0433a9ab9c2e90de1cef87c2861ab3b9739706b70b943af06dbf5b",
+  "source_files": [
+    {
+      "path": "src/bgin_json/__init__.py",
+      "sha256": "3748eda78d7888d2c3d1613eb4f965f729c46fed135be19c090e1be944267b65"
+    },
+    {
+      "path": "src/bgin_json/__main__.py",
+      "sha256": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d"
+    },
+    {
+      "path": "src/bgin_json/_wire.py",
+      "sha256": "c8a03e54c94ce8959137abe0c838dcfb1ddc98b6a1e54aac7a43223c964586d4"
+    },
+    {
+      "path": "src/bgin_json/catalog.py",
+      "sha256": "8e657aeae5124ee5551e4c95fb06e163425b0d3e0f4b86be6f191c976971b770"
+    },
+    {
+      "path": "src/bgin_json/cli.py",
+      "sha256": "164592c109767b02166e5245339770bd49c483563db9dc8b43f92ede39dedc44"
+    },
+    {
+      "path": "src/bgin_json/drafts.py",
+      "sha256": "32696f609e67e0144d340ee201b9023983210eef7fafcbe8e22d11e97e571c16"
+    },
+    {
+      "path": "src/bgin_json/engine_catalog.py",
+      "sha256": "0c7045f71cfcfbb4157a3940bf1080cb0dffed61e47c07b5366a672ba30bc028"
+    },
+    {
+      "path": "src/bgin_json/engine_params.py",
+      "sha256": "3e5e927f0e280ca1805e69d5b119b5666f9f218d6a7c932060d8c7ef164f0ea7"
+    },
+    {
+      "path": "src/bgin_json/export.py",
+      "sha256": "da3f6f32f7ee1def2241650c8a804fd9c98a4e0b2b2c94305d2ee933a56281f9"
+    },
+    {
+      "path": "src/bgin_json/file_conversion.py",
+      "sha256": "3c59068a9f173c3a6a9ab5a4f594d0f6cd5f1d1ccd0909b57293470eb70c0dfa"
+    },
+    {
+      "path": "src/bgin_json/header.py",
+      "sha256": "849e52b8e8421b1595a4a403aefdfffab8813ead25f3ac1b3360c9ff0911112e"
+    },
+    {
+      "path": "src/bgin_json/mcp_server/__init__.py",
+      "sha256": "ca5fd4f17874aabdede2bf725b6d407650cb735f2fd3aa06fd508179972c48cc"
+    },
+    {
+      "path": "src/bgin_json/mcp_server/__main__.py",
+      "sha256": "ddd60a1df996b2b744c45953165711e5afe2711f5f0249f4e98875e1342411df"
+    },
+    {
+      "path": "src/bgin_json/mcp_server/bridge.py",
+      "sha256": "0ef3e7825a3bb73a25e5457517e0f02505065ad52bd16f7279484872cacc77aa"
+    },
+    {
+      "path": "src/bgin_json/mcp_server/server.py",
+      "sha256": "eae1cceca587b924cde969fab5ce8e605e80d19a0378fb4eeb6bf6d99e50bbce"
+    },
+    {
+      "path": "src/bgin_json/mcp_server/service.py",
+      "sha256": "de1b3b532d7dffbd8a9acb883c06898a1857cac429e19071cd416523a8bb4c6d"
+    },
+    {
+      "path": "src/bgin_json/mcp_server/sheets.py",
+      "sha256": "a439ef1513029ca5850e601e801616a07fd8ef94b02f274f001411878d0ba9b5"
+    },
+    {
+      "path": "src/bgin_json/names.py",
+      "sha256": "0646d984e38f007e9c4526f8354415096da7ef43a39fafea2f234f7318eb696e"
+    },
+    {
+      "path": "src/bgin_json/observed.py",
+      "sha256": "7f079705df1cb7da633fdb984c8c1363e77e82a737ab41f2343bab67e3016941"
+    },
+    {
+      "path": "src/bgin_json/parser.py",
+      "sha256": "52da29107e013b9d6b83a4b073937193fa8fe05e453920b4728b580c194ca1ff"
+    },
+    {
+      "path": "src/bgin_json/profiles.py",
+      "sha256": "5775cc26ce7b38b536e46d29ca080a7b727367b27314559c5abfd820413340a7"
+    },
+    {
+      "path": "src/bgin_json/publication.py",
+      "sha256": "1916647fb1a4c88fa6929fb3e4ccc112939d2995920cb4e22331cd6c4a8f79ad"
+    },
+    {
+      "path": "src/bgin_json/render/__init__.py",
+      "sha256": "8bca8362c90fed97a3db92460c64e88c0a0a8de7fb32e94eb869a7276bda968d"
+    },
+    {
+      "path": "src/bgin_json/render/archives.py",
+      "sha256": "f760018a35077ce331dbab550a6ba663c9a25aae88e661de9d7ac944bca0c576"
+    },
+    {
+      "path": "src/bgin_json/render/layout.py",
+      "sha256": "3318fe027d8a4031c4cde57e212b4bbfb25b8f957bfaadc832a54b62b0d21faf"
+    },
+    {
+      "path": "src/bgin_json/render/model.py",
+      "sha256": "49bc4e94e3afcee4d49fb14ac788b1d605eb59b86dcbd8b4bff94523e56e2317"
+    },
+    {
+      "path": "src/bgin_json/render/resources.py",
+      "sha256": "11f6475b6de4fe6dc4d088fe9551e0333f5eb4c9b55d03fd4c50efd3c1b70a5f"
+    },
+    {
+      "path": "src/bgin_json/render/scene.py",
+      "sha256": "d1dbd0761a9a67d8e0c433a6d1ac17c9fcabc1f0612b3f62452b73de66d9b6c7"
+    },
+    {
+      "path": "src/bgin_json/render/sprites.py",
+      "sha256": "84c6c592219d9f62383ff4022381daa218576b3717b81a5c52a2ff6ab1ac1b90"
+    },
+    {
+      "path": "src/bgin_json/render/text.py",
+      "sha256": "8851673465635716ea35b0e018ce9487d4c0eec56d381eec1382ec8f51a87572"
+    },
+    {
+      "path": "src/bgin_json/render/textures.py",
+      "sha256": "c793c15c1c965404aa1b7d69b6a1abbab5653a8131417c923bd06147ad1e95fa"
+    },
+    {
+      "path": "src/bgin_json/render/widgets.py",
+      "sha256": "d952534cee105a9506ad17e4dc99dffd29ddf5d4e0e8f15b7e697a873f8ea0ca"
+    },
+    {
+      "path": "src/bgin_json/resource_formats.py",
+      "sha256": "008b69406462cd521b97dcecc95f65575eeaea2fb267a6e940e80306441f8bae"
+    },
+    {
+      "path": "src/bgin_json/rpc.py",
+      "sha256": "0e58dd38df564499a1517ecbc28d5a3f38cf87739c1bae9ababb09d25fbe8889"
+    },
+    {
+      "path": "src/bgin_json/texture_conversion.py",
+      "sha256": "a644a7f2e2438f19a0ed19da23dcca44ce7eb22bf39211b33a78b60086ca0d66"
+    },
+    {
+      "path": "src/bgin_json/vocabulary.py",
+      "sha256": "6480d5fb1037711e338bd65e1891b3386700fac163b70e19f976766eab4357a0"
+    },
+    {
+      "path": "src/bgin_json/writer.py",
+      "sha256": "081635dfb899935f4c3773ddcbc30800d41bff7711e80c17ab383c1d1028cbe3"
+    },
+    {
+      "path": "vendor/bgin_core/__init__.py",
+      "sha256": "ac54c089eda60a35b7de715ec534439bc15b231c9b3f120039177eba535d159d"
+    },
+    {
+      "path": "vendor/bgin_core/codec.py",
+      "sha256": "39667c44a9c92b3fc4f541ef5afa9101af0914e508e950783d14c7239e325174"
+    },
+    {
+      "path": "vendor/bgin_core/hashes.py",
+      "sha256": "7098006d0c555c515c55f46f89550c1b275be9079c9e33e611f648f0e1e31318"
+    },
+    {
+      "path": "vendor/bgin_core/legacy.py",
+      "sha256": "ee626c335f60872e9f5ae5247a3137ac510e2278a5e98158bde0952423c10766"
+    },
+    {
+      "path": "vendor/bgin_core/model.py",
+      "sha256": "f0b67ce9fa914e0e415fb2001ae415d3ca27b6c2134da7bcf0a2ca59c024e09f"
+    },
+    {
+      "path": "vendor/bgin_core/profiles.py",
+      "sha256": "2ace6bb292dd1dbeb42d59532edbeb6365be771dd76a599a52cac566af5861da"
+    },
+    {
+      "path": "vendor/bgin_core/reader.py",
+      "sha256": "7c379cf5e2d097573cdeffcc15a0e96ca23c272de899748a9146e73a6542a1ab"
+    },
+    {
+      "path": "vendor/bgin_core/transaction.py",
+      "sha256": "3c37fbfccf3a7a3e4d4d94219f337e9ea71cb5318137f691dbf0d2bd972b5713"
+    },
+    {
+      "path": "vscode/src/backend.ts",
+      "sha256": "775649010efb1622c2befd771d4545c28fd1e3aeb4c9d9f4b97a6bc165a176c9"
+    },
+    {
+      "path": "vscode/src/clipboard.ts",
+      "sha256": "c75faea84295b5cc945a5dcab02d9698530929132b89677f13adcc08b463dfbd"
+    },
+    {
+      "path": "vscode/src/converterView.ts",
+      "sha256": "e8b5130192e6f966443ff229d4cd872a0a4243ae2fb901730cb17b0a9427f535"
+    },
+    {
+      "path": "vscode/src/dialogs.ts",
+      "sha256": "a141b15a838bbb3f5236ccb003669d16b3f8d08f5a52c1c30e9a103128407ec7"
+    },
+    {
+      "path": "vscode/src/document.ts",
+      "sha256": "a7d5ece76dcc49d832d713eea7b4a71dcbc63fb2d02d00c6be63abd738f9dc7f"
+    },
+    {
+      "path": "vscode/src/draftDiagnostics.ts",
+      "sha256": "23315e329f653b641a963c05beba5308f2ec006f65f0f305abc024a33eb6743b"
+    },
+    {
+      "path": "vscode/src/explorerNew.ts",
+      "sha256": "6d7b1a84485ddbfcdb758c04ffb44f666a16967384d182d0f28e266e89a2f59a"
+    },
+    {
+      "path": "vscode/src/extension.ts",
+      "sha256": "078ee661105198c9ef0dc0e99f6a8cb3c6f7851a2137b78110bab7ddddd22927"
+    },
+    {
+      "path": "vscode/src/formatProfiles.ts",
+      "sha256": "6574392c3cecb1ca6c81f5f5bcb38bd4eda2892b3cbf59d37baef089729d1056"
+    },
+    {
+      "path": "vscode/src/i18n.ts",
+      "sha256": "64fc878fbce42c1d4311670229da644fad7f9364e17826ed6567157871ed6a54"
+    },
+    {
+      "path": "vscode/src/icons.ts",
+      "sha256": "a52cccb644d80d573e1fede0cf557426f669bb9380507dae48cc921129b10484"
+    },
+    {
+      "path": "vscode/src/mcpBridge.ts",
+      "sha256": "815cbb883501bc0350f76918b175ba49904a00c927799c56ca3a08e765a3f145"
+    },
+    {
+      "path": "vscode/src/newDocument.ts",
+      "sha256": "0e75117fc78f47fb2f51509f459147db7e63a2a637579065237d1ab057bf75c6"
+    },
+    {
+      "path": "vscode/src/onboarding.ts",
+      "sha256": "f34f0e546b1e5d1f22d5177834b9c9dff44440d9c92fd2b68e838865dd9cae34"
+    },
+    {
+      "path": "vscode/src/preview.ts",
+      "sha256": "a4492eed25307f84287b855c3bdba1d30b54ea8ee88018491788858248e49551"
+    },
+    {
+      "path": "vscode/src/previewControls.ts",
+      "sha256": "4bdbc7f2bca289201c59eee6eb30e409bcbdd1b2ab5cad7e99f4df82f9124451"
+    },
+    {
+      "path": "vscode/src/propertyControls.ts",
+      "sha256": "3b88e3edc0aed75b4b0eff56f0f09dc4fce477b660353c4da5824e852a980ae8"
+    },
+    {
+      "path": "vscode/src/resourceDiscovery.ts",
+      "sha256": "10aac2de7be673d2024b8aea792b6aee88acf7ce4a8e28d183e2632be485ccf4"
+    },
+    {
+      "path": "vscode/src/resourcePanel.ts",
+      "sha256": "25deffd149ca2dc71cd67e05f1b988013b9d9b5a5461306be2698cc3f5394b0a"
+    },
+    {
+      "path": "vscode/src/resourceSettings.ts",
+      "sha256": "1c39995c02d882e434dd3f4244e25c5115893bb925e8aa4958dff000c2e0f60b"
+    },
+    {
+      "path": "vscode/src/terms.ts",
+      "sha256": "415b7c0416eefb4cabcc6be5d51faa6d7dbbeeefd8a0e96545dbc7a1ea7a20f5"
+    },
+    {
+      "path": "vscode/src/termsVersion.ts",
+      "sha256": "43cecee54b467cede37040f685d865a774d8f7bc26d0017c47c8084467773902"
+    },
+    {
+      "path": "vscode/src/textureConversion.ts",
+      "sha256": "edf5294522afc0924b95ef491505fdbde58e841ac25cd3a0ccecbe4f17f9c77a"
+    },
+    {
+      "path": "vscode/src/translations.ts",
+      "sha256": "5369a4fc0ac67341dbaa58080722d0aff1d3c9ff27936c8ed079099483d967b6"
+    },
+    {
+      "path": "vscode/src/tree.ts",
+      "sha256": "da6626e2b3c8253203fdc0b5f0f6ae0266d25141a0a9b87c615e00a9380084be"
+    },
+    {
+      "path": "vscode/src/typePicker.ts",
+      "sha256": "29112bbf59b40db01973da2c3a9e93e7dc018afdfee0c44af7aaf8aafde7313f"
+    },
+    {
+      "path": "vscode/src/webview.ts",
+      "sha256": "205b187a0b86ff399ae9daae67a591d8c3902dc263b7e0b8e74cc89e857a7746"
+    },
+    {
+      "path": "schemas/bgin-json.schema.json",
+      "sha256": "c4c6fbef1da774654009d666911130b96690dd0d047a3a9dc8258e06c72e212f"
+    }
+  ],
+  "compiled_modules": [
+    {
+      "source": "src/bgin_json/__init__.py",
+      "source_sha256": "3748eda78d7888d2c3d1613eb4f965f729c46fed135be19c090e1be944267b65",
+      "generated_c_sha256": "879704a6b98c670b4b53454b2732e4be732125788c5716c5a6a450a9522babd1",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/_wire.py",
+      "source_sha256": "c8a03e54c94ce8959137abe0c838dcfb1ddc98b6a1e54aac7a43223c964586d4",
+      "generated_c_sha256": "3019a134978c1363ab636b6b39615d2875567a57e31399acae3737454af3b0a6",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/catalog.py",
+      "source_sha256": "8e657aeae5124ee5551e4c95fb06e163425b0d3e0f4b86be6f191c976971b770",
+      "generated_c_sha256": "5d4ca5ee15439fa25da52aa80ebebaccf2738e18b840685c11eece21b397328f",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/drafts.py",
+      "source_sha256": "32696f609e67e0144d340ee201b9023983210eef7fafcbe8e22d11e97e571c16",
+      "generated_c_sha256": "d1035bfe87cfd9595fa37c3540f64488c9b7ab5efc333ac56df1a57f111bcc70",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/engine_catalog.py",
+      "source_sha256": "0c7045f71cfcfbb4157a3940bf1080cb0dffed61e47c07b5366a672ba30bc028",
+      "generated_c_sha256": "5e19f429b3a751c629ec6126c5eba6e32a9ba2acf8016267112addb043bc1c03",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/engine_params.py",
+      "source_sha256": "3e5e927f0e280ca1805e69d5b119b5666f9f218d6a7c932060d8c7ef164f0ea7",
+      "generated_c_sha256": "dbc5a2beeb0b4af468dab96ee621b3804e33338eb0f6fb4403c3b953b4b93b77",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/export.py",
+      "source_sha256": "da3f6f32f7ee1def2241650c8a804fd9c98a4e0b2b2c94305d2ee933a56281f9",
+      "generated_c_sha256": "cbfa3724c2352215030ae92312e5d641118798ce6b2ced83254762203c22a6cf",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/file_conversion.py",
+      "source_sha256": "3c59068a9f173c3a6a9ab5a4f594d0f6cd5f1d1ccd0909b57293470eb70c0dfa",
+      "generated_c_sha256": "dbf9be4d1dd46b29ae4399a6314c11f2542a3f0788042b5a404d8f2a5f5f75f6",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/header.py",
+      "source_sha256": "849e52b8e8421b1595a4a403aefdfffab8813ead25f3ac1b3360c9ff0911112e",
+      "generated_c_sha256": "2724180a7a6262d69f9153de24617ecbcd65e3bbe017ac6f69d5d55713775c73",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/names.py",
+      "source_sha256": "0646d984e38f007e9c4526f8354415096da7ef43a39fafea2f234f7318eb696e",
+      "generated_c_sha256": "b6ccc2612d12112021043b456d3dd6a2c36e5b19f1855b0d81aae61ed9e7ab0d",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/observed.py",
+      "source_sha256": "7f079705df1cb7da633fdb984c8c1363e77e82a737ab41f2343bab67e3016941",
+      "generated_c_sha256": "e4ab70dda73239c815d21abc3ec75c427301958e350130ba4dbede0f89760574",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/parser.py",
+      "source_sha256": "52da29107e013b9d6b83a4b073937193fa8fe05e453920b4728b580c194ca1ff",
+      "generated_c_sha256": "4a4692aaa40faf5db5ef36ce16616e8397dce6eec90f704bced7078186483a7a",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/profiles.py",
+      "source_sha256": "5775cc26ce7b38b536e46d29ca080a7b727367b27314559c5abfd820413340a7",
+      "generated_c_sha256": "2ba9cf7289da226c9d81f1705c660ab0ee0cbdc506a74e1dd4ee6dbcae4b2c63",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/publication.py",
+      "source_sha256": "1916647fb1a4c88fa6929fb3e4ccc112939d2995920cb4e22331cd6c4a8f79ad",
+      "generated_c_sha256": "f12d29b31d5f89e16193796442ceb8a6e28bd4968ba5b04c3fc4df60ae5fe381",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/__init__.py",
+      "source_sha256": "8bca8362c90fed97a3db92460c64e88c0a0a8de7fb32e94eb869a7276bda968d",
+      "generated_c_sha256": "06ef84fc40021ca190f1124c344bc6d8cbc3d5a477507c67b9ac4fcbaec6d196",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/archives.py",
+      "source_sha256": "f760018a35077ce331dbab550a6ba663c9a25aae88e661de9d7ac944bca0c576",
+      "generated_c_sha256": "8d418c272f0d5ee21e717e553f76f385e4d55f5ff1957c50f3aaca49a498e76e",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/layout.py",
+      "source_sha256": "3318fe027d8a4031c4cde57e212b4bbfb25b8f957bfaadc832a54b62b0d21faf",
+      "generated_c_sha256": "38b8eb1738ad4979a4ae6610ff6a36ae1c626989a4148bdb5adab02f08a8f026",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/model.py",
+      "source_sha256": "49bc4e94e3afcee4d49fb14ac788b1d605eb59b86dcbd8b4bff94523e56e2317",
+      "generated_c_sha256": "4c422fa6c4ff2b1e6a3fda4d8c663c0e7d1bd8b5d66e1bc9d396e9454b99aa0f",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/resources.py",
+      "source_sha256": "11f6475b6de4fe6dc4d088fe9551e0333f5eb4c9b55d03fd4c50efd3c1b70a5f",
+      "generated_c_sha256": "05e1b712f4acf8796508fa60cb756224c254070947623b5181fa3fd995bf0dec",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/scene.py",
+      "source_sha256": "d1dbd0761a9a67d8e0c433a6d1ac17c9fcabc1f0612b3f62452b73de66d9b6c7",
+      "generated_c_sha256": "3f14d1ea501a37e6c044aa1b8d7affc0e6899524ef8667c629230902d2e486c8",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/sprites.py",
+      "source_sha256": "84c6c592219d9f62383ff4022381daa218576b3717b81a5c52a2ff6ab1ac1b90",
+      "generated_c_sha256": "dc1d8ba4612d79b0dc9e08a63b1bdf35fe38fc0875ddb0ba2537210111220860",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/text.py",
+      "source_sha256": "8851673465635716ea35b0e018ce9487d4c0eec56d381eec1382ec8f51a87572",
+      "generated_c_sha256": "36ed22b482de8d8ad88317ac72057e5f75176282e108b30c86140dd08776bf4b",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/textures.py",
+      "source_sha256": "c793c15c1c965404aa1b7d69b6a1abbab5653a8131417c923bd06147ad1e95fa",
+      "generated_c_sha256": "50f663ee1de86a5aa08b7ae19d456705bcb7f6de6b85c332843536157ef95180",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/render/widgets.py",
+      "source_sha256": "d952534cee105a9506ad17e4dc99dffd29ddf5d4e0e8f15b7e697a873f8ea0ca",
+      "generated_c_sha256": "dde6c025590fb4cc52079489fdbe7ea81aff414e180038989691806b6c99150e",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/resource_formats.py",
+      "source_sha256": "008b69406462cd521b97dcecc95f65575eeaea2fb267a6e940e80306441f8bae",
+      "generated_c_sha256": "cf6a7ba47c3d2a77f360a1b5cfb0040fe25d0163133e721c0970a3f268c5d297",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/rpc.py",
+      "source_sha256": "0e58dd38df564499a1517ecbc28d5a3f38cf87739c1bae9ababb09d25fbe8889",
+      "generated_c_sha256": "c6afe31214804364b0a2305cfe4209a6ff88fd4a574dd14ba06de4a98656d080",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/texture_conversion.py",
+      "source_sha256": "a644a7f2e2438f19a0ed19da23dcca44ce7eb22bf39211b33a78b60086ca0d66",
+      "generated_c_sha256": "99c7b571af99eb1d2778595e0356967e0339ef05317e0fadfc9cf471b0ebf73d",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/vocabulary.py",
+      "source_sha256": "6480d5fb1037711e338bd65e1891b3386700fac163b70e19f976766eab4357a0",
+      "generated_c_sha256": "0310275c4835f18adc3b94474051c511f61b80cf0c22ff4f47301fe25a0e0eba",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "src/bgin_json/writer.py",
+      "source_sha256": "081635dfb899935f4c3773ddcbc30800d41bff7711e80c17ab383c1d1028cbe3",
+      "generated_c_sha256": "d20a79b36e282b62ea2513d508eac3bcdbd89b317d7c896484bc6103f05585e5",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/__init__.py",
+      "source_sha256": "ac54c089eda60a35b7de715ec534439bc15b231c9b3f120039177eba535d159d",
+      "generated_c_sha256": "14d3102d917f7e9faa7f6bfa8dbd46498246fa50d67b2e1b391665c6b124ea4a",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/codec.py",
+      "source_sha256": "39667c44a9c92b3fc4f541ef5afa9101af0914e508e950783d14c7239e325174",
+      "generated_c_sha256": "0ce88f0d5161d25ca0d9a22df8a82c8c68eae557412669d9dc0bcdf10af4c6aa",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/hashes.py",
+      "source_sha256": "7098006d0c555c515c55f46f89550c1b275be9079c9e33e611f648f0e1e31318",
+      "generated_c_sha256": "4f0f73f30be981b0fe6e1082c674cc14d209ab88b431cbfdd0c260945beb5a95",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/legacy.py",
+      "source_sha256": "ee626c335f60872e9f5ae5247a3137ac510e2278a5e98158bde0952423c10766",
+      "generated_c_sha256": "9cbfb05d39816370bffb2ffc10e568840131b8a8d324f64e677e66d63daeed84",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/model.py",
+      "source_sha256": "f0b67ce9fa914e0e415fb2001ae415d3ca27b6c2134da7bcf0a2ca59c024e09f",
+      "generated_c_sha256": "a941b90b5fb5bcf3cfdfa9c3456d64340a8c9037550111ac98b876f84265b308",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/profiles.py",
+      "source_sha256": "2ace6bb292dd1dbeb42d59532edbeb6365be771dd76a599a52cac566af5861da",
+      "generated_c_sha256": "833a1c3e5cc2be4eb348f6c4fe7531dea81a4174e5587b584ad6cd78c23e3f03",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/reader.py",
+      "source_sha256": "7c379cf5e2d097573cdeffcc15a0e96ca23c272de899748a9146e73a6542a1ab",
+      "generated_c_sha256": "ab662111e240141e3d1a31b4ed1b75e740e1022b4add9ac606f24b7073f0846d",
+      "source_predates_generated_c": true
+    },
+    {
+      "source": "vendor/bgin_core/transaction.py",
+      "source_sha256": "3c37fbfccf3a7a3e4d4d94219f337e9ea71cb5318137f691dbf0d2bd972b5713",
+      "generated_c_sha256": "dfdb5068710f497d815c2dc3b0d0afa838754947ebd312b7f15a6aa072bcc3cd",
+      "source_predates_generated_c": true
+    }
+  ],
+  "validation_logs": {
+    "tests-python-final.log": "859170de58e091d9ffd75eb459fdaa241ace55a87b9c3bba5076d2fa7d3a216f",
+    "test-product-modern.log": "441591675f88e03a1f183a0d5257553a5c2025ceb6271100e7969d6436dd75e2",
+    "580-main-independent.log": "e4cc65acf13f12c6bc5855546d5efd7df4b505a9b732036111ce979eb923fe1e",
+    "extension-host-packaged.log": "31ddeb56743da175fb1f572fc6c124f381031438779be80eecce09d3aa7ed216",
+    "ui-native-final.log": "78ddbd514f0aaf44154e67dce739b83c8ec3c2aa39174113ff874354cb87ca2e",
+    "graph-update.log": "eb4447a4a9400397261834631d25702ff97a2e9388a545387a8e88a342d0e4b5",
+    "package-final.log": "dd7cabf9b79b070061d11a0eabed2d599c529b0e0ff59ad2b72e8c722fa08831"
+  },
+  "notes": [
+    "The native worker serves RPC; stdio MCP uses the separate Python adapter.",
+    "Compiled module timestamps and generated-code hashes supplement behavioral checks; they are not a reproducible-build proof.",
+    "No game-loading test of modified resources was performed."
+  ],
+  "checks": {
+    "python_suite": {
+      "tests": 165,
+      "skipped": 3,
+      "passed": true
+    },
+    "texture_conversion_focused": {
+      "tests": 3,
+      "passed": true
+    },
+    "independent_corpora": {
+      "a8-3.7.0": {
+        "supported": 70,
+        "total": 74
+      },
+      "a8-5.8.0-minigame": {
+        "supported": 10,
+        "total": 13
+      },
+      "a8-5.8.0-main": {
+        "supported": 85,
+        "total": 96
+      }
+    },
+    "typescript": true,
+    "packaged_extension_host": true,
+    "native_worker_ui": true,
+    "sidebar_browser_ui": true,
+    "worker_without_python_path": true,
+    "local_document_links": true,
+    "schema_json": true,
+    "git_diff_check": true,
+    "device_game_loading": false
+  }
+}

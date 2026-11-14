@@ -88,8 +88,11 @@ class Scene:
     ):
         self.document, self.o = document, options(raw_options)
         self.warnings = set()
-        if document.get("format") == "legacy":
+        if document.get("format") in ("legacy", "a8-0.0.2"):
             self.warnings.add("Legacy BGIN: layout uses the current preview model; older engine behaviour may differ")
+        if document.get("format") in ("a8-3.7.0", "a8-5.8.0"):
+            self.warnings.add("Modern BGIN preview uses the older layout model; engine behaviour is unverified")
+        self.preview_coverage(document)
         self.resources = resources or Resources(config or {}, source, self.warnings)
         self.resources.configure(config or {}, source, self.warnings)
         # The open document provides its own namespace; other aliases are explicit bindings.
@@ -107,6 +110,18 @@ class Scene:
         self.content_sizes = {}
         self.text_reference_sizes = {}
         self.font_ids = {}
+
+    def preview_coverage(self, item):
+        if isinstance(item, dict):
+            if set(item) == {"value", "variants"}:
+                self.warnings.add("Property variants are preserved; preview uses primary values without selecting variants")
+            if item.get("color_channels"):
+                self.warnings.add("Hashed keyframe color channels are preserved but are not rendered")
+            for child in item.values():
+                self.preview_coverage(child)
+        elif isinstance(item, list):
+            for child in item:
+                self.preview_coverage(child)
 
     def text_style(self, node, content_rect=None):
         p = properties(node)

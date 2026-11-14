@@ -15,6 +15,8 @@ def main(argv=None):
     parser.add_argument("-o", "--output")
     parser.add_argument("--to", choices=("json", "bgin"), help="Default: infer from input extension")
     parser.add_argument("--dialect", choices=("auto", "ui", "templates", "sprites"), default="auto")
+    parser.add_argument("--target-format", choices=("a8-0.0.2", "a8-1.6.0", "a8-3.7.0", "a8-5.8.0"),
+                        help="Explicit target BGIN mode; otherwise preserve the source mode")
     parser.add_argument("--force", action="store_true", help="Replace an existing destination")
     parser.add_argument("--compact", action="store_true")
     parser.add_argument("--max-bytes", type=int, default=Limits().max_bytes)
@@ -25,12 +27,15 @@ def main(argv=None):
         parser.error("JSON to BGIN requires -o")
     if args.force and not args.output:
         parser.error("--force requires -o")
+    if args.target_format and (not args.output or direction != "bgin"):
+        parser.error("--target-format requires --to bgin and -o")
     try:
         limits = Limits(max_bytes=args.max_bytes, max_depth=args.max_depth)
         indent = None if args.compact else 2
         if args.output:
             document = convert_file(args.input, args.output, to=direction, dialect=args.dialect,
-                         limits=limits, overwrite=args.force, indent=indent)
+                         limits=limits, overwrite=args.force, indent=indent,
+                         target_format=args.target_format)
         else:
             document = load(args.input, dialect=args.dialect, limits=limits)
             if hasattr(sys.stdout, "reconfigure"):

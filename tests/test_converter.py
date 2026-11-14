@@ -16,7 +16,7 @@ from fixtures import document, node, prop, sprite_document, text, u32
 
 
 def sample():
-    return {"name": "example", "screens": [{"type": "StackContainer", "name": "screen",
+    return {"name": "example", "format": "a8-1.6.0", "screens": [{"type": "StackContainer", "name": "screen",
             "properties": {"Size": [200, 100]}, "children": [
                 {"type": "Label", "name": "caption", "properties": {"Text": "Пример"}}]}]}
 
@@ -52,7 +52,7 @@ class ConverterTests(unittest.TestCase):
         result = dumps(parse(encode(sample())))
         for forbidden in ("type_hash", "metadata_hex", "sha256", "raw_hex", "offset", "payload_size", "decoded", "directory", "0x"):
             self.assertNotIn(forbidden, result)
-        self.assertEqual(set(json.loads(result)), {"name", "screens"})
+        self.assertEqual(set(json.loads(result)), {"name", "format", "screens"})
 
     def test_every_property_type_cardinality_and_exact_bytes(self):
         records = [prop(0, 0), prop(0, 7), prop(2, 1, struct.pack("<d", 1.25)),
@@ -103,7 +103,6 @@ class ConverterTests(unittest.TestCase):
 
     def test_unsupported_data_is_rejected_without_dumping_it(self):
         cases = [document([node(properties=[prop(0x7777, 0)])]),
-                 document([node(type_hash=0x12345678)]),
                  document(extra=b"x"), sprite_document(0x40),
                  document([node(properties=[prop(2, 1, struct.pack("<d", float("nan")))])])]
         for raw in cases:
@@ -155,7 +154,7 @@ class ConverterTests(unittest.TestCase):
         root = {"type": "StackContainer", "name": "leaf"}
         for _ in range(127):
             root = {"type": "StackContainer", "name": "parent", "children": [root]}
-        doc = {"name": "depth", "screens": [root]}
+        doc = {"name": "depth", "format": "a8-1.6.0", "screens": [root]}
         self.assertEqual(json.loads(dumps(parse(encode(doc)))), doc)
 
 

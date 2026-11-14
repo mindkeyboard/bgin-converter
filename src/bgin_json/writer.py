@@ -9,6 +9,7 @@ from .parser import FILE_SIGNATURE, IDENTITY, MOVIE_SETTINGS, BginError, Limits,
 from .engine_params import LEGACY_NAMES
 from .names import TYPE_NAMES
 from .vocabulary import PROPERTY_KINDS, PROPERTY_NAMES, ENUMS
+from .profiles import FORMATS, normalize_format, hash_reference, identifier
 
 NAMES = {**LEGACY_NAMES, **{name: h for h, name in PROPERTY_NAMES.items()}}
 TYPES = {name: h for h, name in TYPE_NAMES.items()}
@@ -63,9 +64,11 @@ def floating(value, fmt, path):
 
 
 class _Writer:
-    def __init__(self, dialect, limits, legacy=False):
+    def __init__(self, dialect, limits, profile="a8-1.6.0"):
         self.dialect, self.limits = dialect, limits
-        self.legacy = legacy
+        self.profile = profile
+        self.legacy = profile == "a8-0.0.2"
+        self.modern = profile == "a8-5.8.0"
         self.nodes = self.values = 0
         self.output_size = 0
 
@@ -100,6 +103,8 @@ class _Writer:
         if self.legacy:
             object_keys(token, ("enum", "value"), path)
             label = token.get("enum")
+            if hash_reference(label) is not None:
+                error("The ~0.0.2 format requires the actual enum spelling", path)
             default = ENUMS.get(name, {}).get(label)
             if "value" not in token and default is None:
                 error("Unregistered legacy enum choice requires an explicit value", path)
@@ -109,17 +114,25 @@ class _Writer:
         label = token.get("enum")
         if not isinstance(label, str):
             error("Expected an enum name", path)
-        if label not in NAMES and token.get("text") != label:
+        reference = hash_reference(label)
+        if label not in NAMES and reference is None and token.get("text") != label:
             error("Unknown enum name needs matching text", path)
         if label not in ENUMS.get(name, {}) and "value" not in token:
             error("Unregistered enum choice requires an explicit value", path)
-        default = ENUMS.get(name, {}).get(label, (0, NAMES.get(label, jet_hash(label)), ""))
+        default = ENUMS.get(name, {}).get(label, (0, identifier(label, NAMES, jet_hash), ""))
         code = integer(token.get("value", default[0]), 2147483647, path, -2147483648)
         return struct.pack("<iI", code, default[1]) + text(token.get("text", default[2]), path)
 
-    def property(self, name, value, path):
-        if not isinstance(name, str) or not self.legacy and name not in NAMES:
+    def property(self, name, value, path, *, count_output=True):
+        if not isinstance(name, str) or not self.legacy and name not in NAMES and hash_reference(name) is None:
             error("Property name is absent from the supported vocabulary", path)
+        variants = []
+        if isinstance(value, dict) and "variants" in value:
+            object_keys(value, ("value", "variants"), path)
+            if not self.modern:
+                error("Property variants require the ~5.8.0 format", path + "/variants")
+            variants = array(value["variants"], path + "/variants")
+            value = value.get("value")
         kind = PROPERTY_KINDS.get(name)
         if name in ("MinSize", "MaxSize"):
             kind = "vector" if isinstance(value, list) else "number"
@@ -166,12 +179,34 @@ class _Writer:
                 if chunk_size > self.limits.max_bytes:
                     raise BginError("Property size budget exceeded", 0, path, "limit_exceeded")
             payload = b"".join(chunks)
-        header = text(name, path) + struct.pack("<IH", KINDS[kind], count) if self.legacy else struct.pack("<IHH", NAMES.get(name, jet_hash(name)), KINDS[kind], count)
-        self.reserve(len(header) + len(payload), path)
+        if self.legacy and hash_reference(name) is not None:
+            error("The ~0.0.2 format requires the actual property spelling", path)
+        header = (text(name, path) + struct.pack("<IH", KINDS[kind], count) if self.legacy else
+                  struct.pack("<IHB" if self.modern else "<IHH", identifier(name, NAMES, jet_hash), KINDS[kind],
+                              integer(count, 255 if self.modern else 65535, path)))
+        if self.modern:
+            suffix = bytes([integer(len(variants), 255, path + "/variants")])
+            for i, variant in enumerate(variants):
+                vp = f"{path}/variants/{i}"
+                object_keys(variant, ("key", "value"), vp)
+                if isinstance(variant.get("value"), dict) and "variants" in variant["value"]:
+                    error("Property variants cannot contain nested variants", vp + "/value")
+                key = variant.get("key")
+                if not isinstance(key, str):
+                    error("Variant key must be a name or #XXXXXXXX identifier", vp + "/key")
+                # Reuse the typed encoder, but retain only count and value bytes;
+                # each alternative inherits the original property's wire kind.
+                compiled = self.property(name, variant.get("value"), vp + "/value", count_output=False)
+                if struct.unpack_from("<H", compiled, 4)[0] != KINDS[kind]:
+                    error("Variant value kind differs from its property", vp + "/value")
+                suffix += struct.pack("<I", identifier(key, NAMES, jet_hash)) + compiled[6:-1]
+            payload += suffix
+        if count_output:
+            self.reserve(len(header) + len(payload), path)
         return header + payload
 
     def frame(self, source, path):
-        object_keys(source, ("frame", "position", "rotation", "scale", "strings", "event", "colors"), path)
+        object_keys(source, ("frame", "position", "rotation", "scale", "strings", "event", "colors", "color_channels"), path)
         index = integer(source.get("frame"), 0xFFFFFFFE, path + "/frame")
         flags, payload = 0, b""
         for flag, channel, count in ((1, "position", 2), (2, "rotation", 1), (4, "scale", 2)):
@@ -201,10 +236,30 @@ class _Writer:
             payload += struct.pack("<IIB", *(integer(v, m, path) for v, m in zip(values, (0xFFFFFFFF, 0xFFFFFFFF, 255))))
         colors_size = 0
         if "colors" in source:
+            if self.modern:
+                error("The ~5.8.0 format uses color_channels, not old color properties", path + "/colors")
             flags |= 0x20
             colors = self.properties(source["colors"], path + "/colors")
             colors_size = len(colors) - 2
             payload += colors
+        if "color_channels" in source:
+            if not self.modern:
+                error("Color channels require the ~5.8.0 format", path + "/color_channels")
+            flags |= 0x20
+            channels = array(source["color_channels"], path + "/color_channels")
+            payload += self.counted(channels, path)
+            for i, item in enumerate(channels):
+                cp = f"{path}/color_channels/{i}"
+                object_keys(item, ("key", "interpolation", "value"), cp)
+                key = item.get("key")
+                if not isinstance(key, str):
+                    error("Channel key must be a name or #XXXXXXXX identifier", cp + "/key")
+                values = array(item.get("value"), cp + "/value")
+                self.budget(len(values), cp)
+                payload += struct.pack("<IBB", identifier(key, NAMES, jet_hash),
+                                       integer(item.get("interpolation", 0), 255, cp),
+                                       integer(len(values), 255, cp))
+                payload += b"".join(floating(v, "f", cp) for v in values)
         self.budget(1, path)
         self.reserve(6 + len(payload) - colors_size, path)
         return struct.pack("<IH", index, flags) + payload
@@ -218,8 +273,10 @@ class _Writer:
         fields = ("type", "name", "transform", "properties", "children", "tracks", "settings")
         object_keys(source, fields + (("marker", "keyframes") if track else ()), path)
         type_name = source.get("type")
-        if not isinstance(type_name, str) or not self.legacy and type_name not in TYPES:
+        if not isinstance(type_name, str) or not self.legacy and type_name not in TYPES and hash_reference(type_name) is None:
             error("Unknown node type", path + "/type")
+        if self.legacy and hash_reference(type_name) is not None:
+            error("The ~0.0.2 format requires the actual type spelling", path + "/type")
         payload = text(source.get("name"), path + "/name")
         self.reserve((len(text(type_name, path)) + 4 if self.legacy else 8) + len(payload), path)
         children = array(source.get("children", []), path + "/children")
@@ -249,22 +306,27 @@ class _Writer:
                 payload += b"".join(self.frame(f, f"{tp}/keyframes/{j}") for j, f in enumerate(frames))
                 payload += struct.pack("<I", 0xFFFFFFFF)
         else:
-            self.reserve(24, path)
+            self.reserve(4 if self.modern else 24, path)
             if "tracks" in source or "settings" in source:
                 error("Only a sprite Movie has tracks or settings", path)
             if "transform" in source:
                 values = array(source["transform"], path + "/transform")
                 if len(values) != 5:
                     error("transform needs five numbers", path)
-                payload += b"".join(floating(v, "f", path) for v in values)
-            else:
+                encoded_transform = b"".join(floating(v, "f", path) for v in values)
+                if self.modern:
+                    if encoded_transform != IDENTITY:
+                        error("Nonidentity transform cannot be represented in ~5.8.0", path + "/transform")
+                else:
+                    payload += encoded_transform
+            elif not self.modern:
                 payload += IDENTITY
             payload += self.properties(source.get("properties", {}), path + "/properties")
             payload += self.counted(children, path)
             payload += b"".join(self.node(c, f"{path}/children/{i}", depth + 1) for i, c in enumerate(children))
         if len(payload) > self.limits.max_bytes:
             raise BginError("Output size budget exceeded", 0, path, "limit_exceeded")
-        header = text(type_name, path) + struct.pack("<I", len(payload)) if self.legacy else struct.pack("<II", TYPES[type_name], len(payload))
+        header = text(type_name, path) + struct.pack("<I", len(payload)) if self.legacy else struct.pack("<II", identifier(type_name, TYPES, jet_hash), len(payload))
         return header + payload
 
 
@@ -272,10 +334,12 @@ def encode(document: dict, *, limits: Limits | None = None) -> bytes:
     """Compile without an original BGIN, sidecar, or workspace dependency."""
     limits = limits or Limits()
     object_keys(document, ("name", "dialect", "screens", "format"), "/")
-    wire_format = document.get("format", "hashed")
-    if wire_format not in ("hashed", "legacy"):
-        error("Unknown BGIN format", "/format")
-    legacy = wire_format == "legacy"
+    try:
+        profile = normalize_format(document.get("format"))
+    except ValueError as exc:
+        error(str(exc), "/format")
+    legacy = profile == "a8-0.0.2"
+    extended = profile in ("a8-3.7.0", "a8-5.8.0")
     if "name" not in document and document.get("screens") == []:
         if "format" in document:
             error("An unnamed empty draft has no binary format yet", "/format")
@@ -293,17 +357,52 @@ def encode(document: dict, *, limits: Limits | None = None) -> bytes:
     if not screens:
         error("At least one screen is required", "/screens")
     integer(len(screens), 65535, "/screens")
-    writer = _Writer(dialect, limits, legacy)
-    writer.reserve(4 + len(_wire.LEGACY_MARKER) + len(name_bytes) + 2 if legacy else 8 + len(name_bytes) + 4 + 8 * len(screens), "/")
+    writer = _Writer(dialect, limits, profile)
+    writer.reserve(4 + len(_wire.LEGACY_MARKER) + len(name_bytes) + 2 if legacy else 8 + len(name_bytes) + (10 if extended else 4) + 8 * len(screens), "/")
     blobs = [writer.node(s, f"/screens/{i}") for i, s in enumerate(screens)]
-    prefix = struct.pack("<II", _wire.MAGIC, FILE_SIGNATURE) + name_bytes + struct.pack("<H", len(screens))
-    offset = len(prefix) + 8 * len(screens) + 2
+    prefix = struct.pack("<II", _wire.MAGIC, FILE_SIGNATURE) + name_bytes
+    prefix += (struct.pack("<I", 4 + 8 * len(screens)) if extended else b"") + struct.pack("<H", len(screens))
+    offset = len(prefix) + 8 * len(screens) + (4 if extended else 2)
     directory = bytearray()
     for screen, blob in zip(screens, blobs):
         directory += struct.pack("<II", jet_hash(screen["name"]), offset)
         offset += len(blob)
-    result = struct.pack("<I", _wire.MAGIC) + _wire.LEGACY_MARKER + name_bytes + struct.pack("<H", len(screens)) + b"".join(blobs) if legacy else prefix + directory + struct.pack("<H", len(screens)) + b"".join(blobs)
+    result = struct.pack("<I", _wire.MAGIC) + _wire.LEGACY_MARKER + name_bytes + struct.pack("<H", len(screens)) + b"".join(blobs) if legacy else prefix + directory + (b"\x00\x00" if extended else b"") + struct.pack("<H", len(screens)) + b"".join(blobs)
     if len(result) > limits.max_bytes:
         raise BginError("Output size budget exceeded", 0, "/", "limit_exceeded")
-    _wire.parse(bytes(result), dialect=dialect, limits=limits)
+    _wire.parse(bytes(result), dialect=dialect, limits=limits, format=profile)
     return bytes(result)
+
+
+def convert_document(document: dict, target_format: str, *, limits: Limits | None = None) -> dict:
+    """Return a separately owned document after lossless target checks.
+
+    Conversion never rewrites the source object. Unknown identifiers cannot be
+    certified for an earlier engine, and variant/channel semantics are not guessed.
+    """
+    import copy
+    # Validate the source before converting; a target must not make an invalid
+    # source document appear valid by replacing its format field.
+    encode(document, limits=limits)
+    target = normalize_format(target_format)
+    source = normalize_format(document.get("format"))
+    result = copy.deepcopy(document)
+    if "name" not in result and result.get("screens") == []:
+        error("Choose a name and first screen before converting formats", "/screens")
+    def check(node, path):
+        if FORMATS.index(target) < FORMATS.index(source):
+            if hash_reference(node.get("type")) is not None:
+                error("Unknown type is not verified for the target engine", path + "/type")
+            props = node.get("properties", {})
+            pairs = props.items() if isinstance(props, dict) else ((k,v) for item in props for k,v in item.items())
+            for key, value in pairs:
+                if hash_reference(key) is not None:
+                    error("Unknown property is not verified for the target engine", path + "/properties/" + key)
+        for name in ("children", "tracks"):
+            for i, child in enumerate(node.get(name, [])):
+                check(child, f"{path}/{name}/{i}")
+    for i, node in enumerate(result.get("screens", [])):
+        check(node, f"/screens/{i}")
+    result["format"] = target
+    encode(result, limits=limits)
+    return result

@@ -83,10 +83,11 @@ def finish_distribution(binary, target, venv):
         version = platform.python_version()
         with urlopen(f"https://raw.githubusercontent.com/python/cpython/v{version}/LICENSE", timeout=30) as license_file:
             (licenses / "Python.txt").write_bytes(license_file.read())
-    for package in ("pillow", "texture2ddecoder"):
+    for package in ("pillow", "texture2ddecoder", "lz4", "zstd"):
         for license_file in venv.glob(f"**/{package}-*.dist-info/**/LICENSE*"):
             if license_file.is_file():
                 shutil.copyfile(license_file, licenses / f"{package}-{license_file.name}.txt")
+    shutil.copyfile(Path(__file__).resolve().parents[1] / "vendor/licenses/Zstandard.txt", licenses / "Zstandard.txt")
     (binary.parent / "target.json").write_text(json.dumps({"target": target}) + "\n", encoding="utf-8")
 
 
@@ -109,12 +110,23 @@ def main():
     python = venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
     if not python.is_file():
         subprocess.run([sys.executable, "-m", "venv", str(venv)], check=True)
-    dependencies = ["Nuitka==" + args.nuitka_version, "Pillow==13.0.0", "texture2ddecoder==1.0.6"]
+    dependencies = ["Nuitka==" + args.nuitka_version, "Pillow==13.0.0", "texture2ddecoder==1.0.6", "lz4==4.4.5"]
     if target.startswith("alpine-"):
         # Nuitka rejects the patchelf 0.18.0 shipped with Alpine 3.23.
         dependencies.append("patchelf==0.17.2.4")
     subprocess.run(
         [str(python), "-m", "pip", "install", *dependencies],
+        check=True,
+    )
+    # The published zstd wheels omit the v0.6 decoder used by game resources.
+    # Compile its source distribution with legacy support on every target.
+    legacy_env = dict(os.environ, ZSTD_LEGACY="1")
+    subprocess.run(
+        [str(python), "-m", "pip", "install", "--use-pep517", "--no-binary=zstd", "--no-cache-dir", "--force-reinstall", "zstd==1.5.7.2"],
+        env=legacy_env, check=True,
+    )
+    subprocess.run(
+        [str(python), "-c", "import zstd; assert zstd.ZSTD_legacy_support(), 'Zstd legacy decoder was not built'"],
         check=True,
     )
     # Keep the entry outside the package so Python relative imports retain their identity.
@@ -139,6 +151,8 @@ def main():
         "--include-module=PIL.Image",
         "--include-module=PIL.ImageFont",
         "--include-module=texture2ddecoder",
+        "--include-module=lz4.block",
+        "--include-module=zstd",
         "--output-dir=" + str(output),
         "--report=" + str(output / "compilation-report.xml"),
         "--jobs=" + str(args.jobs),

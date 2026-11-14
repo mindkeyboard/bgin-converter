@@ -2,6 +2,7 @@ import { nodeIcon } from "./icons";
 
 export type TreeRow = {
   node: any;
+  detail?: string;
   path: string;
   depth: number;
   opened: boolean;
@@ -98,14 +99,14 @@ export class ObjectTree {
         const row = byPath.get(element.dataset.path!);
         if (!row) continue;
         element.querySelector("span")!.textContent = row.node.name;
-        element.querySelector("small")!.textContent = row.node.type;
+        element.querySelector("small")!.textContent = row.detail ?? row.node.type;
         if (element.dataset.kind !== row.node.type) {
           element
             .querySelector(".node-icon")
             ?.replaceWith(nodeIcon(row.node.type));
           element.dataset.kind = row.node.type;
         }
-        element.title = row.node.name + " · " + row.node.type;
+        element.title = row.node.name + " · " + (row.detail ?? row.node.type);
       }
       this.select(selected);
     } else this.render();
@@ -190,8 +191,8 @@ export class ObjectTree {
       const name = document.createElement("span"),
         type = document.createElement("small");
       name.textContent = item.node.name;
-      type.textContent = item.node.type;
-      row.title = item.node.name + " · " + item.node.type;
+      type.textContent = item.detail ?? item.node.type;
+      row.title = item.node.name + " · " + (item.detail ?? item.node.type);
       row.append(expander, nodeIcon(item.node.type), name, type);
       row.onclick = () => this.choose(item.path);
       if (this.menu)

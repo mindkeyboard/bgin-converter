@@ -43,7 +43,7 @@ class MCPBase(unittest.IsolatedAsyncioTestCase):
         self.addCleanup(self.temporary.cleanup)
         self.root = Path(self.temporary.name)
         self.config = self.root / "settings.json"
-        self.core = Path(os.environ.get("BGIN_CORE_PATH", str(PROJECT.parent / "tools")))
+        self.core = Path(os.environ.get("BGIN_CORE_PATH", str(PROJECT / "vendor")))
 
     @asynccontextmanager
     async def server(self, *, core=None):
@@ -94,7 +94,8 @@ class MCPProtocolTests(MCPBase):
             for filename in ("source.json", "source.bgin"):
                 with self.subTest(filename=filename):
                     read = await self.call(session, "bgin_read", source={"path": filename}, depth=0)
-                    self.assertEqual(read["document"], authored)
+                    expected = dict(authored, format="a8-1.6.0") if filename.endswith(".bgin") else authored
+                    self.assertEqual(read["document"], expected)
                     self.assertFalse(read["draft"])
                     self.assertEqual(Path(read["source"]), self.root / filename)
                     self.assertEqual(read["tree"][0]["childrenCount"], 2)
@@ -207,7 +208,7 @@ class MCPProtocolTests(MCPBase):
             raw = target.read_bytes()
             independent = bgin_core.BginSession(raw, "ui")
             self.assertEqual(bgin_core.encode_document(independent.snapshot(), force=True), raw)
-            self.assertEqual(parse(raw), document())
+            self.assertEqual(parse(raw), dict(document(), format="a8-1.6.0"))
             await self.error(session, "bgin_export", source={"path": "export.bgin"}, destination="export.bgin", overwrite=True)
             self.assertEqual(target.read_bytes(), raw)
             target.write_bytes(backup.read_bytes())

@@ -1,0 +1,36 @@
+{
+  "apk_sha256": "f8ca6c7616f2c6d9824500d6171eb78646cb97dfa41145b070f88604f9c95209",
+  "strings": [
+    {
+      "file": "classes.dex",
+      "term": "common_pack",
+      "offset": 7191572
+    },
+    {
+      "file": "classes.dex",
+      "term": "AssetsManagerPlugin",
+      "offset": 6150464
+    },
+    {
+      "file": "classes.dex",
+      "term": "5.8.0k",
+      "offset": 6069190
+    },
+    {
+      "file": "classes2.dex",
+      "term": "assetpacks.AssetPackExtractionService",
+      "offset": 6469349
+    }
+  ],
+  "manifest_asset_pack_service": true,
+  "verified_internal_data_dir": "/data/user/0/com.gameloft.android.ANMP.GloftA8HM580",
+  "expected_relative_path": "files/assetpacks/common_pack/<version>/<version>/assets/data",
+  "exact_path_verified": false,
+  "shell_access": "Permission denied",
+  "run_as": "package not debuggable",
+  "root": "su inaccessible or not found",
+  "references": [
+    "https://developer.android.com/guide/playcore/asset-delivery/integrate-java#check-status",
+    "https://4pda.to/forum/index.php?showtopic=492661&view=findpost&p=112110852"
+  ]
+}

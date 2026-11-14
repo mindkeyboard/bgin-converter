@@ -1,0 +1,482 @@
+{
+  "date": "2026-11-14",
+  "device_serial": "<research-device>",
+  "device_model": "25102PCBEG",
+  "version_labels": "3.7.0 and 5.8.0 supplied by user; manifest names differ and are retained below",
+  "installed_packages": {
+    "com.gameloft.android.ANMP.GloftA8PM": [
+      "versionCode=37060 minSdk=15 targetSdk=26",
+      "versionName=1.2.2g"
+    ],
+    "com.gameloft.android.ANMP.GloftA8HM580": [
+      "versionCode=58011 minSdk=21 targetSdk=30",
+      "versionName=vngmcpe2"
+    ]
+  },
+  "origins": {
+    "370/gui": "/sdcard/Android/data/com.gameloft.android.ANMP.GloftA8PM/files/gui",
+    "580/base.apk": "/data/app/~~c0g5gTPn4eXMdE3D2umBVw==/com.gameloft.android.ANMP.GloftA8HM580-RCi9GkMSrrzDfnzo_40q5Q==/base.apk"
+  },
+  "apk": {
+    "path": "580/base.apk",
+    "bytes": 183537719,
+    "sha256": "f8ca6c7616f2c6d9824500d6171eb78646cb97dfa41145b070f88604f9c95209",
+    "verified_against_device": true
+  },
+  "device_verified_370_files": [
+    "debug_menu.bgin",
+    "widgets.bgin",
+    "sprites.bgin"
+  ],
+  "corpora": [
+    {
+      "corpus": "370/gui",
+      "files": [
+        {
+          "path": "370/gui/background_posters_templates.bgin",
+          "bytes": 32435,
+          "sha256": "a0660c3e62fa51e30f0dc8d440b3584b1d1934c817817292b84cddfc17124bc6"
+        },
+        {
+          "path": "370/gui/bike_career_menu.bgin",
+          "bytes": 969868,
+          "sha256": "6aaa7c0cee62e5d49ea233cbc95d59962e0765ba274c1f1f5cd7b02240d58ff7"
+        },
+        {
+          "path": "370/gui/bike_poster_images.bgin",
+          "bytes": 32934,
+          "sha256": "131a1e3d69de93762d65010a015eeb7208f9332c37df7b0eb67cc048a5afd1e0"
+        },
+        {
+          "path": "370/gui/bike_poster_images_career.bgin",
+          "bytes": 16324,
+          "sha256": "9933ced08f8e730a9cd63c182cdc9f808c759859b33de8314642bc9a268b2d4c"
+        },
+        {
+          "path": "370/gui/bundle_menu.bgin",
+          "bytes": 44845,
+          "sha256": "31117f89fe114359fc409b33b65a0864b29a0c6f53f484ff9e8c2a246d9e267c"
+        },
+        {
+          "path": "370/gui/car_collection_images.bgin",
+          "bytes": 13414,
+          "sha256": "0f00b1f2e22310e14b48c0ef135812ebfde42e8c4d4128f85f00b3ec543b9d7b"
+        },
+        {
+          "path": "370/gui/car_collection_menu.bgin",
+          "bytes": 183697,
+          "sha256": "174590fb1cb0b74e80363ac695673e96e508db27219ddc850c61daff7895eb9e"
+        },
+        {
+          "path": "370/gui/car_poster_images.bgin",
+          "bytes": 469495,
+          "sha256": "5ff4bdeeaad22ca49f2bc7f18c01dafcff12606cfcedc7c636a9d89050667a78"
+        },
+        {
+          "path": "370/gui/car_series_menu.bgin",
+          "bytes": 478066,
+          "sha256": "5c7c37e8833068098b8158b23c0390ef16d890a92a49e2d252f9ca5478391954"
+        },
+        {
+          "path": "370/gui/career_menu.bgin",
+          "bytes": 428395,
+          "sha256": "1c084272adc5ca55f1c9fc70adda378497a9f37048260b12990a4cf010ba7fb5"
+        },
+        {
+          "path": "370/gui/cmp_special_events.bgin",
+          "bytes": 1120416,
+          "sha256": "bba7995c3517d6b05628cd8b13077ea894f72e18c24ab3ff674f3d66e1015e66"
+        },
+        {
+          "path": "370/gui/conflicts.bgin",
+          "bytes": 389476,
+          "sha256": "3008a45fa10c0994dff3f5570c864d22d1393ad3a9a4dd367997b983d2bce2f2"
+        },
+        {
+          "path": "370/gui/controllers_menu.bgin",
+          "bytes": 196719,
+          "sha256": "98f2859f5c70df977d45b12c5646ea40a8fc3f37680d608b83ca4ef987a14f6f"
+        },
+        {
+          "path": "370/gui/customization_menu.bgin",
+          "bytes": 248528,
+          "sha256": "6c463fba393ba2415dd9e2c4b76ea6ab87653dbf9c9a1eff2bdc9ee2b0ed39c4"
+        },
+        {
+          "path": "370/gui/daily_tasks_menu.bgin",
+          "bytes": 305624,
+          "sha256": "47d1f9fadb970c4ff92f929dfdf166a28445b48fb24e12579468ee92b96ad3d4"
+        },
+        {
+          "path": "370/gui/debug_menu.bgin",
+          "bytes": 19211,
+          "sha256": "015d5b3ea8bd9aeedab1754b9c55b47343566209c73d837bb495e7c0760bc411"
+        },
+        {
+          "path": "370/gui/decal_template_pack_images.bgin",
+          "bytes": 637,
+          "sha256": "0988f9d2c7d2d80bd2170b09bd33aee106a67872214ddfb1c4c45e2128cb3e9d"
+        },
+        {
+          "path": "370/gui/decal_thumbnails_templates.bgin",
+          "bytes": 2075446,
+          "sha256": "6d237a7e1bf7f729814e840edd3de0b23e64f17c61bcb65e5d2a25e642146bf7"
+        },
+        {
+          "path": "370/gui/decals_editor.bgin",
+          "bytes": 294604,
+          "sha256": "2b018ef911f639128bf58069f4092b2fd5a021f6fe3c501f37acb5ac3703eacb"
+        },
+        {
+          "path": "370/gui/dialogues_templates.bgin",
+          "bytes": 1940366,
+          "sha256": "3f499acc568f329263f7e0442519bf9225193c796211441da6d496dc2c76a59f"
+        },
+        {
+          "path": "370/gui/download_minigame.bgin",
+          "bytes": 35020,
+          "sha256": "c71f97df5c5446ba2b9868f0a9fd17893bee91ceaa86f3fe0de6f3313ed88961"
+        },
+        {
+          "path": "370/gui/end_race_screens.bgin",
+          "bytes": 2088688,
+          "sha256": "1e0b3461ea75f51d02ea85c2da0a129d41cf0b9e7eef11d1c30782cf99e54a62"
+        },
+        {
+          "path": "370/gui/enduro_menu.bgin",
+          "bytes": 1981185,
+          "sha256": "e9d42f5230ae43b9e3dcc7c62d7f5788936fbfb559e7becff0e87f7a0e7cec3b"
+        },
+        {
+          "path": "370/gui/energy_menu.bgin",
+          "bytes": 150569,
+          "sha256": "049ac953e79429daf3dcea9bcea6cbd81e42244225d448a395e31cc1298c4430"
+        },
+        {
+          "path": "370/gui/garage_menu.bgin",
+          "bytes": 510201,
+          "sha256": "cd525bdaf78b8e430763a6787f75999248dde1075c84a876fdf744b042dbb954"
+        },
+        {
+          "path": "370/gui/generic_templates.bgin",
+          "bytes": 38994,
+          "sha256": "e808e9d1ebbaf7b9ef35216407c43fb6e80b081c85d3c790cf643c38c48d90c6"
+        },
+        {
+          "path": "370/gui/hints_templates.bgin",
+          "bytes": 70180,
+          "sha256": "5146f4a923199dcfd8411ad7db4c78d16f32c82a7f9f9336f770f6308f6280a7"
+        },
+        {
+          "path": "370/gui/hw_special_events.bgin",
+          "bytes": 1045629,
+          "sha256": "279c269880874e966bd0fcdbe4ad936e3af8fac61433a9d8cfb8c77c2e1e034a"
+        },
+        {
+          "path": "370/gui/iap_menu.bgin",
+          "bytes": 1988452,
+          "sha256": "5ac4caae24c7af42462309fcd53686a40470bc735e1d0ad56db247ff966978cb"
+        },
+        {
+          "path": "370/gui/iap_template_pack_images.bgin",
+          "bytes": 22099,
+          "sha256": "31f40acac386b38d39b86a2f3bee1a16230bf74f2cb4a00b1b167d0bd1a8eaf3"
+        },
+        {
+          "path": "370/gui/ingame_menu.bgin",
+          "bytes": 731514,
+          "sha256": "793fb15dc2ea1f8d90e37650ee007c0229451f93f329443fe1f98e791d933b34"
+        },
+        {
+          "path": "370/gui/leaderboards_menu.bgin",
+          "bytes": 231681,
+          "sha256": "4235aa1783306412db591ac9bdbe39cb4fdf7e4bfe880819b2205965ceeabe7f"
+        },
+        {
+          "path": "370/gui/leaderboards_menu_new.bgin",
+          "bytes": 307503,
+          "sha256": "288180f4b3bd93cb1dee1cf97cb671cd6f9cd5dfd7b22622e0995a2a42f94f36"
+        },
+        {
+          "path": "370/gui/loading_menu.bgin",
+          "bytes": 2218679,
+          "sha256": "e732e5b99ca7ede7fa33a6098dd4890dc0d40ced446ca7b7957ee34a401e62f3"
+        },
+        {
+          "path": "370/gui/localization_menu.bgin",
+          "bytes": 72123,
+          "sha256": "518ffe542e7a81a08f8f68a1bbb36a48f79d3b933a10a287df52193bead0ce46"
+        },
+        {
+          "path": "370/gui/localization_menu_init.bgin",
+          "bytes": 20754,
+          "sha256": "3e7159b3d1ff9d458f895a50a44fb75a135b51f86f12269fb715aace81d1cec9"
+        },
+        {
+          "path": "370/gui/lottery_boxes_templates.bgin",
+          "bytes": 28997,
+          "sha256": "025d5f22b1fa447ea4f596de51d1ab5f274b09bd93f14f5cc97bbe146faea571"
+        },
+        {
+          "path": "370/gui/main_menu_new.bgin",
+          "bytes": 2226245,
+          "sha256": "3e197be3a2e7249e2bb5a93853a0ebf4079a8ab1ac6927d018689f05212cc087"
+        },
+        {
+          "path": "370/gui/mclaren_special_events.bgin",
+          "bytes": 1268560,
+          "sha256": "1012bc36d3b4f68322a4006c26bc24a8b903e3252857c0679540bd29e55927eb"
+        },
+        {
+          "path": "370/gui/medals_templates.bgin",
+          "bytes": 35166,
+          "sha256": "51e42fb087e05ccd547c4ceb4bcc93a2e3914b847b324b045388bb9ae8e6190a"
+        },
+        {
+          "path": "370/gui/metal_menu.bgin",
+          "bytes": 202818,
+          "sha256": "87e2e7bb45b0dd7a1cf9ef29d8a7a51466c9b63ad8a5e19dc8776394de8389f2"
+        },
+        {
+          "path": "370/gui/mss_menu.bgin",
+          "bytes": 628246,
+          "sha256": "c44d2bdbb4c7b0b4be23a9d0ad3eb94c9adfaf58599bbd2984dc8067b7a4308e"
+        },
+        {
+          "path": "370/gui/multiplayer_menu.bgin",
+          "bytes": 472107,
+          "sha256": "7a3b83779341471dc4c2f8aea828116305719e5df2967381aa0f3714415e7da8"
+        },
+        {
+          "path": "370/gui/multiplayer_menu_ranked.bgin",
+          "bytes": 723165,
+          "sha256": "3de96a05acab3e5d26a064e5bb0dfde05b15bf3aafaa589de537718165831ea8"
+        },
+        {
+          "path": "370/gui/notification_templates.bgin",
+          "bytes": 26801,
+          "sha256": "510f3803c736158d4e81bb61da9526d9eb330dad5f4c7dbdfd9e61104f4fcd37"
+        },
+        {
+          "path": "370/gui/options_menu.bgin",
+          "bytes": 1168604,
+          "sha256": "6897726b6890361c67fc68c0acbd26a7b38c8df5e7fa71242cb2ad4f11a77294"
+        },
+        {
+          "path": "370/gui/popups.bgin",
+          "bytes": 2971654,
+          "sha256": "7ba2affa8fa8be33c0b7dadbc6556ef320b893b52cdd50bb59dfc2c179cd7a73"
+        },
+        {
+          "path": "370/gui/porsche_special_events.bgin",
+          "bytes": 1051733,
+          "sha256": "e0d303fd5014b9a7dbaefef5104b425b407a40ec34cfeba88bc0052e806c1296"
+        },
+        {
+          "path": "370/gui/profile.bgin",
+          "bytes": 31050,
+          "sha256": "8d067a818f7f868f72a538bb43b93d00436fd6914df790dc0f546f3a47c29d7b"
+        },
+        {
+          "path": "370/gui/profile_social_menu.bgin",
+          "bytes": 729340,
+          "sha256": "0575520ef431ac7b400ee8a2dbf96b6d971fc26c8176a75c1fdf810ab73a8bdc"
+        },
+        {
+          "path": "370/gui/prokits_blueprint_icons_templates.bgin",
+          "bytes": 64861,
+          "sha256": "60ad90d0d9ea426ea41a9d7865482f286223379d6bebd1650dd4286c4f617bd4"
+        },
+        {
+          "path": "370/gui/prokits_box_templates.bgin",
+          "bytes": 1129903,
+          "sha256": "b72a55993b4f4abd964a28cf1296d583ecc187bc98ebfeed9ed678141474ceea"
+        },
+        {
+          "path": "370/gui/prokits_card_templates.bgin",
+          "bytes": 975180,
+          "sha256": "79a3e68cbb47cfd08e25e0cd107092ba72abfa76a9c6f46c61596b022acfc84b"
+        },
+        {
+          "path": "370/gui/prokits_menu.bgin",
+          "bytes": 1727653,
+          "sha256": "d5250371842ff80aff38e2d015a574406eebb87adf2672d3c135700899e40af6"
+        },
+        {
+          "path": "370/gui/racing_team.bgin",
+          "bytes": 32696,
+          "sha256": "0b57d73040b9bc1b772e215677914bad8e008b9396c77fada915df6e12dd5f03"
+        },
+        {
+          "path": "370/gui/replaykit_menu.bgin",
+          "bytes": 144101,
+          "sha256": "caed509186f78c244ac40e4f25c153de05e1634900e7390b1849c477263e28cd"
+        },
+        {
+          "path": "370/gui/rnd_menu.bgin",
+          "bytes": 1457427,
+          "sha256": "3fad29ca98d5f81a35c173ea74a4a2af2122080426db9a1f2f012f3da3dd3592"
+        },
+        {
+          "path": "370/gui/scheme_controller_specific.bgin",
+          "bytes": 356897,
+          "sha256": "f7c9d3cfd729ef45c9dc985a146443b1b942e7d218ee502ae2f5058277afdc51"
+        },
+        {
+          "path": "370/gui/sequences.bgin",
+          "bytes": 13962,
+          "sha256": "b16264c0843c2e3c5d682480b8b78be79b8c84351d232330e2b730670677d6a1"
+        },
+        {
+          "path": "370/gui/special_events_entry_points.bgin",
+          "bytes": 7837,
+          "sha256": "1083a0d35d91498850658574febca39ee239b593cf3ccbdfcab5155393404390"
+        },
+        {
+          "path": "370/gui/special_events_tutorial_templates.bgin",
+          "bytes": 2527611,
+          "sha256": "888c68128972b26e9748919ba2b1f36ffb2bec3e88e168787f7b0b873f2f43ba"
+        },
+        {
+          "path": "370/gui/splash_menu.bgin",
+          "bytes": 10183,
+          "sha256": "df2f6558a3a251a69b4d75bb67422a568e4ad96711f4fa96125ff8557c5225ed"
+        },
+        {
+          "path": "370/gui/sprites.bgin",
+          "bytes": 11021407,
+          "sha256": "f0d202089507d0a46832fa2ddf0d22f2871f00a9aba9a46d6ca30c820b4aa0ce"
+        },
+        {
+          "path": "370/gui/tag_racing_menu.bgin",
+          "bytes": 306986,
+          "sha256": "122a309fc4ff71916bd02546e735d8eac95c923454863bcfc5cb38368c16866a"
+        },
+        {
+          "path": "370/gui/test.bgin",
+          "bytes": 96395,
+          "sha256": "d2a5066da17ea505275feeaa09e21f68466ed36e5d84f4735d6bbb4ceb52c46e"
+        },
+        {
+          "path": "370/gui/tle_menu.bgin",
+          "bytes": 931683,
+          "sha256": "d0f25660c83af87f229740d9366dd6c2bdf18f976736b59c62f35ff1f80d86f7"
+        },
+        {
+          "path": "370/gui/top_bar.bgin",
+          "bytes": 331353,
+          "sha256": "8fcad5feb4317382a86ef777627baff832e3de2040a07a23b9212205c9343857"
+        },
+        {
+          "path": "370/gui/tracker_menu.bgin",
+          "bytes": 118640,
+          "sha256": "ea1568a3dba925cdf75273e53db1a7c1fada74ba2ad357b0f0bd036f31311c5f"
+        },
+        {
+          "path": "370/gui/transition_a9_special_events.bgin",
+          "bytes": 1100707,
+          "sha256": "027261f1fe2d2cc758131fc8433b9d105829dc1b922e335e42e1a97bc90fd8f0"
+        },
+        {
+          "path": "370/gui/twitch_menu.bgin",
+          "bytes": 185710,
+          "sha256": "92e780a8813bcf8b77c53d2ce31caf9167ec32adc4f1561246def66a5250a165"
+        },
+        {
+          "path": "370/gui/upgrades_icons_templates.bgin",
+          "bytes": 32810,
+          "sha256": "757f9d100f0f368aa0b6baf116e7a82b81bb1b46367fc019592489678f9a792f"
+        },
+        {
+          "path": "370/gui/vip_menu.bgin",
+          "bytes": 493803,
+          "sha256": "754d0f6606a06833403aeb40a12d59f4364ac432a0ce55033b443a7ebf3b5b5f"
+        },
+        {
+          "path": "370/gui/widgets.bgin",
+          "bytes": 165411,
+          "sha256": "b201aac036c6509433b14a815a1c2b5f0429051673181b9e46f2d5e6ad1e944f"
+        },
+        {
+          "path": "370/gui/win_streak.bgin",
+          "bytes": 11941,
+          "sha256": "c3925f87153869c493a9ecffbcb49e8ace418e0ad6ff2a8a33aab852a9a50ad8"
+        }
+      ]
+    },
+    {
+      "corpus": "580/extracted/assets/releaseminigame",
+      "files": [
+        {
+          "path": "580/extracted/assets/releaseminigame/controllers_menu.bgin",
+          "bytes": 303089,
+          "sha256": "b1aac4b85d9d20e40a63fbd19f84a13e82881e796ea92d5db3157be78699a285"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/debug_menu.bgin",
+          "bytes": 19019,
+          "sha256": "fc6514876113635eb22d081d4bd8cb173814b70505ecaa812fcbdc0e40000398"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/download_minigame.bgin",
+          "bytes": 34584,
+          "sha256": "c162366eaeae6affc5852f1516070a9c0e6a6b2e311e1ca8e85f526c65fef040"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/end_race_screens.bgin",
+          "bytes": 2749330,
+          "sha256": "e8bdbe567a6eb25e781c23fdf1a9f6db607a457ee6c5b5f234366afcbee5168c"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/generic_templates.bgin",
+          "bytes": 78507,
+          "sha256": "fda701af3189e049afc12536282f329745b1a26806c247ca559543961ab3d7b6"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/ingame_menu.bgin",
+          "bytes": 1727611,
+          "sha256": "7871cf907509e3f816eeedd6cdea2733089ce428508320c4871f84c5e2e74291"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/medals_templates.bgin",
+          "bytes": 75687,
+          "sha256": "337f09778f1f09ad5657df6e843ff4abeab7356192c1026ff95316aedd4d2ee8"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/popups.bgin",
+          "bytes": 3439260,
+          "sha256": "3eb6a9d6bc4f90525d467e86d66d385bac0e29482b260c32fb42a8ff8d9fb8d6"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/scheme_controller_specific.bgin",
+          "bytes": 339885,
+          "sha256": "c4d655502d3824d1ca60d50e2e14f3cabc37fd06bafa5512f3b1b114dd85c035"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/sequences.bgin",
+          "bytes": 18034,
+          "sha256": "c6c9b45e1b66872ae339e879dc32d3686d18206ad4ddf217ef5009ccc5ae75d9"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/splash_menu.bgin",
+          "bytes": 13409,
+          "sha256": "61d9761d720e9e65e6d5d99b36cf6354ed5b9de9993e3380eaed7bd872ee3622"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/sprites.bgin",
+          "bytes": 833585,
+          "sha256": "0a89af9f55a861c38f42a4d3be933088e8f7d5699d0f9b07988b20f7f4b9a571"
+        },
+        {
+          "path": "580/extracted/assets/releaseminigame/widgets.bgin",
+          "bytes": 187720,
+          "sha256": "d34627031df6b7fd833b6b7e162a9b070882c43a86a8f52f45b6cef17306c7e0"
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "5.8.0 corpus is APK releaseminigame only; complete main-game GUI not present in requested Android/data directory",
+    "No device file modifications or game launch performed"
+  ]
+}

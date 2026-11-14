@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import * as path from "node:path";
-import { randomBytes } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
 import {
   parseTree,
   ParseError,
@@ -17,7 +17,10 @@ import { FirstRunChannel, CHANNEL_URL } from "./onboarding";
 import { DraftDiagnostics } from "./draftDiagnostics";
 import { registerExplorerNew, runExplorerRegistration } from "./explorerNew";
 import { PreviewSession } from "./preview";
+import { McpBridge, BridgeDocument, BridgeRender } from "./mcpBridge";
+import { normalizeFormat } from "./formatProfiles";
 import { discoverResources, scanBginFolder } from "./resourceDiscovery";
+import { convertTexture } from "./textureConversion";
 import {
   resourceFolderKeys,
   resourceFolders,
@@ -43,6 +46,10 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
   private timers = new Map<BginDocument, NodeJS.Timeout>();
   private watchers = new Map<BginDocument, vscode.Disposable[]>();
   private drafts: DraftDiagnostics;
+  bridge?: McpBridge;
+  private renderGallery?: vscode.WebviewPanel;
+  private renderHistory: BridgeRender[] = [];
+  private sharedResourceRevision = 0;
   constructor(
     readonly context: vscode.ExtensionContext,
     readonly backend: Backend,
@@ -57,6 +64,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
       this.resourceFiles,
       vscode.workspace.onDidChangeConfiguration((e) => {
         if (e.affectsConfiguration("bgin")) {
+          this.invalidateSharedResources();
           for (const session of this.previews.values())
             session.cancel("Settings changed; refresh the preview");
           for (const d of this.documents.values()) {
@@ -72,14 +80,19 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
     uri: vscode.Uri,
     open: vscode.CustomDocumentOpenContext,
   ): Promise<BginDocument> {
-    let text: string;
+    let text: string, bytes: Uint8Array | undefined;
     if (open.backupId)
       text = Buffer.from(
         await vscode.workspace.fs.readFile(vscode.Uri.parse(open.backupId)),
       ).toString("utf8");
-    else text = await readDocumentText(uri, this.backend);
+    else {
+      if (uri.scheme !== "untitled") bytes = await vscode.workspace.fs.readFile(uri);
+      text = await readDocumentText(uri, this.backend, bytes);
+    }
     const doc = new BginDocument(uri, text, this.backend);
+    await doc.rememberDisk(bytes);
     this.documents.set(uri.toString(), doc);
+    doc.onDidChange(() => { this.bridge?.documentChanged(this.snapshot(doc)); this.refreshRenderGallery(); });
     void this.drafts.check(uri);
     doc.onDispose(() => {
       this.documents.delete(uri.toString());
@@ -97,7 +110,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
     this.validate(doc);
     return doc;
   }
-  edit(doc: BginDocument, text: string, origin?: vscode.WebviewPanel, naming = false) {
+  edit(doc: BginDocument, text: string, origin?: vscode.WebviewPanel, naming = false, label = "Edit BGIN") {
     if (!naming && requiresDocumentName(doc.text)) throw Error("Set a document name before editing this BGIN file.");
     if (text === doc.text) return;
     const before = doc.text;
@@ -107,7 +120,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
     this.validate(doc);
     this.changes.fire({
       document: doc,
-      label: "Edit BGIN",
+      label,
       undo: async () => {
         doc.set(before);
         this.validate(doc);
@@ -117,6 +130,89 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
         this.validate(doc);
       },
     });
+  }
+  snapshot(doc: BginDocument): BridgeDocument {
+    return { documentId: doc.uri.toString(), path: doc.uri.fsPath, text: doc.text, revision: doc.revision };
+  }
+  private sharedDocument(id: string) {
+    const doc = this.documents.get(id);
+    if (!doc) throw Error("The shared BGIN document is no longer open.");
+    return doc;
+  }
+  private requireRevision(doc: BginDocument, revision: number, signal?: AbortSignal) {
+    if (signal?.aborted) throw Object.assign(Error("Operation cancelled."), { code: "cancelled" });
+    if (!Number.isInteger(revision) || revision !== doc.revision)
+      throw Object.assign(Error(`Document revision conflict: expected ${revision}, current ${doc.revision}. Read the current document before editing.`), { code: "revision_conflict", details: this.snapshot(doc) });
+  }
+  async applySharedEdit(id: string, text: string, revision: number, label: string, signal?: AbortSignal) {
+    const doc = this.sharedDocument(id);
+    this.requireRevision(doc, revision, signal);
+    // Validate the proposed snapshot, then check again after yielding to the worker.
+    // Manual edits, including invalid JSON, always remain the authoritative text.
+    await this.backend.call("validate", { text });
+    this.requireRevision(doc, revision, signal);
+    this.edit(doc, text, undefined, false, label);
+    return this.snapshot(doc);
+  }
+  async saveSharedDocument(id: string, revision: number, signal?: AbortSignal) {
+    const doc = this.sharedDocument(id);
+    this.requireRevision(doc, revision, signal);
+    await this.backend.call("validate", { text: doc.text });
+    this.requireRevision(doc, revision, signal);
+    // The VS Code save command owns the dirty flag and delegates to doc.save().
+    if (doc.saveRequest) throw Error("Another client is already saving this document.");
+    const request = { revision, signal };
+    doc.saveRequest = request;
+    try {
+      const saved = await vscode.workspace.save(doc.uri);
+      if (!saved) throw Error("VS Code did not save the document.");
+      this.requireRevision(doc, revision, signal);
+      return this.snapshot(doc);
+    } finally { if (doc.saveRequest === request) doc.saveRequest = undefined; }
+  }
+  async openSharedDocument(file: string) {
+    if (!path.isAbsolute(file)) throw Error("Opening a shared document requires an absolute local path.");
+    const uri = vscode.Uri.file(file);
+    await vscode.commands.executeCommand("vscode.openWith", uri, "bgin.editor", { preserveFocus: true, preview: false });
+    const doc = this.documents.get(uri.toString());
+    if (!doc) throw Error("VS Code did not open the BGIN document.");
+    return this.snapshot(doc);
+  }
+  sharedSettings(id?: string) {
+    const doc = id ? this.sharedDocument(id) : this.documents.values().next().value;
+    if (!doc) return { preview: {}, resources: {}, resourceBase: vscode.workspace.workspaceFolders?.[0]?.uri.fsPath, resourceRevision: this.sharedResourceRevision };
+    const config = this.config(doc);
+    return { preview: config.defaults, resources: config.resources, resourceBase: path.dirname(doc.uri.fsPath), resourceRevision: this.sharedResourceRevision };
+  }
+  showSharedRender(event: BridgeRender) {
+    const metadata = event.metadata as any;
+    if (event.stale || metadata?.stale || this.documents.get(event.documentId)?.revision !== event.revision ||
+        (metadata?.resourceRevision !== undefined && metadata.resourceRevision !== this.sharedResourceRevision)) event = { ...event, stale: true };
+    this.renderHistory.unshift(event);
+    // Bound retained image data; the model already received the original result.
+    this.renderHistory = this.renderHistory.slice(0, 8);
+    if (!this.renderGallery) {
+      this.renderGallery = vscode.window.createWebviewPanel("bgin.mcpPreviews", "BGIN · MCP previews", { viewColumn: vscode.ViewColumn.Beside, preserveFocus: true }, { enableScripts: false, retainContextWhenHidden: true, localResourceRoots: [] });
+      this.renderGallery.onDidDispose(() => { this.renderGallery = undefined; this.renderHistory = []; });
+    }
+    this.refreshRenderGallery();
+  }
+  private refreshRenderGallery() {
+    if (!this.renderGallery) return;
+    this.renderHistory = this.renderHistory.map(render => {
+      const sources = (render.metadata as any)?.documents;
+      const stale = render.stale || this.documents.get(render.documentId)?.revision !== render.revision ||
+        Array.isArray(sources) && sources.some(source => this.documents.get(source.documentId)?.revision !== source.revision);
+      return { ...render, stale };
+    });
+    const escape = (value: unknown) => String(value ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+    const ru = vscode.workspace.getConfiguration("bgin").get<string>("language", "en") === "ru";
+    this.renderGallery.webview.html = `<!doctype html><html lang="${ru ? "ru" : "en"}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'"><style>body{font:var(--vscode-font-size)/1.5 var(--vscode-font-family);color:var(--vscode-foreground);padding:16px}section{border-bottom:1px solid var(--vscode-panel-border);margin-bottom:24px}img{display:block;max-width:100%;height:auto;margin:12px 0}small,p{overflow-wrap:anywhere}h2{font-size:14px}</style></head><body><h1>${ru ? "Предпросмотры MCP" : "MCP previews"}</h1><p>${ru ? "Снимки общих документов. Редактирование остаётся доступным в редакторе BGIN." : "Snapshots of shared documents. Editing remains available in the BGIN editor."}</p>${this.renderHistory.map(render => `<section><h2>${escape(render.clientName)} · ${ru ? "ревизия" : "revision"} ${render.revision}${render.stale ? ru ? " · устарел" : " · stale" : ""}</h2><small>${escape(render.documentId)}</small>${render.images.filter(image => image.mimeType === "image/png" && /^[A-Za-z0-9+/=\r\n]+$/.test(image.data)).map(image => `<img alt="MCP preview" src="data:image/png;base64,${image.data}">`).join("")}</section>`).join("")}</body></html>`;
+  }
+  private invalidateSharedResources() {
+    this.sharedResourceRevision++;
+    this.renderHistory = this.renderHistory.map(render => ({ ...render, stale: true }));
+    this.refreshRenderGallery();
   }
   private location(text: string, offset: number): vscode.Position {
     const lines = text.slice(0, offset).split("\n");
@@ -168,13 +264,15 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
       setTimeout(() => this.checkSyntax(doc), 200),
     );
   }
-  nameDocument(doc: BginDocument, name: string) {
+  nameDocument(doc: BginDocument, name: string, format?: string) {
     if (!requiresDocumentName(doc.text)) return;
     if (typeof name !== "string" || !name.trim()) throw Error("Document name must not be blank.");
     name = name.trim();
     if (Buffer.byteLength(name, "utf8") > 65535) throw Error("Document name exceeds 65535 UTF-8 bytes.");
     const data = JSON.parse(doc.text);
     data.name = name;
+    data.format = normalizeFormat(format ?? "a8-1.6.0");
+    if (!data.format) throw Error("Choose one of the four BGIN formats.");
     this.edit(doc, JSON.stringify(data, null, 2) + "\n", undefined, true);
     for (const panel of doc.panels) panel.webview.postMessage({ type: "nameAccepted" });
   }
@@ -372,6 +470,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
     }
   }
   private async refreshResourceDocuments(doc: BginDocument) {
+    this.invalidateSharedResources();
     // Workspace-state fallback emits no configuration event. Synchronize every
     // open document sharing these folders, including its in-flight preview.
     const key = this.resourceStateKey(doc);
@@ -414,6 +513,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
     const refresh = () => {
       clearTimeout(timer);
       timer = setTimeout(() => {
+        this.invalidateSharedResources();
         void this.checkResourceFiles(doc);
         for (const p of doc.panels)
           this.previews
@@ -490,7 +590,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
           return;
         }
         if (message.type === "setDocumentName") {
-          this.nameDocument(doc, message.name);
+          this.nameDocument(doc, message.name, message.format);
           return;
         }
         if (message.type === "openEditorGuide") {
@@ -506,17 +606,25 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
           return;
         }
         if (message.type === "ready") {
+          const catalog = await this.backend.call("catalog");
           this.sendConfig(doc, panel);
           panel.webview.postMessage({
             type: "init",
             text: doc.text,
-            catalog: await this.backend.call("catalog"),
+            revision: doc.revision,
+            catalog,
             ...this.config(doc),
           });
           this.validate(doc);
         }
-        if (message.type === "edit" && typeof message.text === "string")
-          this.edit(doc, message.text, panel);
+        if (message.type === "edit" && typeof message.text === "string") {
+          if (!Number.isInteger(message.baseRevision) || message.baseRevision !== doc.revision) {
+            panel.webview.postMessage({ type: "editConflict", text: doc.text, revision: doc.revision, editId: message.editId });
+          } else {
+            this.edit(doc, message.text, panel);
+            panel.webview.postMessage({ type: "editAccepted", revision: doc.revision, editId: message.editId });
+          }
+        }
         if (
           message.type === "clipboardWrite" &&
           typeof message.text === "string"
@@ -548,6 +656,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
                     path.dirname(doc.uri.fsPath),
                   message.root,
                 ),
+                message.layout || "archive",
               )),
             });
           } catch (e) {
@@ -558,9 +667,9 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
           }
         }
         if (message.type === "undo")
-          await vscode.commands.executeCommand("undo");
+          await vscode.commands.executeCommand("undo", doc.uri);
         if (message.type === "redo")
-          await vscode.commands.executeCommand("redo");
+          await vscode.commands.executeCommand("redo", doc.uri);
         if (message.type === "resources")
           panel.webview.postMessage({ type: "openResources" });
         if (message.type === "resourcesApply")
@@ -665,7 +774,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
 }
 
 export function editorGuideUrl(language: string) {
-  return `https://octane-loader.utmsoft.ru/${language === "ru" ? "ru" : "en"}/guide/octane-devtools/bgin-editor/v0.5.0/`;
+  return `https://octane-loader.utmsoft.ru/${language === "ru" ? "ru" : "en"}/guide/octane-devtools/bgin-editor/v0.6.2/`;
 }
 
 /** Reference page of one engine class, or of the gin namespace without one. */
@@ -680,6 +789,22 @@ export function activate(context: vscode.ExtensionContext) {
   const backend = new Backend(context),
     provider = new Provider(context, backend);
   const converter = new ConverterView(context, backend);
+  const windowId = randomUUID();
+  const bridge = new McpBridge({
+    listDocuments: () => [...provider.documents.values()].map(doc => provider.snapshot(doc)),
+    openDocument: file => provider.openSharedDocument(file),
+    getDocument: id => { const doc = provider.documents.get(id); return doc && provider.snapshot(doc); },
+    applyEdit: (id, text, revision, label, signal) => provider.applySharedEdit(id, text, revision, label, signal),
+    saveDocument: (id, revision, signal) => provider.saveSharedDocument(id, revision, signal),
+    getSettings: id => provider.sharedSettings(id),
+    showRender: event => provider.showSharedRender(event),
+  }, { discoveryFile: path.join(context.globalStorageUri.fsPath, "mcp", `bridge-${windowId}.json`), windowId });
+  provider.bridge = bridge;
+  converter.attachBridge(bridge, id => {
+    const doc = provider.documents.get(id);
+    if (doc) return vscode.commands.executeCommand("vscode.openWith", doc.uri, "bgin.editor", { preview: false });
+  }, () => provider.sharedSettings());
+  void bridge.start().catch(error => backend.output.appendLine(`MCP bridge: ${error}`));
   const syncExplorer = registerExplorerNew(context, backend.output);
   const setExplorer = async (enabled: boolean) => {
     await vscode.workspace.getConfiguration("bgin").update("windowsExplorerNewFile", enabled, vscode.ConfigurationTarget.Global);
@@ -692,6 +817,7 @@ export function activate(context: vscode.ExtensionContext) {
   };
   context.subscriptions.push(
     backend,
+    { dispose: () => bridge.dispose() },
     vscode.window.registerWebviewViewProvider("bgin.converter", converter),
     vscode.commands.registerCommand("bgin.enableExplorerNewFile", () => setExplorer(true)),
     vscode.commands.registerCommand("bgin.disableExplorerNewFile", () => setExplorer(false)),
@@ -712,9 +838,11 @@ export function activate(context: vscode.ExtensionContext) {
       provider.configureResources(),
     ),
     vscode.commands.registerCommand("bgin.newFile", newBginFile),
+    vscode.commands.registerCommand("bgin.convertTexture", () => convertTexture(backend)),
   );
   return {
     provider,
+    bridge,
     backend,
     discoverResources,
     scanBginFolder,

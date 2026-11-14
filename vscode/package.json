@@ -2,7 +2,7 @@
   "name": "bgin-editor",
   "displayName": "Binary GIN Editor",
   "description": "Binary GIN hierarchy, JSON editing and preview with external resources.",
-  "version": "0.5.0",
+  "version": "0.6.2",
   "publisher": "a8devtools",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
@@ -13,7 +13,9 @@
     "Visualization"
   ],
   "main": "./out/extension.js",
-  "extensionKind": ["workspace"],
+  "extensionKind": [
+    "workspace"
+  ],
   "activationEvents": [
     "onCustomEditor:bgin.editor",
     "onStartupFinished"
@@ -66,6 +68,10 @@
       {
         "command": "bgin.disableExplorerNewFile",
         "title": "BGIN: Disable Windows Explorer New File"
+      },
+      {
+        "command": "bgin.convertTexture",
+        "title": "BGIN: Convert Texture Separately"
       }
     ],
     "configuration": {
@@ -171,7 +177,7 @@
       "bgin": [
         {
           "id": "bgin.converter",
-          "name": "Converter",
+          "name": "Binary GIN",
           "type": "webview",
           "icon": "media/bgin.svg"
         }
@@ -216,6 +222,6 @@
     "prettier": "^3.9.10",
     "typescript": "^5.9.0"
   },
-  "homepage": "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.5.0/",
+  "homepage": "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.2/",
   "icon": "media/icon.jpg"
 }

@@ -1,0 +1,664 @@
+{
+  "label": "3.7.0 as identified by user; Android package com.gameloft.android.ANMP.GloftA8PM",
+  "source_scope": "74 files copied from Android/data/com.gameloft.android.ANMP.GloftA8PM/files/gui; no original files changed",
+  "corpus": {
+    "files": 74,
+    "bytes": 55583414,
+    "manifest": [
+      {
+        "file": "background_posters_templates.bgin",
+        "bytes": 32435,
+        "sha256": "a0660c3e62fa51e30f0dc8d440b3584b1d1934c817817292b84cddfc17124bc6"
+      },
+      {
+        "file": "bike_career_menu.bgin",
+        "bytes": 969868,
+        "sha256": "6aaa7c0cee62e5d49ea233cbc95d59962e0765ba274c1f1f5cd7b02240d58ff7"
+      },
+      {
+        "file": "bike_poster_images.bgin",
+        "bytes": 32934,
+        "sha256": "131a1e3d69de93762d65010a015eeb7208f9332c37df7b0eb67cc048a5afd1e0"
+      },
+      {
+        "file": "bike_poster_images_career.bgin",
+        "bytes": 16324,
+        "sha256": "9933ced08f8e730a9cd63c182cdc9f808c759859b33de8314642bc9a268b2d4c"
+      },
+      {
+        "file": "bundle_menu.bgin",
+        "bytes": 44845,
+        "sha256": "31117f89fe114359fc409b33b65a0864b29a0c6f53f484ff9e8c2a246d9e267c"
+      },
+      {
+        "file": "car_collection_images.bgin",
+        "bytes": 13414,
+        "sha256": "0f00b1f2e22310e14b48c0ef135812ebfde42e8c4d4128f85f00b3ec543b9d7b"
+      },
+      {
+        "file": "car_collection_menu.bgin",
+        "bytes": 183697,
+        "sha256": "174590fb1cb0b74e80363ac695673e96e508db27219ddc850c61daff7895eb9e"
+      },
+      {
+        "file": "car_poster_images.bgin",
+        "bytes": 469495,
+        "sha256": "5ff4bdeeaad22ca49f2bc7f18c01dafcff12606cfcedc7c636a9d89050667a78"
+      },
+      {
+        "file": "car_series_menu.bgin",
+        "bytes": 478066,
+        "sha256": "5c7c37e8833068098b8158b23c0390ef16d890a92a49e2d252f9ca5478391954"
+      },
+      {
+        "file": "career_menu.bgin",
+        "bytes": 428395,
+        "sha256": "1c084272adc5ca55f1c9fc70adda378497a9f37048260b12990a4cf010ba7fb5"
+      },
+      {
+        "file": "cmp_special_events.bgin",
+        "bytes": 1120416,
+        "sha256": "bba7995c3517d6b05628cd8b13077ea894f72e18c24ab3ff674f3d66e1015e66"
+      },
+      {
+        "file": "conflicts.bgin",
+        "bytes": 389476,
+        "sha256": "3008a45fa10c0994dff3f5570c864d22d1393ad3a9a4dd367997b983d2bce2f2"
+      },
+      {
+        "file": "controllers_menu.bgin",
+        "bytes": 196719,
+        "sha256": "98f2859f5c70df977d45b12c5646ea40a8fc3f37680d608b83ca4ef987a14f6f"
+      },
+      {
+        "file": "customization_menu.bgin",
+        "bytes": 248528,
+        "sha256": "6c463fba393ba2415dd9e2c4b76ea6ab87653dbf9c9a1eff2bdc9ee2b0ed39c4"
+      },
+      {
+        "file": "daily_tasks_menu.bgin",
+        "bytes": 305624,
+        "sha256": "47d1f9fadb970c4ff92f929dfdf166a28445b48fb24e12579468ee92b96ad3d4"
+      },
+      {
+        "file": "debug_menu.bgin",
+        "bytes": 19211,
+        "sha256": "015d5b3ea8bd9aeedab1754b9c55b47343566209c73d837bb495e7c0760bc411"
+      },
+      {
+        "file": "decal_template_pack_images.bgin",
+        "bytes": 637,
+        "sha256": "0988f9d2c7d2d80bd2170b09bd33aee106a67872214ddfb1c4c45e2128cb3e9d"
+      },
+      {
+        "file": "decal_thumbnails_templates.bgin",
+        "bytes": 2075446,
+        "sha256": "6d237a7e1bf7f729814e840edd3de0b23e64f17c61bcb65e5d2a25e642146bf7"
+      },
+      {
+        "file": "decals_editor.bgin",
+        "bytes": 294604,
+        "sha256": "2b018ef911f639128bf58069f4092b2fd5a021f6fe3c501f37acb5ac3703eacb"
+      },
+      {
+        "file": "dialogues_templates.bgin",
+        "bytes": 1940366,
+        "sha256": "3f499acc568f329263f7e0442519bf9225193c796211441da6d496dc2c76a59f"
+      },
+      {
+        "file": "download_minigame.bgin",
+        "bytes": 35020,
+        "sha256": "c71f97df5c5446ba2b9868f0a9fd17893bee91ceaa86f3fe0de6f3313ed88961"
+      },
+      {
+        "file": "end_race_screens.bgin",
+        "bytes": 2088688,
+        "sha256": "1e0b3461ea75f51d02ea85c2da0a129d41cf0b9e7eef11d1c30782cf99e54a62"
+      },
+      {
+        "file": "enduro_menu.bgin",
+        "bytes": 1981185,
+        "sha256": "e9d42f5230ae43b9e3dcc7c62d7f5788936fbfb559e7becff0e87f7a0e7cec3b"
+      },
+      {
+        "file": "energy_menu.bgin",
+        "bytes": 150569,
+        "sha256": "049ac953e79429daf3dcea9bcea6cbd81e42244225d448a395e31cc1298c4430"
+      },
+      {
+        "file": "garage_menu.bgin",
+        "bytes": 510201,
+        "sha256": "cd525bdaf78b8e430763a6787f75999248dde1075c84a876fdf744b042dbb954"
+      },
+      {
+        "file": "generic_templates.bgin",
+        "bytes": 38994,
+        "sha256": "e808e9d1ebbaf7b9ef35216407c43fb6e80b081c85d3c790cf643c38c48d90c6"
+      },
+      {
+        "file": "hints_templates.bgin",
+        "bytes": 70180,
+        "sha256": "5146f4a923199dcfd8411ad7db4c78d16f32c82a7f9f9336f770f6308f6280a7"
+      },
+      {
+        "file": "hw_special_events.bgin",
+        "bytes": 1045629,
+        "sha256": "279c269880874e966bd0fcdbe4ad936e3af8fac61433a9d8cfb8c77c2e1e034a"
+      },
+      {
+        "file": "iap_menu.bgin",
+        "bytes": 1988452,
+        "sha256": "5ac4caae24c7af42462309fcd53686a40470bc735e1d0ad56db247ff966978cb"
+      },
+      {
+        "file": "iap_template_pack_images.bgin",
+        "bytes": 22099,
+        "sha256": "31f40acac386b38d39b86a2f3bee1a16230bf74f2cb4a00b1b167d0bd1a8eaf3"
+      },
+      {
+        "file": "ingame_menu.bgin",
+        "bytes": 731514,
+        "sha256": "793fb15dc2ea1f8d90e37650ee007c0229451f93f329443fe1f98e791d933b34"
+      },
+      {
+        "file": "leaderboards_menu.bgin",
+        "bytes": 231681,
+        "sha256": "4235aa1783306412db591ac9bdbe39cb4fdf7e4bfe880819b2205965ceeabe7f"
+      },
+      {
+        "file": "leaderboards_menu_new.bgin",
+        "bytes": 307503,
+        "sha256": "288180f4b3bd93cb1dee1cf97cb671cd6f9cd5dfd7b22622e0995a2a42f94f36"
+      },
+      {
+        "file": "loading_menu.bgin",
+        "bytes": 2218679,
+        "sha256": "e732e5b99ca7ede7fa33a6098dd4890dc0d40ced446ca7b7957ee34a401e62f3"
+      },
+      {
+        "file": "localization_menu.bgin",
+        "bytes": 72123,
+        "sha256": "518ffe542e7a81a08f8f68a1bbb36a48f79d3b933a10a287df52193bead0ce46"
+      },
+      {
+        "file": "localization_menu_init.bgin",
+        "bytes": 20754,
+        "sha256": "3e7159b3d1ff9d458f895a50a44fb75a135b51f86f12269fb715aace81d1cec9"
+      },
+      {
+        "file": "lottery_boxes_templates.bgin",
+        "bytes": 28997,
+        "sha256": "025d5f22b1fa447ea4f596de51d1ab5f274b09bd93f14f5cc97bbe146faea571"
+      },
+      {
+        "file": "main_menu_new.bgin",
+        "bytes": 2226245,
+        "sha256": "3e197be3a2e7249e2bb5a93853a0ebf4079a8ab1ac6927d018689f05212cc087"
+      },
+      {
+        "file": "mclaren_special_events.bgin",
+        "bytes": 1268560,
+        "sha256": "1012bc36d3b4f68322a4006c26bc24a8b903e3252857c0679540bd29e55927eb"
+      },
+      {
+        "file": "medals_templates.bgin",
+        "bytes": 35166,
+        "sha256": "51e42fb087e05ccd547c4ceb4bcc93a2e3914b847b324b045388bb9ae8e6190a"
+      },
+      {
+        "file": "metal_menu.bgin",
+        "bytes": 202818,
+        "sha256": "87e2e7bb45b0dd7a1cf9ef29d8a7a51466c9b63ad8a5e19dc8776394de8389f2"
+      },
+      {
+        "file": "mss_menu.bgin",
+        "bytes": 628246,
+        "sha256": "c44d2bdbb4c7b0b4be23a9d0ad3eb94c9adfaf58599bbd2984dc8067b7a4308e"
+      },
+      {
+        "file": "multiplayer_menu.bgin",
+        "bytes": 472107,
+        "sha256": "7a3b83779341471dc4c2f8aea828116305719e5df2967381aa0f3714415e7da8"
+      },
+      {
+        "file": "multiplayer_menu_ranked.bgin",
+        "bytes": 723165,
+        "sha256": "3de96a05acab3e5d26a064e5bb0dfde05b15bf3aafaa589de537718165831ea8"
+      },
+      {
+        "file": "notification_templates.bgin",
+        "bytes": 26801,
+        "sha256": "510f3803c736158d4e81bb61da9526d9eb330dad5f4c7dbdfd9e61104f4fcd37"
+      },
+      {
+        "file": "options_menu.bgin",
+        "bytes": 1168604,
+        "sha256": "6897726b6890361c67fc68c0acbd26a7b38c8df5e7fa71242cb2ad4f11a77294"
+      },
+      {
+        "file": "popups.bgin",
+        "bytes": 2971654,
+        "sha256": "7ba2affa8fa8be33c0b7dadbc6556ef320b893b52cdd50bb59dfc2c179cd7a73"
+      },
+      {
+        "file": "porsche_special_events.bgin",
+        "bytes": 1051733,
+        "sha256": "e0d303fd5014b9a7dbaefef5104b425b407a40ec34cfeba88bc0052e806c1296"
+      },
+      {
+        "file": "profile.bgin",
+        "bytes": 31050,
+        "sha256": "8d067a818f7f868f72a538bb43b93d00436fd6914df790dc0f546f3a47c29d7b"
+      },
+      {
+        "file": "profile_social_menu.bgin",
+        "bytes": 729340,
+        "sha256": "0575520ef431ac7b400ee8a2dbf96b6d971fc26c8176a75c1fdf810ab73a8bdc"
+      },
+      {
+        "file": "prokits_blueprint_icons_templates.bgin",
+        "bytes": 64861,
+        "sha256": "60ad90d0d9ea426ea41a9d7865482f286223379d6bebd1650dd4286c4f617bd4"
+      },
+      {
+        "file": "prokits_box_templates.bgin",
+        "bytes": 1129903,
+        "sha256": "b72a55993b4f4abd964a28cf1296d583ecc187bc98ebfeed9ed678141474ceea"
+      },
+      {
+        "file": "prokits_card_templates.bgin",
+        "bytes": 975180,
+        "sha256": "79a3e68cbb47cfd08e25e0cd107092ba72abfa76a9c6f46c61596b022acfc84b"
+      },
+      {
+        "file": "prokits_menu.bgin",
+        "bytes": 1727653,
+        "sha256": "d5250371842ff80aff38e2d015a574406eebb87adf2672d3c135700899e40af6"
+      },
+      {
+        "file": "racing_team.bgin",
+        "bytes": 32696,
+        "sha256": "0b57d73040b9bc1b772e215677914bad8e008b9396c77fada915df6e12dd5f03"
+      },
+      {
+        "file": "replaykit_menu.bgin",
+        "bytes": 144101,
+        "sha256": "caed509186f78c244ac40e4f25c153de05e1634900e7390b1849c477263e28cd"
+      },
+      {
+        "file": "rnd_menu.bgin",
+        "bytes": 1457427,
+        "sha256": "3fad29ca98d5f81a35c173ea74a4a2af2122080426db9a1f2f012f3da3dd3592"
+      },
+      {
+        "file": "scheme_controller_specific.bgin",
+        "bytes": 356897,
+        "sha256": "f7c9d3cfd729ef45c9dc985a146443b1b942e7d218ee502ae2f5058277afdc51"
+      },
+      {
+        "file": "sequences.bgin",
+        "bytes": 13962,
+        "sha256": "b16264c0843c2e3c5d682480b8b78be79b8c84351d232330e2b730670677d6a1"
+      },
+      {
+        "file": "special_events_entry_points.bgin",
+        "bytes": 7837,
+        "sha256": "1083a0d35d91498850658574febca39ee239b593cf3ccbdfcab5155393404390"
+      },
+      {
+        "file": "special_events_tutorial_templates.bgin",
+        "bytes": 2527611,
+        "sha256": "888c68128972b26e9748919ba2b1f36ffb2bec3e88e168787f7b0b873f2f43ba"
+      },
+      {
+        "file": "splash_menu.bgin",
+        "bytes": 10183,
+        "sha256": "df2f6558a3a251a69b4d75bb67422a568e4ad96711f4fa96125ff8557c5225ed"
+      },
+      {
+        "file": "sprites.bgin",
+        "bytes": 11021407,
+        "sha256": "f0d202089507d0a46832fa2ddf0d22f2871f00a9aba9a46d6ca30c820b4aa0ce"
+      },
+      {
+        "file": "tag_racing_menu.bgin",
+        "bytes": 306986,
+        "sha256": "122a309fc4ff71916bd02546e735d8eac95c923454863bcfc5cb38368c16866a"
+      },
+      {
+        "file": "test.bgin",
+        "bytes": 96395,
+        "sha256": "d2a5066da17ea505275feeaa09e21f68466ed36e5d84f4735d6bbb4ceb52c46e"
+      },
+      {
+        "file": "tle_menu.bgin",
+        "bytes": 931683,
+        "sha256": "d0f25660c83af87f229740d9366dd6c2bdf18f976736b59c62f35ff1f80d86f7"
+      },
+      {
+        "file": "top_bar.bgin",
+        "bytes": 331353,
+        "sha256": "8fcad5feb4317382a86ef777627baff832e3de2040a07a23b9212205c9343857"
+      },
+      {
+        "file": "tracker_menu.bgin",
+        "bytes": 118640,
+        "sha256": "ea1568a3dba925cdf75273e53db1a7c1fada74ba2ad357b0f0bd036f31311c5f"
+      },
+      {
+        "file": "transition_a9_special_events.bgin",
+        "bytes": 1100707,
+        "sha256": "027261f1fe2d2cc758131fc8433b9d105829dc1b922e335e42e1a97bc90fd8f0"
+      },
+      {
+        "file": "twitch_menu.bgin",
+        "bytes": 185710,
+        "sha256": "92e780a8813bcf8b77c53d2ce31caf9167ec32adc4f1561246def66a5250a165"
+      },
+      {
+        "file": "upgrades_icons_templates.bgin",
+        "bytes": 32810,
+        "sha256": "757f9d100f0f368aa0b6baf116e7a82b81bb1b46367fc019592489678f9a792f"
+      },
+      {
+        "file": "vip_menu.bgin",
+        "bytes": 493803,
+        "sha256": "754d0f6606a06833403aeb40a12d59f4364ac432a0ce55033b443a7ebf3b5b5f"
+      },
+      {
+        "file": "widgets.bgin",
+        "bytes": 165411,
+        "sha256": "b201aac036c6509433b14a815a1c2b5f0429051673181b9e46f2d5e6ad1e944f"
+      },
+      {
+        "file": "win_streak.bgin",
+        "bytes": 11941,
+        "sha256": "c3925f87153869c493a9ecffbcb49e8ace418e0ad6ff2a8a33aab852a9a50ad8"
+      }
+    ]
+  },
+  "unmodified_current_codecs": {
+    "wire": {
+      "success": 0,
+      "failure": 74
+    },
+    "editable": {
+      "success": 0,
+      "failure": 74
+    },
+    "core": {
+      "success": 0,
+      "failure": 74
+    }
+  },
+  "research_header_adapter": {
+    "description": "Remove u32 directory payload length and second table count for ordinary UI. Rebuild older count/offset directory in memory; original source and product codecs stay unchanged. Sequence table was initially merged to demonstrate ordinary node codecs reject it.",
+    "wire_success": 70,
+    "core_success": 70,
+    "core_force_roundtrip_equal": 70,
+    "editable_success": 1,
+    "editable_force_roundtrip_equal": 1,
+    "editable_failures_missing_property_spelling": 69,
+    "editable_success_files": [
+      "widgets.bgin"
+    ],
+    "exceptions": [
+      {
+        "file": "car_poster_images.bgin",
+        "wire_error": "invalid_directory at 0x2CCD (/header): Directory counts differ: 1430 and 1428",
+        "core_error": "Invalid first screen offset 0x2cbf",
+        "n1": 1430,
+        "n2": 0,
+        "declared_root_count": 1428
+      },
+      {
+        "file": "options_menu.bgin",
+        "wire_error": "invalid_directory at 0xD0 (/header): Directory counts differ: 23 and 21",
+        "core_error": "Screen directory count 21 does not match 23",
+        "n1": 23,
+        "n2": 0,
+        "declared_root_count": 21
+      },
+      {
+        "file": "prokits_menu.bgin",
+        "wire_error": "truncated at 0x1A5B9F (/screens/65/root): Need 2 bytes, have 1",
+        "core_error": "Invalid node size 1 at 0x1a5b97",
+        "n1": 65,
+        "n2": 1,
+        "declared_root_count": 66
+      },
+      {
+        "file": "sequences.bgin",
+        "wire_error": "truncated at 0x16A (/screens/0/root): Need 20 bytes, have 1",
+        "core_error": "Invalid node size 4 at 0x15f",
+        "n1": 0,
+        "n2": 41,
+        "declared_root_count": 41
+      }
+    ]
+  },
+  "header": {
+    "magic": "0x000C1AAA",
+    "database_hash": "0x9456A530",
+    "directory_layout": "u32 block_bytes, u16 n1, (u32 hash,u32 absolute_offset)[n1], u16 n2, (u32 hash,u32 absolute_offset)[n2], u16 record_count",
+    "directory_size_matches_4_plus_8_times_n1_plus_n2": true,
+    "sequence_tables": [
+      {
+        "file": "prokits_menu.bgin",
+        "n1": 65,
+        "n2": 1,
+        "record_count": 66
+      },
+      {
+        "file": "sequences.bgin",
+        "n1": 0,
+        "n2": 41,
+        "record_count": 41
+      }
+    ]
+  },
+  "exception_research": [
+    {
+      "file": "car_poster_images.bgin",
+      "n1": 1430,
+      "n2": 0,
+      "declared_roots": 1428,
+      "physical_ui_roots": 1430,
+      "ui_exact_end": true,
+      "body_end": 469495,
+      "file_bytes": 469495,
+      "directory_offset_delta_counts": {
+        "-16": 1430
+      },
+      "directory_hash_matches_actual_name": 1430,
+      "wire": {
+        "ok": true
+      },
+      "core": {
+        "ok": true,
+        "force_roundtrip_equal": true
+      }
+    },
+    {
+      "file": "options_menu.bgin",
+      "n1": 23,
+      "n2": 0,
+      "declared_roots": 21,
+      "physical_ui_roots": 23,
+      "ui_exact_end": true,
+      "body_end": 1168604,
+      "file_bytes": 1168604,
+      "directory_offset_delta_counts": {
+        "0": 23
+      },
+      "directory_hash_matches_actual_name": 23,
+      "wire": {
+        "ok": true
+      },
+      "core": {
+        "ok": true,
+        "force_roundtrip_equal": true
+      }
+    },
+    {
+      "file": "prokits_menu.bgin",
+      "n1": 65,
+      "n2": 1,
+      "declared_roots": 66,
+      "physical_ui_roots": 65,
+      "ui_exact_end": true,
+      "body_end": 1727389,
+      "file_bytes": 1727653,
+      "directory_offset_delta_counts": {
+        "0": 65
+      },
+      "directory_hash_matches_actual_name": 65,
+      "wire": {
+        "ok": true
+      },
+      "core": {
+        "ok": true,
+        "force_roundtrip_equal": true
+      }
+    }
+  ],
+  "aggregate_ui_records": {
+    "files_completely_decoded_after_documented_research_adjustments": 73,
+    "nodes": 225018,
+    "node_type_hashes": {
+      "0x6E739C13": 47021,
+      "0x8706BEAF": 30080,
+      "0xDE8925BA": 13139,
+      "0xB8F333D9": 13696,
+      "0x02737331": 9133,
+      "0xB490D6D6": 14278,
+      "0x64BAC2F5": 13448,
+      "0xC6D609D8": 373,
+      "0xA855F996": 18087,
+      "0x34EA05F7": 9755,
+      "0xB737FB69": 55,
+      "0x7D332216": 1674,
+      "0x57CCBBC1": 1582,
+      "0x915854F8": 1017,
+      "0x730FD607": 4,
+      "0xAD1E6B8E": 4,
+      "0x2829EE60": 451,
+      "0xB76EA225": 21,
+      "0xCE026A8F": 126,
+      "0x47B597C6": 94,
+      "0x33EF85C7": 38,
+      "0xD5B3083A": 42,
+      "0x4A745A36": 170,
+      "0x7417B190": 23,
+      "0xFE3354C4": 212,
+      "0xE7D7F713": 65,
+      "0x1B16669A": 690,
+      "0xD7BE6A5C": 9,
+      "0x3FD29A03": 292,
+      "0x98811796": 10,
+      "0x6E077718": 2,
+      "0x3BA2E9E2": 458,
+      "0x93EF34CD": 6544,
+      "0xBE17FA7A": 12739,
+      "0xEB9A8C92": 29686
+    },
+    "property_records": 2299900,
+    "distinct_property_hashes": 166,
+    "property_kind_counts": {
+      "0x0080": 545284,
+      "0x0002": 1379944,
+      "0x0008": 137241,
+      "0x0004": 223750,
+      "0x0400": 13681
+    },
+    "unknown_node_type_hashes": {
+      "0x730FD607": 4,
+      "0xAD1E6B8E": 4,
+      "0x7417B190": 23,
+      "0x1B16669A": 690,
+      "0xD7BE6A5C": 9
+    },
+    "unknown_property_hashes": {
+      "0xE240F3A9": 162003,
+      "0x7A2C31A2": 162003,
+      "0x8F1E663F": 500,
+      "0x8DCE7469": 373,
+      "0xF46B3B5C": 373,
+      "0xAAC04948": 373,
+      "0x26936E0F": 1674,
+      "0x8C5676C1": 1582,
+      "0xCD624281": 1582,
+      "0xDC5F9341": 1582,
+      "0x95954A96": 1582,
+      "0x18AF0F6B": 1582,
+      "0x6B4993B7": 8,
+      "0xFE337A82": 4,
+      "0x1B8038F4": 42,
+      "0x04FA7DAD": 42,
+      "0xC419C355": 42,
+      "0xF594FCD7": 42,
+      "0xDFE708F6": 42,
+      "0x3048C1EB": 690,
+      "0xEE17FF22": 690,
+      "0x1A8132D8": 690,
+      "0x4271CB1A": 690,
+      "0x490CC48A": 690,
+      "0xA0D1CDBA": 690,
+      "0x138A3964": 9,
+      "0x37FFE570": 9,
+      "0xB4A006C2": 60180,
+      "0xF9E153A2": 60159
+    },
+    "unresolved_existing_aliases": {
+      "0x4F50C861": {
+        "label": "UnnamedProperty4",
+        "count": 87311
+      },
+      "0x4FFE73DC": {
+        "label": "UnnamedProperty5",
+        "count": 78
+      },
+      "0x1185171F": {
+        "label": "UnnamedProperty2",
+        "count": 78
+      },
+      "0xC1EA89C1": {
+        "label": "UnnamedProperty8",
+        "count": 78
+      },
+      "0x584CF538": {
+        "label": "UnnamedProperty6",
+        "count": 48
+      },
+      "0x088925A3": {
+        "label": "UnnamedProperty1",
+        "count": 458
+      },
+      "0x41CB0B8A": {
+        "label": "UnnamedProperty3",
+        "count": 458
+      },
+      "0x64532066": {
+        "label": "UnnamedProperty7",
+        "count": 458
+      }
+    }
+  },
+  "limitations": [
+    "No runtime or Ghidra semantic investigation; property and widget semantics are not established.",
+    "Strict editable JSON succeeds only for widgets.bgin after header normalization; unsupported property spellings block 69 otherwise wire-readable files.",
+    "Sequence table values are not ordinary UI node records and remain undecoded: 41 in sequences.bgin and 1 in prokits_menu.bgin.",
+    "car_poster_images.bgin contains 1430 physical UI records and name/hash matches, directory offsets are uniformly 16 bytes before actual records, declared record count is 1428. Cause unknown.",
+    "options_menu.bgin has 23 matching physical UI records with exact directory offsets, declared record count is 21. Cause unknown.",
+    "Three exceptional UI-only trees were reconstructed for research in memory: corrected directory/record count for car_poster_images and options_menu, omitted separate sequence data for prokits_menu. Each reconstructed older-format tree passes strict wire/core decode and independent force encode equality. This is not source-file repair authorization or a shipping converter.",
+    "The 70 ordinary document force roundtrips prove current primitive payload encoding remains byte-identical after header adaptation. They do not prove newly generated documents run correctly in 3.7.0.",
+    "New format writers, conversions, rendering semantics, device imports and device launches were not implemented or tested."
+  ],
+  "scripts": [
+    "audit.py",
+    "normalize.py",
+    "exceptions.py",
+    "summarize.py"
+  ],
+  "recommendation": "One editor and shared semantic tree with explicit retained wire profile. Save preserves original profile; separate explicit conversion must check unsupported types, unknown hashes, sequence data and profile-specific fields, refusing silent loss. Profile cannot be inferred from game version or common magic alone."
+}

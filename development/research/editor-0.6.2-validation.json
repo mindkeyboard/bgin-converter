@@ -1,0 +1,14 @@
+{
+  "version": "0.6.2",
+  "package": "dist\\bgin-editor-0.6.2-win32-x64.vsix",
+  "sha256": "0c7e5ce4a07298689f43745776fbcf484a05fad6bfae2a7c10415e532cd67d94",
+  "bytes": 17795613,
+  "checks": {
+    "typescript": true,
+    "browser_ui": true,
+    "nested_object_counts_in_all_and_prefix_views": true,
+    "packaged_ui_matches_tested_files": true,
+    "git_diff_check": true
+  },
+  "count_semantics": "Includes the screen root and stored children/tracks recursively; external definitions and animation frames are excluded."
+}

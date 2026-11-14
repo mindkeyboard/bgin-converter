@@ -60,21 +60,31 @@ def load_json(path: str | Path, *, limits: Limits | None = None):
 
 
 def convert_file(source: str | Path, destination: str | Path, *, to: str | None = None,
-                 dialect="auto", limits: Limits | None = None, overwrite=False, indent=2):
+                 dialect="auto", limits: Limits | None = None, overwrite=False, indent=2,
+                 target_format=None):
     source, destination = Path(source), Path(destination)
     if source.resolve() == destination.resolve() or (
             destination.exists() and os.path.samefile(source, destination)):
         raise ValueError("Source and destination must be different files")
     direction = to or ("bgin" if source.suffix.lower() == ".json" else "json")
+    if target_format is not None and direction != "bgin":
+        raise ValueError("A target BGIN format requires conversion to bgin")
     if direction == "json":
         document = load(source, dialect=dialect, limits=limits)
         data = dumps(document, indent=indent).encode("utf-8")
     elif direction == "bgin":
-        document = load_json(source, limits=limits)
+        document = (load_json(source, limits=limits) if source.suffix.lower() == ".json"
+                    else load(source, dialect=dialect, limits=limits))
+        if source.suffix.lower() != ".json" and target_format is None:
+            raise ValueError("BGIN to BGIN conversion requires an explicit target format")
         if dialect != "auto":
             if not isinstance(document, dict):
                 raise BginError("Expected a document object", 0, "/", "invalid_json")
             document = dict(document, dialect=dialect)
+        if target_format is not None:
+            from .writer import convert_document
+
+            document = convert_document(document, target_format, limits=limits)
         data = encode(document, limits=limits)
     else:
         raise ValueError("to must be 'json' or 'bgin'")

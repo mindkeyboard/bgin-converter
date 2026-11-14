@@ -34,6 +34,14 @@ class EnumToken:
 
 
 @dataclass
+class PropertyVariant:
+    name_hash: int
+    count: int
+    value: Any
+    dirty: bool = False
+
+
+@dataclass
 class BginProperty:
     name_hash: int
     kind: int
@@ -44,10 +52,22 @@ class BginProperty:
     source_bytes: bytes
     dirty: bool = False
     literal_name: str | None = None
+    variants: list[PropertyVariant] = field(default_factory=list)
+
+    def is_dirty(self) -> bool:
+        return self.dirty or any(item.dirty for item in self.variants)
 
     def set_value(self, value: Any) -> None:
         self.value = value
         self.dirty = True
+
+
+@dataclass
+class SpriteColorChannel:
+    name_hash: int
+    interpolation: int
+    values: list[float]
+    dirty: bool = False
 
 
 @dataclass
@@ -66,9 +86,11 @@ class SpriteKeyframe:
     event: tuple[str, int, int, int] | None = None
     color_properties: list[BginProperty] = field(default_factory=list)
     dirty: bool = False
+    color_channels: list[SpriteColorChannel] = field(default_factory=list)
 
     def is_dirty(self) -> bool:
-        return self.dirty or any(prop.dirty for prop in self.color_properties)
+        return (self.dirty or any(prop.is_dirty() for prop in self.color_properties)
+                or any(channel.dirty for channel in self.color_channels))
 
 
 @dataclass
@@ -89,7 +111,7 @@ class BginNode:
     def is_dirty(self) -> bool:
         return (
             self.dirty
-            or any(prop.dirty for prop in self.properties)
+            or any(prop.is_dirty() for prop in self.properties)
             or any(child.is_dirty() for child in self.children)
             or (self.sprite_movie is not None and self.sprite_movie.is_dirty())
         )

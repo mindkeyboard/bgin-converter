@@ -42,6 +42,10 @@ class Server:
                 importlib.import_module(module)
 
             return {"ready": True}
+        if method == "convert_texture":
+            from .texture_conversion import convert_texture_file
+            return convert_texture_file(p["source"], p["destination"], method=p["method"],
+                                        target_format=p["target_format"], overwrite=p.get("overwrite", False))
         if method == "convert":
             from .file_conversion import convert_saved_file
 
@@ -50,6 +54,7 @@ class Server:
                 p["source"], p["destination"], p["to"],
                 overwrite=p.get("overwrite", False),
                 expected=base64.b64decode(expected, validate=True) if expected is not None else None,
+                target_format=p.get("target_format"),
             )
         started = time.perf_counter()
         if p["text"] == self.last_text:

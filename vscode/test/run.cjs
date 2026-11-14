@@ -20,7 +20,7 @@ const { runTests } = require("@vscode/test-electron");
       "--skip-welcome",
       "--skip-release-notes",
       "--disable-workspace-trust",
-      "--user-data-dir=" + path.resolve(root, "../build/vscode-test-user"),
+      "--user-data-dir=" + (process.env.BGIN_TEST_USER_DATA || path.resolve(root, "../build/vscode-test-user")),
       "--extensions-dir=" +
         path.resolve(root, "../build/vscode-test-extensions"),
     ],
