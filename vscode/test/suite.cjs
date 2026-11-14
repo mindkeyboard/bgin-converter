@@ -97,7 +97,9 @@ exports.run = async () => {
   const previousClipboard = await vscode.env.clipboard.readText();
   await converterReceive({ type: "copyClientConfig" });
   const mcpConfig = JSON.parse(await vscode.env.clipboard.readText()).mcpServers.bgin;
-  assert.equal(mcpConfig.command, path.join(extension.extensionPath, "backend", process.platform === "win32" ? "bgin_backend.exe" : "bgin_backend"));
+    const expectedMcpCommand = path.join(extension.extensionPath, "backend", process.platform === "win32" ? "bgin_backend.exe" : "bgin_backend");
+    assert.equal(process.platform === "win32" ? mcpConfig.command.toLowerCase() : mcpConfig.command,
+      process.platform === "win32" ? expectedMcpCommand.toLowerCase() : expectedMcpCommand);
   assert.deepEqual(mcpConfig.args.slice(0, 4), ["--mcp", "--mode", "connected", "--editor-bridge"]);
   assert.equal(mcpConfig.args[4], bridge.state().discoveryFile);
   await converterReceive({ type: "copyClientCommand" });
