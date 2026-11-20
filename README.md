@@ -9,7 +9,7 @@ and select the package for your platform. The package includes the BGIN worker,
 so a separate Python installation is unnecessary.
 
 [Download](https://github.com/mindkeyboard/bgin-converter/releases/latest) ·
-[Installation and user guide](https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/) ·
+[Installation and user guide](https://octane-loader.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/) ·
 [Русский](README.ru.md)
 
 Created by **mindkeyboard**.

@@ -1,7 +1,7 @@
 # Binary GIN Editor 0.6.3
 
 Practical guide for the 0.6.3 sources. Extension 0.6.3 uses worker version 0.6.3 with bundled MCP.
-[User guide](https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/).
+[User guide](https://octane-loader.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/).
 
 Opening detects the document's wire mode. Saving preserves it. New documents
 offer ~0.0.2, ~1.6.0, ~3.7.0 and ~5.8.0. Use the sidebar's BGIN → BGIN converter

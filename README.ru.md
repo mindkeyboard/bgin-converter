@@ -9,7 +9,7 @@
 устанавливать Python отдельно не нужно.
 
 [Скачать](https://github.com/mindkeyboard/bgin-converter/releases/latest) ·
-[Установка и руководство](https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/) ·
+[Установка и руководство](https://octane-loader.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/) ·
 [English](README.md)
 
 Автор — **mindkeyboard**.

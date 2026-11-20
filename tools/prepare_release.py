@@ -101,14 +101,14 @@ def prepare(target, resource_root=None):
             "This directory contains gui, textures_android and texter_fonts only. "
             "Open Preview.code-workspace from the release folder to use these relative paths. "
             "Resources are external to the extension and are not installed into VS Code.\n"
-            f"\n[Preview resource guide](https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v{version}/resources)\n"
+            f"\n[Preview resource guide](https://octane-loader.ru/en/guide/octane-devtools/bgin-editor/v{version}/resources)\n"
         ).encode()
         files["resources/README.ru.md"] = (
             "# Ресурсы предпросмотра\n\n"
             "Здесь только gui, textures_android и texter_fonts. Откройте Preview.code-workspace "
             "из папки выпуска: пути к ресурсам уже заданы относительно неё. "
             "Ресурсы остаются внешними файлами и не устанавливаются внутрь VS Code.\n"
-            f"\n[Подключение ресурсов](https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v{version}/resources)\n"
+            f"\n[Подключение ресурсов](https://octane-loader.ru/ru/guide/octane-devtools/bgin-editor/v{version}/resources)\n"
         ).encode()
         print(f"Renderer resources: {resource_count} files, {resource_bytes:,} bytes", flush=True)
 

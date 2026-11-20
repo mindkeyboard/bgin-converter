@@ -1,7 +1,7 @@
 # Binary GIN Editor 0.6.3
 
 Практическое руководство к исходникам выпуска 0.6.3. Расширение 0.6.3
-использует двоичный модуль 0.6.3 со встроенным MCP. [Пользовательское руководство](https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/).
+использует двоичный модуль 0.6.3 со встроенным MCP. [Пользовательское руководство](https://octane-loader.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/).
 
 ## Просмотр открытого экрана в 0.6.1
 

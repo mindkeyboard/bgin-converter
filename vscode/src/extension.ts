@@ -774,7 +774,7 @@ export class Provider implements vscode.CustomEditorProvider<BginDocument> {
 }
 
 export function editorGuideUrl(language: string) {
-  return `https://octane-loader.utmsoft.ru/${language === "ru" ? "ru" : "en"}/guide/octane-devtools/bgin-editor/v0.6.3/`;
+  return `https://octane-loader.ru/${language === "ru" ? "ru" : "en"}/guide/octane-devtools/bgin-editor/v0.6.3/`;
 }
 
 /** Reference page of one engine class, or of the gin namespace without one. */
@@ -782,7 +782,7 @@ export function documentationUrl(language: string, target: unknown) {
   const page = typeof target === "string" && /^gin(::\w+)+$/.test(target)
     ? `view=class&name=${target}`
     : "mode=namespaces&view=namespace&name=gin";
-  return `https://octane-loader.utmsoft.ru/${language === "ru" ? "ru" : "en"}/reference/?${page}`;
+  return `https://octane-loader.ru/${language === "ru" ? "ru" : "en"}/reference/?${page}`;
 }
 
 export function activate(context: vscode.ExtensionContext) {

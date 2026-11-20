@@ -18,8 +18,8 @@ exports.run = async () => {
     editorGuideUrl,
   } = await extension.activate();
   assert.deepEqual(await backend.call("ping"), { ready: true });
-  assert.equal(editorGuideUrl("ru"), "https://octane-loader.utmsoft.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/");
-  assert.equal(editorGuideUrl("en"), "https://octane-loader.utmsoft.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/");
+  assert.equal(editorGuideUrl("ru"), "https://octane-loader.ru/ru/guide/octane-devtools/bgin-editor/v0.6.3/");
+  assert.equal(editorGuideUrl("en"), "https://octane-loader.ru/en/guide/octane-devtools/bgin-editor/v0.6.3/");
   assert.match(documentationUrl("en", "gin::LabelWidget"), /\/en\/reference\/\?view=class&name=gin::LabelWidget$/);
   assert.match(documentationUrl("ru", "https://wrong.invalid"), /name=gin$/);
   const onboardingState = new Map();
